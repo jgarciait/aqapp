@@ -1,0 +1,864 @@
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: center;
+    padding: .4rem;
+    background: #fafdff;
+    color: #383838;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-left: 1.5rem;
+}
+
+body {
+    background: #3b3c4717;
+}
+
+.header-content p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Ensure the .header-content takes up the full height */
+}
+
+.shine {
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 4px;
+    font-weight: bold;
+    overflow: hidden;
+    color: #4b4b4b;
+    background: linear-gradient(45deg, #ffffff, #dbc926, #000, #000, #000, #000, #000, #000, #000, #999999, #999999, #f5f9ff);
+    background-repeat: repeat;
+    background-size: 80%;
+    animation: animate 10s linear infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255, 253, 253, 0);
+}
+
+@keyframes animate {
+    0% {
+        background-position: -500%;
+    }
+    100% {
+        background-position: 500%;
+    }
+}
+.profile {
+    display: flex;
+    align-items: center;
+    padding: 0 4rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.profile .profile-text {
+    padding-right: .5rem;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+    .profile .profile-text {
+        display: none;
+    }
+    td {
+    white-space: normal !important; 
+    word-wrap: break-word !important;  
+    }
+    /* Force table to not be like tables anymore */
+    #templateTable table, 
+    #templateTable thead, 
+    #templateTable tbody, 
+    #templateTable th, 
+    #templateTable td, 
+    #templateTable tr { 
+        display: block; 
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    #templateTable thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    #templateTable tr { border: 1px solid #ccc; }
+
+    #templateTable td { 
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee; 
+        position: relative;
+        padding-left: 50%; 
+        white-space: normal;
+        text-align:left;
+    }
+
+    #templateTable td:before { 
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+        text-align:left;
+        font-weight: bold;
+    }
+    #nmobile {
+        display: block;
+        text-align: center;
+    }
+    /*
+    Label the data
+    */
+    #templateTable td:before { 
+    content: attr(data-title);
+
+    }
+
+    .content-table {
+        padding: .2rem!important;
+        margin-left: 3.2rem !important;
+    }
+                    /* Container Styles */
+        .container-table {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            margin-top: 2.6rem !important;
+            margin-bottom: 34px;
+            z-index: 2;
+            padding: .5px !important;
+        }
+
+}
+
+.content-table {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    width: 100%;
+    margin-right: 0px;
+    margin-left: 2.5rem;
+    align-content: flex-start;
+    justify-content:start;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+ #templateTable td { 
+    text-align: center;
+    justify-content: center;
+ }
+.profile .display-picture {
+    width: 50px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.profile-menu {
+    display: none;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 20px;
+    list-style: none;
+    position: absolute;
+    margin-right: 2rem;
+    top: 100%;
+    right: 0;
+}
+
+.profile:hover .profile-menu {
+    display: block;
+}
+.profile li a:hover {
+    color: darkblue;
+    font-weight: 600;
+}
+
+/* Content Styles */
+.content {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    background: #fafdff;
+    justify-content: center;
+    max-width: 100%;
+}
+/* Flip Clock Style */
+
+    .tick-container {
+        text-align: center;
+        padding: 16px;
+    }
+
+    .tick {
+        font-size: 16px;
+        color: #215f92;
+    }
+
+    .tick .tick-credits {
+        color: #fff!important;
+    }
+     
+/* Modal Styles */
+.modal {
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: left;
+     z-index: 9999;
+}
+
+        /* Container Styles */
+        .container-data-card {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            margin-top: 54px;
+            margin-bottom: 34px;
+            z-index: 2;
+        }
+
+           /* Container Styles */
+        .container-data-card-1 {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            margin-top: 3rem;
+            margin-bottom: 34px;
+            z-index: 2;
+        }
+
+
+                /* Container Styles */
+        .container-table {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            margin-top: 5rem;
+            margin-bottom: 34px;
+            z-index: 2;
+            padding: .5px;
+        }
+        
+        
+        .content-data-card {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 0;
+            width: 100%;
+            margin-right: 0px;
+            margin-left: 20px;
+            align-content: flex-start;
+            padding: 1rem;
+        }
+
+
+
+        /* Footer Styles */
+        .footer {
+            background: #fafdff;
+            color: #383838;
+            text-align: center;
+            padding: 1px;
+            left: 0;
+            z-index: 1 ; /* Adjust the z-index */
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 100%;
+            flex-shrink: 0; /* Prevent the footer from shrinking */
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2); /* Add a shadow to separate footer from content */
+        }
+          .footer p {
+            margin: 0;
+            padding: 0.2rem;
+        }
+
+        /* Data Card Styles */
+        .data-card {
+            flex: 1;
+            background: #fff;
+            height: 100px;
+            text-align: center;
+            justify-content: center; /* Center-align the cards within the container */
+            border: 1px solid #909eff; /* Border */
+            padding: 10px; /* Padding inside the data card */
+            margin: 10px; /* Margin around the data card */
+            border-radius: 4px;
+            min-width: 15rem;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 15px 0 rgba(0, 0, 0, 0.10);
+        }
+              /* Data Card Styles */
+        .data-card-1 {
+            flex: 1;
+            background: #fff;
+            height: 10rem;
+            color:#2a3844;
+            text-align: center;
+            justify-content: center; /* Center-align the cards within the container */
+            border: 1px solid #b4befc; /* Border */
+            padding: 10px; /* Padding inside the data card */
+            margin: 10px; /* Margin around the data card */
+            border-radius: 4px;
+            min-width: 19rem;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 15px 0 rgba(0, 0, 0, 0.10);
+        }
+        /* Data Card Styles */
+        .data-card-2 {
+            flex: 1;
+            background: #ffffff00;
+            text-align: center;
+            justify-content: center; /* Center-align the cards within the container */
+            color:#005eb6;
+            padding: 10px; /* Padding inside the data card */
+            margin: 10px; /* Margin around the data card */
+            border-radius: 4px;
+            min-width: 7rem;
+          
+        }
+         /* Data Card Styles */
+        .data-card-3 {
+            flex: 1;
+            background: #fff;
+            height: 25rem;
+            color:#2a3844;
+            text-align: center;
+            justify-content: center; /* Center-align the cards within the container */
+            border: 1px solid #b4befc; /* Border */
+            padding: 1rem; /* Padding inside the data card */
+            margin: 10px; /* Margin around the data card */
+            border-radius: 4px;
+            min-width: 15rem;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 15px 0 rgba(0, 0, 0, 0.10);
+        }
+        
+        @keyframes pulse {
+  0% {
+    background-color: #ccffcf; /* Start with light red background */
+  }
+  50% {
+    background-color: white; /* Midpoint, back to white */
+  }
+  100% {
+    background-color: #ccffd9; /* End with light red background */
+  }
+}
+            /* CSS for the pulsing effect */
+            .pulse-effect {
+            animation-name: pulse; /* Use the pulse animation */
+            animation-duration: 3s; /* Duration of each pulse cycle */
+            animation-iteration-count: infinite; /* Infinite looping */
+            }
+
+            .pulse-effect:hover {
+                background-color: rgb(59, 255, 102);
+            }
+                    /* Add this CSS to your existing styles */
+          .card-container {
+              display: grid;
+              grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust the minmax value to your desired card width */
+              gap: 10px; /* Adjust the gap between cards */
+              margin: 10px; /* Margin around the container */
+          }
+
+          /* Style for the links within data-card */
+          .data-card a, .data-card p {
+              text-decoration: none; /* Remove underlines from links */
+              color: #333; /* Link text color */
+              font-weight: bold; /* Bold font */
+              display: block; /* Make the links block-level elements */
+              margin-bottom: 8px; /* Spacing between links */
+              font-size: 16px;
+          }
+
+                /* Style for the links within data-card */
+          .data-card-2 a, .data-card-2 p {
+              text-decoration: none; /* Remove underlines from links */
+            color:#005eb6;/* Link text color */
+              font-weight: bold; /* Bold font */
+              display: block; /* Make the links block-level elements */
+              margin-bottom: 8px; /* Spacing between links */
+              font-size: 16px;
+          }
+
+          /* Hover effect for links within data-card */
+          .data-card {
+              color: #007bff; /* Change link text color on hover */
+          }
+          .card-row {
+              display: flex;
+              justify-content: space-between; /* Distribute the cards evenly within the row */
+          }
+
+          .card-container2 {
+              flex: 1; /* Each card takes up an equal amount of space within the row */
+              margin-right: 10px; /* Add some spacing between the cards (adjust as needed) */
+          }
+          .data-card:hover {
+              transform: scale(1.05);
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+              background-color: #dcecff; /* Light blue background color on hover */
+          }
+        /* Font Styles */
+        @import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+        .fa-2x {
+            font-size: 2em;
+        }
+        .fa {
+            position: relative;
+            display: table-cell;
+            width: 60px;
+            height: 36px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 20px;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 50px;
+            background: #313a46;
+            color: #fff;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 2;
+            overflow: hidden;
+            transition: width 0.3s;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 0;
+        }
+
+        .sidebar a:hover {
+            background-color: #37709e;
+        }
+
+        .sidebar.expanded {
+            width: 200px;
+        }
+
+        .sidebar > ul {
+            margin: 7px 0;
+            overflow: hidden;
+        }
+
+        .sidebar li {
+            position: relative;
+            display: block;
+        }
+
+        .sidebar li > a {
+            position: relative;
+            display: table;
+            border-collapse: collapse;
+            border-spacing: 0;
+            color: #ffff;
+            font-family: arial;
+            font-size: 16px;
+            text-decoration: none;
+            -webkit-transform: translateZ(0) scale(1, 1);
+            -webkit-transition: all .1s linear;
+            transition: all .1s linear;
+        }
+
+        .sidebar .nav-icon {
+            position: relative;
+            display: table-cell;
+            width: 60px;
+            height: 36px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 18px;
+        }
+
+        .sidebar .nav-text {
+            position: relative;
+            display: table-cell;
+            vertical-align: middle;
+            width: 190px;
+            font-family: 'Titillium Web', sans-serif;
+            display: none;
+        }
+
+        .sidebar.expanded .nav-text {
+            display: table-cell;
+        }
+
+        /* Miscellaneous Styles */
+        /* Add other styles here as needed */
+
+        .sidebar>ul.logout {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+
+        .no-touch .scrollable.hover {
+            overflow-y: hidden;
+        }
+
+        .no-touch .scrollable.hover:hover {
+            overflow-y: auto;
+            overflow: visible;
+        }
+
+        a:hover,
+        a:focus {
+            text-decoration: none;
+        }
+
+        nav {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+
+        nav ul, nav li {
+            outline: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar li:hover>a,
+        nav.main-menu li.active>a,
+        .dropdown-menu>li>a:hover,
+        .dropdown-menu>li>a:focus,
+        .dropdown-menu>.active>a,
+        .dropdown-menu>.active>a:hover,
+        .dropdown-menu>.active>a:focus,
+        .no-touch .dashboard-page nav.dashboard-menu ul li:hover a,
+        .dashboard-page nav.dashboard-menu ul li.active a {
+            color: #fff;
+            background-color: #37709e;
+        }
+
+        .area {
+            float: left;
+            background: #e2e2e2;
+            width: 100%;
+            height: 100%;
+        }
+
+        @font-face {
+            font-family: 'Titillium Web';
+            font-style: normal;
+            font-weight: 300;
+            src: local('Titillium WebLight'), local('TitilliumWeb-Light'),
+            url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
+        }
+
+        #toggleButton {
+          background-color: #122f4600;
+          border: solid #122f4600;
+          color: #fff; /* Light blue text color */
+          border-radius: 25px;
+          padding: 1px;
+          font-size: 10px;
+          cursor: pointer;
+        }
+
+           .toggle-button-container {
+            display: flex;
+            flex-direction: column; /* Change to column direction to place the button at the top */
+            align-items: center;
+            padding: 10px; /* Add padding to the top of the container */
+        }
+
+        #toggleButton:hover {
+            color: #e6eaff; /* White text color on hover */
+            border: 1px solid #7095da;
+        }
+    
+
+
+.display-picture{
+  margin-left: auto;
+}
+.display-picture img{
+  width: 50px;
+  border-radius: 50%;
+  border:2px solid #fff;
+}
+.display-picture img:hover{
+border:2px solid #417be7;
+}
+.card{
+  transition: 0.5s ease;
+}
+
+.card ul{
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  background: #fff;
+  position: absolute;
+  top: 4rem;
+  right:0rem;
+border-radius: 10px;
+padding: 10px 50px 10px 20px;
+}
+.card ul li{
+ 
+  padding: 5px 0;
+  color: #4d4d4d;
+  font-size: 14px;
+}
+.hidden{
+  display: none;
+}
+a{
+  text-decoration: none;
+  color:#2b2b2b;
+}
+/* Table Animation */
+.active > .page-link
+{
+    background-color: #0087ca;
+    color: #fff;
+}
+
+/* Text Animation */
+.textAnimation {
+  width: 100px;
+  height: 100px;
+  font-size: 30px; /* Adjust the font size as needed */
+  color: #0087ca; /* Set the initial color of the letter */
+  text-align: center;
+  line-height: 100px; /* Vertically center the text */
+  position: relative;
+  font-weight: bold;
+  animation-name: example;
+  animation-duration: 3s;
+}
+@keyframes example {
+  0%   {color: #02344d; left: 205px; top: 0px;}
+  30%  {color: #034d72; left: 205px; top: 25px;}
+  65%  {color: #025680; left: 0px; top: 25px;}
+  100% {color: #0272aa; left: 0px; top: 0px; right: 5px;}
+}
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  color: #0087ca;
+  
+}
+
+.hover-underline-animation::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #0087ca;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+        .queue-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+        }
+        
+        .ticket {
+            width: 110px;
+            height: 210px;
+            background-color: #007BFF;
+            color: #FFF;
+            text-align: center;
+            border-radius: 5px;
+            border:.5px solid #cdcfd3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: queue-animation 5s infinite;
+        }
+
+.ticket img {
+    max-width: 10rem; /* Ensure the SVG image doesn't exceed its container */
+    padding: 2rem;
+}
+        @keyframes queue-animation {
+            0% {
+                background-color: #007bff3f;
+            }
+            50% {
+                background-color: #22f8ff46;
+            }
+            100% {
+                background-color: #007bff42;
+            }
+        }
+* {
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+}
+.title-table {
+  border-bottom: 1px solid #818181;
+  color: #000;
+  display: block;
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%;
+}
+.btn-menu {
+  background: none;
+  border: 1px solid #000;
+  border-radius: 5px;
+  color: #000;
+  display: block;
+  font-size: 1.6em;
+  font-weight: bold;
+  text-transform: uppercase;
+  z-index: -1;
+}
+
+.btn-menu-1 {
+  background: none;
+  border-radius: 5px;
+  color: #000;
+  display: block;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 2px;
+}
+
+
+
+.btn-menu span {         
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    top: 0; left: 0;
+    width: 100%;
+    padding: 15px 20px;
+    transition: 0.1s;
+  }
+.btn-menu-1 span {         
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    top: 0; left: 0;
+    width: 100%;
+    padding: 15px 20px;
+    transition: 0.1s;
+  }
+/* GENERAL BUTTON STYLING */
+.btn-menu,
+.btn-menu::after {
+  -webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+
+/* GENERAL BUTTON STYLING */
+.btn-menu-1,
+.btn-menu-1::after {
+  -webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+
+.btn-menu:hover {
+  color: #fff;
+  background: #313a46;
+}
+
+.btn-menu-1:hover {
+  color: #fff;
+  background: #313a46;
+}
+
+/* BUTTON 2 */
+.btn-1::after {
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 0;
+}
+
+.btn-1:hover:after {
+  width: 100%;
+}
+
+    /* Styles for the mainContent and fullscreen button */
+    #mainContent {
+        transition: height 0.5s;
+    }
+
+    #fullscreenButton {
+        cursor: pointer;
+     
+    }
+
+    /* Fullscreen styles */
+    #mainContent:-webkit-full-screen {
+        height: 100vh;
+    }
+
+    #mainContent:-moz-full-screen {
+        height: 100vh;
+    }
+
+    #mainContent:-ms-fullscreen {
+        height: 100vh;
+    }
+
+    #mainContent:fullscreen {
+        height: 100vh;
+        background: white;
+    }
