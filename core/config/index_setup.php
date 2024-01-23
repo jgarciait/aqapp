@@ -9,7 +9,6 @@ include_once 'core/assets/util/functions.php';
 //JS Scripts
 include_once 'core/assets/script/main.js';
 
-session_start();
 ?>
 <!DOCTYPE html>
 <html>
