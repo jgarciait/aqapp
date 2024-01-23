@@ -1,0 +1,14 @@
+# Ignore vendor directory (Composer dependencies)
+/vendor/composer
+
+# Ignore logs, caches, and other generated files
+
+
+# Ignore environment-specific configuration files
+
+
+# Ignore user-specific PHPStorm settings
+/.idea/
+
+# Ignore composer.lock file unless you want to commit it (recommended for team collaboration)
+# /composer.lock
