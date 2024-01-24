@@ -60,7 +60,7 @@ body {
     top: 0;
 }
 
-.display-picture img {
+img.display-picture {
     width: 50px;
     border-radius: 50%;
     border: 2px solid #fff;
