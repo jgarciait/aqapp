@@ -476,6 +476,182 @@ function isUserInWorkflow($userId, $workflowName, $pdo) {
 }
 
 
+function displayPunchButtons($pdo, $session_user) {
+    $timestamp = date('Y-m-d H:i:s');
+    $currentDate = date('Y-m-d');
+    $user = $session_user;
 
+    $sqlCheckStartShiftPunch = "SELECT id FROM shift_table 
+                                WHERE DATE(start_time) = :current_date AND sst_user_id = :sst_user_id";
+    $stmtCheckStartShiftPunch = $pdo->prepare($sqlCheckStartShiftPunch);
+    $stmtCheckStartShiftPunch->bindParam(':current_date', $currentDate);
+    $stmtCheckStartShiftPunch->bindParam(':sst_user_id', $user);
+    $stmtCheckStartShiftPunch->execute();
+    $startShiftPunchId = $stmtCheckStartShiftPunch->fetchColumn();
+
+if ($startShiftPunchId === false) {
+    // The user hasn't punched the start shift for today
+        echo '<br><div class="row"><br>';
+                echo '<div class="text-center col">';
+                echo '<input type="hidden" name="start_time" value="' . $timestamp . '">';
+                echo '<button type="submit" class="btn-menu btn-1 hover-filled-opacity"><span>Entrada Turno</span></button>';
+                echo '</div>';
+                echo '</div>';
+} else {
+            // Check if there is another start_b1_time punch for the current user today
+            $sqlCheckSameDayPunch = "SELECT COUNT(*) FROM startb1
+                                WHERE DATE(start_b1_time) = :current_date AND b1_shift_id = :b1_shift_id";
+
+            $stmtCheckSameDayPunch = $pdo->prepare($sqlCheckSameDayPunch);
+            $stmtCheckSameDayPunch->bindParam(':current_date', $currentDate);
+            $stmtCheckSameDayPunch->bindParam(':b1_shift_id', $startShiftPunchId);
+            $stmtCheckSameDayPunch->execute();
+            $sameDayPunchCount = $stmtCheckSameDayPunch->fetchColumn();
+
+            // If the user hasn't punched the end break AM punch for today show the checkbox to punch
+            if ($sameDayPunchCount === 0) {
+                echo '<br><div class="row"><br>';
+                echo '<div class="text-center col">';
+                echo '<input type="hidden" name="start_b1_time" value="' . $timestamp . '">';
+                echo '<button type="submit" class="btn-menu btn-1 hover-filled-opacity"><span>Entrada Break AM</span></button>';
+                echo '</div>';
+                echo '</div>';
+
+            } else {
+                $sqlCheckSameDayPunch = "SELECT COUNT(*) FROM endb1
+                                    WHERE DATE(end_b1_time) = :current_date AND eb1_shift_id = :eb1_shift_id";
+
+                $stmtCheckSameDayPunch = $pdo->prepare($sqlCheckSameDayPunch);
+                $stmtCheckSameDayPunch->bindParam(':current_date', $currentDate);
+                $stmtCheckSameDayPunch->bindParam(':eb1_shift_id', $startShiftPunchId);
+                $stmtCheckSameDayPunch->execute();
+                $sameDayPunchCount = $stmtCheckSameDayPunch->fetchColumn();
+
+                // If the user hasn't punched the end break M punch for today show the checkbox to punch
+                if ($sameDayPunchCount === 0) {
+                echo '<br><div class="row"><br>';
+                echo '<div class="text-center col">';
+                echo '<input type="hidden" name="end_b1_time" value="' . $timestamp . '">';
+                echo '<button type="submit" class="btn-menu btn-1 hover-filled-opacity"><span>Salida Break AM</span></button>';
+                echo '</div>';
+                echo '</div>';
+
+
+            } else {
+                $sqlCheckSameDayPunch = "SELECT COUNT(*) FROM startlunch
+                                    WHERE DATE(start_lunch) = :current_date AND sl_shift_id = :sl_shift_id";
+
+                $stmtCheckSameDayPunch = $pdo->prepare($sqlCheckSameDayPunch);
+                $stmtCheckSameDayPunch->bindParam(':current_date', $currentDate);
+                $stmtCheckSameDayPunch->bindParam(':sl_shift_id', $startShiftPunchId);
+                $stmtCheckSameDayPunch->execute();
+                $sameDayPunchCount = $stmtCheckSameDayPunch->fetchColumn();
+
+                // If the user hasn't punched the start lunch punch for today show the checkbox to punch
+                if ($sameDayPunchCount === 0) {
+                echo '<br><div class="row"><br>';
+                echo '<div class="text-center col">';
+                echo '<input type="hidden" name="start_lunch" value="' . $timestamp . '">';
+                echo '<button type="submit" class="btn-menu btn-1 hover-filled-opacity"><span>Entrada Almuerzo</span></button>';
+                echo '</div> <div';
+                echo '</div>';
+
+
+            } else {
+                $sqlCheckSameDayPunch = "SELECT COUNT(*) FROM endlunch
+                                    WHERE DATE(end_lunch) = :current_date AND el_shift_id = :el_shift_id";
+
+                $stmtCheckSameDayPunch = $pdo->prepare($sqlCheckSameDayPunch);
+                $stmtCheckSameDayPunch->bindParam(':current_date', $currentDate);
+                $stmtCheckSameDayPunch->bindParam(':el_shift_id', $startShiftPunchId);
+                $stmtCheckSameDayPunch->execute();
+                $sameDayPunchCount = $stmtCheckSameDayPunch->fetchColumn();
+
+                // If the user hasn't punched the end lunch punch for today show the checkbox to punch
+                if ($sameDayPunchCount === 0) {
+                    echo '<br><div class="row"><br>';
+                echo '<div class="text-center col">';
+                echo '<input type="hidden" name="end_lunch" value="' . $timestamp . '">';
+                echo '<button type="submit" class="btn-menu btn-1 hover-filled-opacity"><span>Salida Almuerzo</span></button>';
+                echo '</div>';
+                echo '</div>';
+
+
+            } else {
+                $sqlCheckSameDayPunch = "SELECT COUNT(*) FROM startb2
+                                    WHERE DATE(start_b2_time) = :current_date AND b2_shift_id = :b2_shift_id";
+
+                $stmtCheckSameDayPunch = $pdo->prepare($sqlCheckSameDayPunch);
+                $stmtCheckSameDayPunch->bindParam(':current_date', $currentDate);
+                $stmtCheckSameDayPunch->bindParam(':b2_shift_id', $startShiftPunchId);
+                $stmtCheckSameDayPunch->execute();
+                $sameDayPunchCount = $stmtCheckSameDayPunch->fetchColumn();
+
+                // If the user hasn't punched the start break PM punch for today show the checkbox to punch
+                if ($sameDayPunchCount === 0) {
+                    echo '<br><div class="row"><br>';
+                echo '<div class="text-center col">';
+                echo '<input type="hidden" name="start_b2_time" value="' . $timestamp . '">';
+                echo '<button type="submit" class="btn-menu btn-1 hover-filled-opacity"><span>Entrada Break PM</span></button>';
+                echo '</div>';
+                echo '</div>';
+
+
+            } else {
+                $sqlCheckSameDayPunch = "SELECT COUNT(*) FROM endb2
+                                    WHERE DATE(end_b2_time) = :current_date AND eb2_shift_id = :eb2_shift_id";
+
+                $stmtCheckSameDayPunch = $pdo->prepare($sqlCheckSameDayPunch);
+                $stmtCheckSameDayPunch->bindParam(':current_date', $currentDate);
+                $stmtCheckSameDayPunch->bindParam(':eb2_shift_id', $startShiftPunchId);
+                $stmtCheckSameDayPunch->execute();
+                $sameDayPunchCount = $stmtCheckSameDayPunch->fetchColumn();
+
+                // If the user hasn't punched the end break PM punch for today show the checkbox to punch
+                if ($sameDayPunchCount === 0) {
+                    echo '<br><div class="row"><br>';
+                echo '<div class="text-center col">';
+                echo '<input type="hidden" name="end_b2_time" value="' . $timestamp . '">';
+                echo '<button type="submit" class="btn-menu btn-1 hover-filled-opacity"><span>Salida Break PM</span></button>';
+                echo '</div>';
+                echo '</div>';
+    
+
+            } else {
+                $sqlCheckSameDayPunch = "SELECT COUNT(*) FROM endshift_time
+                                        WHERE DATE(end_shift_time) = :current_date AND est_shift_id = :est_shift_id";
+
+                $stmtCheckSameDayPunch = $pdo->prepare($sqlCheckSameDayPunch);
+                $stmtCheckSameDayPunch->bindParam(':current_date', $currentDate);
+                $stmtCheckSameDayPunch->bindParam(':est_shift_id', $startShiftPunchId);
+                $stmtCheckSameDayPunch->execute();
+                $sameDayPunchCount = $stmtCheckSameDayPunch->fetchColumn();
+
+                // If the user hasn't punched the end shift punch for today, show the checkbox to punch
+                if ($sameDayPunchCount === 0) {
+                echo '<br><div class="row"><br>';
+                echo '<div class="text-center col">';
+                echo '<input type="hidden" name="end_shift_time" value="' . $timestamp . '">';
+                echo '<button type="submit" class="btn-menu btn-1 hover-filled-opacity" ><span>Salida Turno</span></button>';
+                echo '</div>';
+                echo '</div>';
+                
+                } else {
+                echo '<br><div style="text-align:center; class="row"><br>';
+                echo '<div class="text-center col">';
+                echo '<a style="color:white; font-size: 14px; background-color:#215f92;" href="home.php" class="btn">
+                <span>Has completado los ponches de hoy.</span></a>';
+                echo '</div>';
+                echo '</div>';
+                }
+            }
+            }
+            }
+            }
+            }
+            }
+            }
+        }
+        
 ?>
 
