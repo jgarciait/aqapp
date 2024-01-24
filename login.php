@@ -30,7 +30,7 @@
     ?>
     <header class="header">
         <div class="header-content">
-            <p style="" class="shine">AQPlatform</p>
+            <p style="" class="shine">Welcome to AQPlatform!</p>
         </div>
     </header>
     <div class="container p-3">
@@ -44,12 +44,12 @@
                     </div>
                 </a>
                 <div class="mb-3">
-                    <label for="user_email">Correo electrónico:</label>
+                    <label for="user_email">Email/Username:</label>
                     <input class="form-control" id="user_email" autocomplete="on" type="text"
                         placeholder="example@email.com" name="user_email" required="">
                 </div>
                 <div class="mb-3">
-                    <label for="user_pass">Contraseña:</label>
+                    <label for="user_pass">Password:</label>
                     <div class="input-group">
                         <input type="password" autocomplete="on" class="form-control" id="user_pass"
                             name="user_pass" placeholder="********">
@@ -59,12 +59,12 @@
                 <div class="row" style="text-align: center;">
                     <div class="col">
                         <label style="display: inline-block;">
-                            <input type="checkbox" id="iamARobot" name="iamARobot" required> No soy Robot
+                            <input type="checkbox" id="iamARobot" name="iamARobot" required> I'm not a robot
                         </label>
                     </div>
                     <div class="col">
                         <label style="display: inline-block;">
-                            <input type="checkbox" id="iamNotARobot" name="iamNotARobot"> Soy Robot
+                            <input type="checkbox" id="iamNotARobot" name="iamNotARobot"> I'm a robot
                         </label>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                 </div>
                 <div class="mb-3 my-4">
                     <a type="button" class="btn forgot-password-link" id="openModal-1" href="#">
-                        <small >Olvidé Contraseña</small>
+                        <small >I Forgot Password</small>
                     </a>
                 </div>
             </form>

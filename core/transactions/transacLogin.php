@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($prohibitedStringFound) {
         $userIP = getUserPublicIP(); // Get the user's IP address
         $_SESSION['modalMessage'] = "SQL Injection attempt detected. Intento de Injección SQL detectado del siguiente IP: $userIP. Your IP will be registered. Su IP será registrado.";
-        header("Location: index.php");
+        header("Location: login.php");
         exit();
     } else {
         // User input validation
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Set the appropriate modal message based on the verification steps
     $_SESSION['modalMessage'] = $modalMessage;
-    header("Location: login.php"); // Redirect to index.php with the appropriate modal message
+    header("Location: ../../login.php"); // Redirect to index.php with the appropriate modal message
     exit();
 }
 

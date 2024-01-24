@@ -116,10 +116,6 @@ $(document).ready(function () {
     const table = $('#templateTable').DataTable({
         "pageLength": 5,
         "lengthMenu": [5, 10, 25, 50, 100],
-        "language": {
-            "search": "Buscar: "
-            // Add other language customizations here
-        }
     });
 
     // Listen for changes in the dropdown

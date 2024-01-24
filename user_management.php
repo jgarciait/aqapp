@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     method="post"
                                     enctype="multipart/form-data">
                                     <div class="mb-3">
-                                        <label>Nombre:</label>
+                                        <label>Name:</label>
                                         <input type="text" class="form-control" name="user_name" required>
                                     </div>
                                     <!-- Input field for user's email -->
@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <input type="email" class="form-control" name="user_email" required>
                                     </div>
                                     <!-- Submit button to send invitation -->
-                                    <button type="submit" class="btn-menu btn-1 hover-filled-opacity"><span>Enviar Invitación</span></button>
+                                    <button type="submit" class="btn-menu btn-1 hover-filled-opacity"><span>Send Invitation</span></button>
                                 </form>
                             </div>
                         </div>
@@ -148,22 +148,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <main class="container-fluid my-3 p-5 border border-info content-table bg-white shadow rounded table-responsive">
                 <div>
-                    <a href="#" class="btn-menu btn-1 hover-filled-opacity" id="openModal-1"><span>Registrar Usuarios</span></a>
+                    <a href="#" class="btn-menu btn-1 hover-filled-opacity" id="openModal-1"><span>Add New User</span></a>
                 </div>
                 <div>
-                    <a href="#" class="btn-menu btn-1 hover-filled-opacity" id="openModal-2"><span>Invitar a AQPlatform</span></a>
+                    <a href="#" class="btn-menu btn-1 hover-filled-opacity" id="openModal-2"><span>Invite to AQPlatform</span></a>
                 </div>
                 <div class="container-fluid p-3 mr-3 ">        
                     <table style="width: 100%; padding: 3rem;" id="templateTable" class="table table-bordered table-condensed table-hover">
                         <thead >
                             <tr>
                                 <th>#</th>
-                                <th>Nombre</th>
-                                <th>Apellidos</th>
-                                <th>Nombre de Usuario</th>
-                                <th>Rol de Sistema</th>
-                                <th>Opciones</th>
-                                <th>Borrar</th>        
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>System Rol</th>
+                                <th>Manage User Account</th>
+                                <th>Delete</th>        
                             </tr>
                         </thead>
                         <tbody>
