@@ -1,6 +1,5 @@
 //::::Sidebar Scripts::::
 
-
 document.addEventListener('DOMContentLoaded', function () {
     // JavaScript to handle the sidebar toggle functionality
     const toggleButton = document.getElementById('toggleButton');

@@ -4,6 +4,9 @@ include_once '../../core/config/loginTransaction_setup.php';
 
 $modalMessage = ""; // Initialize modal message
 
+
+session_start();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Step 1: Prohibited strings verification
     $prohibitedStrings = ["administrator'--", "\$username = 1' or '1' = '1", "admin' --", "admin' #", "admin'/*", "' or 1=1--", "' or 1=1#", "' or 1=1/*", "') or '1'='1--", "') or ('1'='1--", '" or ""=""'];
