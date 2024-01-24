@@ -50,11 +50,12 @@ $sysRol = getSysRol($edit_profile, $db);
                 <div class="mb-3">
                     <label class="form-label">User Rol</label>
                     <select class="form-select" name="ubs_sys_groups_id">
-                        <option value="3"<?php if ($sysRol['sys_group_name'] === 'guest') echo ' selected'; ?>>Guest</option>
-                        <option value="2"<?php if ($sysRol['sys_group_name'] === 'standard_user') echo ' selected'; ?>>Standard User</option>
-                        <option value="1"<?php if ($sysRol['sys_group_name'] === 'admin') echo ' selected'; ?>>Admin</option>
+                        <option value="3"<?php if ($sysRol['ubs_sys_groups_id'] === '3') echo ' selected'; ?>>Guest</option>
+                        <option value="2"<?php if ($sysRol['ubs_sys_groups_id'] === '2') echo ' selected'; ?>>Standard User</option>
+                        <option value="1"<?php if ($sysRol['ubs_sys_groups_id'] === '1') echo ' selected'; ?>>Admin</option>
                     </select>
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label">New Password</label>
                     <div class="input-group">
