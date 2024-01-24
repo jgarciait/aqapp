@@ -194,7 +194,7 @@
                         <a href="logout.php">
                             <i style="color:Tomato;"  class="fa fa-power-off fa-2x"></i>
                             <span  style="font-weight: bold; color:Tomato;" class="nav-text">
-                            Salir
+                            Log Out
                             </span>
                         </a>
                     </li>
