@@ -26,12 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     } else {
         // User input validation
-        function validate($data) {
+        function validate1($data) {
             return htmlspecialchars(stripslashes(trim($data)));
         }
 
-        $email = validate($_POST['user_email']); // Validate user input
-        $password = validate($_POST['user_pass']); // Validate user input
+        $email = validate1($_POST['user_email']); // Validate user input
+        $password = validate1($_POST['user_pass']); // Validate user input
 
         // Step 2: User and password validation using prepared statements
         mysqli_set_charset($db, "utf8mb4");
@@ -47,10 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (password_verify($password, $row['user_pass'])) {
                 // Step 3: Captcha validation (if the checkbox is checked)
                 if (isset($_POST['iamARobot'])) {
-                    // Successful login
+                     // Fetch sys_group_name
+                    $sysGroupName = getSysRol($row['id'], $db);
+                    
                     $_SESSION['id'] = $row['id'];
                     $_SESSION['first_name'] = $row['first_name'];
                     $_SESSION['last_name'] = $row['last_name'];
+                    $_SESSION['sys_group_name'] = $sysGroupName['sys_group_name']; // Store sys_group_name in the session
+
 
                     // Insert log entry
                     $userId = $row['id'];
@@ -81,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Set the appropriate modal message based on the verification steps
     $_SESSION['modalMessage'] = $modalMessage;
-    header("Location: index.php"); // Redirect to index.php with the appropriate modal message
+    header("Location: login.php"); // Redirect to index.php with the appropriate modal message
     exit();
 }
 

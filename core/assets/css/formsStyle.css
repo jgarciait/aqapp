@@ -2,13 +2,13 @@
 .header {
     display: flex;
     justify-content: center;
-    padding: .5rem;
+    padding: .4rem;
     background: #fafdff;
     color: #383838;
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 2;
+    z-index: 1;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 .header-content p{
@@ -46,10 +46,15 @@ body {
     }
 }
 
+.profile-text-blue {
+    color: blue;
+    /* Add any additional styling you want here */
+}
+
 .profile {
     display: flex;
     align-items: center;
-    padding: .1rem 3rem;
+    padding: 0 4rem;
     position: absolute;
     right: 0;
     top: 0;
@@ -343,8 +348,9 @@ body {
         margin-left: auto;
     }
 
-    .display-picture img {
+    img.display-picture {
         width: 50px;
+        margin-left: 5px;
         border-radius: 50%;
         border: 2px solid #fff;
     }

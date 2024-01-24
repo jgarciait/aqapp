@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+/*
 const expandButton = document.getElementById("expandButton");
 const expandContent = document.getElementById("expandContent");
 
@@ -44,7 +45,9 @@ expandButton.addEventListener("click", function () {
         expandContent.style.display = "none";
     }
 });
+*/
 
+/*
 const expandButton1 = document.getElementById("expandButton1");
 const expandContent1 = document.getElementById("expandContent1");
 
@@ -55,6 +58,8 @@ expandButton1.addEventListener("click", function () {
         expandContent1.style.display = "none";
     }
 });
+*/
+
 
 //:::::HOME Scripts:::::
 
@@ -87,6 +92,7 @@ function setupFlip(tick) {
     setInterval(updateClock, 1000);
 }
 
+/*
 let card = document.querySelector(".card"); //declearing profile card element
 let displayPicture = document.querySelector(".display-picture"); //declearing profile picture
 
@@ -98,11 +104,11 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
   return new bootstrap.Popover(popoverTriggerEl)
 })
 
-    const checkIn = document.getElementById("openModal-1");
-        checkIn.addEventListener('click', function () {
-            $('#checkIn').modal('show'); // Open the modal
-    });
-
+const checkIn = document.getElementById("openModal-1");
+    checkIn.addEventListener('click', function () {
+        $('#checkIn').modal('show'); // Open the modal
+});
+*/
 
 //::::Data Table Scripts::::
 

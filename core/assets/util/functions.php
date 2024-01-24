@@ -1,11 +1,7 @@
 <?php
-date_default_timezone_set('America/Puerto_Rico');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
-require 'core/vendor/autoload.php';
-// functions.php
 
 function getUserById($id, $db) {
     // Validate $id as an integer

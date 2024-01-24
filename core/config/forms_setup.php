@@ -1,13 +1,12 @@
 <?php
+//Time Zone
+date_default_timezone_set('America/Puerto_Rico');
 
 //Database Connection
 include_once 'core/config/config_db.php';
 
-//functions
+//Main functions
 include_once 'core/assets/util/functions.php';
-
-//Main  header
-include_once 'core/assets/include/forms_head.php';
 
 //Verify Session
 session_start();
@@ -29,7 +28,14 @@ $user_data = getUserById($session_user, $db);
 //Verify and Get User Permissions
 $sysRol = getSysRol($session_user, $db);
 
-//Time Zone
-date_default_timezone_set('America/Puerto_Rico');
+
+//Main  Head
+include_once 'core/assets/include/forms_head.php';
+
+//Main  Header
+include_once 'core/assets/include/header.php';
+
+//Main Sidebar
+include_once 'core/assets/include/sidebar.php';
 ?>
 
