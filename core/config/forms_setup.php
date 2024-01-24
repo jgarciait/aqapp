@@ -7,7 +7,7 @@ include_once 'core/config/config_db.php';
 include_once 'core/assets/util/functions.php';
 
 //Main  header
-include_once 'core/assets/include/main_head.php';
+include_once 'core/assets/include/forms_head.php';
 
 //Verify Session
 session_start();

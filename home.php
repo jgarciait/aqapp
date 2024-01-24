@@ -43,13 +43,13 @@ $currentDate = strtr($currentDate, $monthTranslations);
 <body>
     <header class="header">
          <div class="header-content">
-            <p style="" class="shine">AQ Platform</p>
+            <p style="" class="shine">AQPlatform</p>
         </div>
         <nav class="profile"><!-- Navigation Bar Starts Here -->
                 <span class="profile-text"><?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name']; ?></span>
                 <img class="display-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/64px-Windows_10_Default_Profile_Picture.svg.png" alt="Profile Image">
             <ul class="shadow border profile-menu"><!-- Profile Menu -->
-                <li><a href="profile.php">Perfil</a></li>
+                <li><a href="profile.php">Profile</a></li>
                <!-- <li><a href="#">Account</a></li> -->
                <!-- <li><a href="#">Settings</a></li> -->
                 <li><a href="logout.php">Log Out</a></li>
@@ -67,7 +67,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                         <a href="home.php">
                             <i class="fa fa-home fa-2x"></i>
                             <span class="nav-text">
-                                Inicio
+                                Home
                             </span>
                         </a>
                     </li>
@@ -76,7 +76,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                         <a href="#" id="expandButton1">
                             <i class="fa fa-gear fa-2x"></i>
                             <span class="nav-text">
-                                Administración
+                                Settings
                             </span>
                         </a>
                     </li>
@@ -86,7 +86,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                             <a href="workflowsList.php">
                                 <i class="fa fa-sliders fa-2x"></i>
                                 <span class="nav-text">
-                                    Gestionar Módulos
+                                    Modules Management
                                 </span>
                             </a>
                         </li>
@@ -107,10 +107,10 @@ $currentDate = strtr($currentDate, $monthTranslations);
                             </a>
                         </li>
                         <li class="has-subnav">
-                            <a href="usersAccount.php">
+                            <a href="user_management.php">
                                 <i class="fa fa-users fa-2x"></i>
                                 <span class="nav-text">
-                                    Usuarios
+                                    User Management
                                 </span>
                             </a>
                         </li>
@@ -123,7 +123,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                     <a href="#" id="expandButton">
                         <i class="fa fa-code-commit fa-2x"></i>
                         <span class="nav-text">
-                            Módulos Asignados
+                            My Modules
                         </span>
                     </a>
                 </li>
@@ -162,7 +162,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                             <a href="<?php echo "newRequest.php" . '?workflow_id=' . $wId; ?>">
                                 <i class="fa fa-file-invoice fa-2x"></i>
                                 <span class="nav-text">
-                                    Solicitudes
+                                    Request
                                 </span>
                             </a>
                         </li>
@@ -289,7 +289,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                             <a href="logout.php">
                                 <i style="color:Tomato;"  class="fa fa-power-off fa-2x"></i>
                                 <span  style="font-weight: bold; color:Tomato;" class="nav-text">
-                                Salir
+                                Log Out
                                 </span>
                             </a>
                         </li>
@@ -305,24 +305,24 @@ $currentDate = strtr($currentDate, $monthTranslations);
                 <!-- Admin Verification -->
                 <?php if ($sysRol['sys_group_name'] == 'admin') { ?>
                      
-                            <a class="data-card" href="usersAccount.php">
+                            <a class="data-card" href="user_management.php">
                                 <div><i class="fas fa-users fa-lg" style="color: #11538d;"></i></div>
-                                <p>Cuentas de Usuario</p>
+                                <p>User Management</p>
                             </a>
                  
                             <a class="data-card" href="workflowsList.php">
                                 <div><i class="fas fa-network-wired fa-lg" style="color: #11538d;"></i></div>
-                                <p>Módulos</p>
+                                <p>Module Management</p>
                             </a>
                  
                             <a class="data-card" href="settingsShift.php">
                                 <div><i class="fas fa-business-time fa-lg" style="color: #11538d;"></i></div>
-                                <p>Configuración de Turnos</p>
+                                <p>Shift Settings</p>
                             </a>
 
                             <a class="data-card" href="invite-user.php">
                                 <div><i class="fas fa-share" style="color: #11538d;"></i></div>
-                                <p>Invitar a AQPlatform</p>
+                                <p>Invite to AQPlatform</p>
                             </a>
              
                 <?php } ?>

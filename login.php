@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
     
     <!-- Index (login) app CSS Style -->
-    <link rel="stylesheet" type="text/css" href="core/assets/css/indexStyle.css">
+    <link rel="stylesheet" type="text/css" href="core/assets/css/formsStyle.css">
 
     <!-- Index JS Scripts -->
-    <script src="core/assets/script/index.js"></script>
+    <script src="core/assets/script/login.js"></script>
 </head>
 
 <body style="background: #34354138;" class="body-container">
@@ -35,7 +35,7 @@
     </header>
     <div class="container p-3">
         <main class="container-login">
-            <form style="width: 26rem;" class="p-5 bg-white shadow rounded" action="core/transactions/login.php"
+            <form style="width: 26rem;" class="p-5 bg-white shadow rounded" action="core/transactions/transacLogin.php"
                 method="post" id="loginForm">
                 <a href="" class="logo">
                     <div style="margin-top: 0%; text-align: center;">

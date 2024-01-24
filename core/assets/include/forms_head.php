@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
 
     <!-- Index (login) app CSS Style -->
-    <link rel="stylesheet" type="text/css" href="core/assets/css/homeStyle.css">
+    <link rel="stylesheet" type="text/css" href="core/assets/css/formsStyle.css">
 
     <!-- Embeded Map for GPS Features. Need to be removed. -->
     <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?key=AkdPaHyrL21_U0E9Gdvkl74fuoBSnbl6QyWT6WuLUrT0COJryzTbcprcqceoP9Pc&callback=loadMapScenario" async defer></script>

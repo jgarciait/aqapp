@@ -1,6 +1,6 @@
 <?php
 
-include_once '../../core/config/loginTransaction_setup.php';
+include_once '../../core/config/transacLoginSetup.php';
 
 $modalMessage = ""; // Initialize modal message
 
