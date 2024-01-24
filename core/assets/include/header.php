@@ -9,7 +9,7 @@
                     $_SESSION['last_name'] . " - " . 
                     $_SESSION['sys_group_name']; ?>
                 </span>
-                <img class="display-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/64px-Windows_10_Default_Profile_Picture.svg.png" alt="Profile Image">
+                <img class="display-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/64px-Windows_10_Default_Profile_Picture.svg.png" alt="Profile Image" width="40">
             <ul class="shadow border profile-menu"><!-- Profile Menu -->
                 <li><a href="profile.php">Profile</a></li>
                <!-- <li><a href="#">Account</a></li> -->
