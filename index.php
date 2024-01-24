@@ -12,6 +12,9 @@
     
     <!-- Index (login) app CSS Style -->
     <link rel="stylesheet" type="text/css" href="core/assets/css/indexStyle.css">
+
+    <!-- Index JS Scripts -->
+    <script src="core/assets/script/index.js"></script>
 </head>
 
 <body style="background: #34354138;" class="body-container">

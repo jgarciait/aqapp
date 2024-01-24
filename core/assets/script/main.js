@@ -1,3 +1,6 @@
+//::::Sidebar Scripts::::
+
+
 document.addEventListener('DOMContentLoaded', function () {
     // JavaScript to handle the sidebar toggle functionality
     const toggleButton = document.getElementById('toggleButton');
@@ -12,22 +15,46 @@ document.addEventListener('DOMContentLoaded', function () {
     function checkViewportWidth() {
         if (window.innerWidth < 1700) {
             sidebar.classList.remove('expanded');
+        } else {
+            sidebar.classList.add('expanded');
         }
     }
-
-    // Add an event listener to expand the sidebar when the page loads
-    window.addEventListener('load', expandSidebar);
-
-    // Add the click event listener to the toggle button
-    toggleButton.addEventListener('click', () => {
-        sidebar.classList.toggle('expanded');
-    });
+    
+    // Function to check the viewport width and expand the sidebar if it's more than 1700px
 
     // Add an event listener to check and hide the sidebar when the viewport width changes
     window.addEventListener('resize', checkViewportWidth);
 
     // Check the viewport width initially
     checkViewportWidth();
+
+    // Add the click event listener to the toggle button
+    toggleButton.addEventListener('click', () => {
+        sidebar.classList.toggle('expanded');
+    });
+});
+
+
+const expandButton = document.getElementById("expandButton");
+const expandContent = document.getElementById("expandContent");
+
+expandButton.addEventListener("click", function () {
+    if (expandContent.style.display === "none") {
+        expandContent.style.display = "block";
+    } else {
+        expandContent.style.display = "none";
+    }
+});
+
+const expandButton1 = document.getElementById("expandButton1");
+const expandContent1 = document.getElementById("expandContent1");
+
+expandButton1.addEventListener("click", function () {
+    if (expandContent1.style.display === "none") {
+        expandContent1.style.display = "block";
+    } else {
+        expandContent1.style.display = "none";
+    }
 });
 
 //:::::HOME Scripts:::::
@@ -77,29 +104,6 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
             $('#checkIn').modal('show'); // Open the modal
     });
 
-//::::Sidebar Scripts::::
-
-const expandButton = document.getElementById("expandButton");
-const expandContent = document.getElementById("expandContent");
-
-expandButton.addEventListener("click", function () {
-    if (expandContent.style.display === "none") {
-        expandContent.style.display = "block";
-    } else {
-        expandContent.style.display = "none";
-    }
-});
-
-const expandButton1 = document.getElementById("expandButton1");
-const expandContent1 = document.getElementById("expandContent1");
-
-expandButton1.addEventListener("click", function () {
-    if (expandContent1.style.display === "none") {
-        expandContent1.style.display = "block";
-    } else {
-        expandContent1.style.display = "none";
-    }
-});
 
 //::::Data Table Scripts::::
 
