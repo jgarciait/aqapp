@@ -12,6 +12,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// Section 1: Checkbox Event Listener
+const notARobotCheckbox = document.getElementById('iamNotARobot');
+const modalText = document.getElementById('modal-text');
+
+notARobotCheckbox.addEventListener('change', function () {
+    if (notARobotCheckbox.checked) {
+        // Checkbox is checked, set the modal text
+        modalText.textContent = 'Are you a robot?';
+        document.getElementById('myModal').style.display = 'block';
+    } else {
+        // Checkbox is unchecked, clear modal text and hide modal
+        modalText.textContent = '';
+        document.getElementById('myModal').style.display = 'none';
+    }
+});
+
 // Section 2: Human Validation Checkbox
 const humanValidationCheckbox = document.getElementById('iamARobot');
 humanValidationCheckbox.addEventListener('change', function () {
@@ -24,42 +40,19 @@ humanValidationCheckbox.addEventListener('change', function () {
 });
 
 // Section 3: Modal Handling for Captcha
-document.querySelector('.close').addEventListener('click', function () {
+document.getElementById('closeModal').addEventListener('click', function () {
     document.getElementById('myModal').style.display = 'none';
-    document.getElementById('captcha-question').style.display = 'none';
+    // Optionally, you can clear the modal text content here if needed.
+    modalText.textContent = '';
 });
 
 // Section 4: Close Modal When Clicking Outside
 window.addEventListener('click', function (event) {
     if (event.target == document.getElementById('myModal')) {
         document.getElementById('myModal').style.display = 'none';
-        document.getElementById('captcha-question').style.display = 'none';
+        // Optionally, you can clear the modal text content here if needed.
+        modalText.textContent = '';
     }
-});
-
-// Section 5: Robot Checkbox and Modal
-document.addEventListener("DOMContentLoaded", function () {
-    const soyRobotCheckbox = document.getElementById("humanValidationCheckbox2");
-    const robotModal = document.getElementById("robotModal");
-    const closeRobotModal = document.getElementById("closeRobotModal");
-    const loginForm = document.getElementById("loginForm"); // Assuming you have a login form element
-
-    soyRobotCheckbox.addEventListener("change", function () {
-        if (soyRobotCheckbox.checked) {
-            robotModal.style.display = "block";
-        }
-    });
-
-    loginForm.addEventListener("submit", function (event) {
-        if (soyRobotCheckbox.checked) {
-            event.preventDefault();
-            alert("Confirme que no es un Robot.");
-        }
-    });
-
-    closeRobotModal.addEventListener("click", function () {
-        robotModal.style.display = "none";
-    });
 });
 
 // Section 6: Sidebar Toggle Functionality

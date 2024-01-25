@@ -18,7 +18,6 @@
     <!-- Embeded Map for GPS Features. Need to be removed. -->
     <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?key=AkdPaHyrL21_U0E9Gdvkl74fuoBSnbl6QyWT6WuLUrT0COJryzTbcprcqceoP9Pc&callback=loadMapScenario" async defer></script>
     
-    
     <script src="https://code.jquery.com/jquery-3.7.0.js" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js" type="text/javascript"></script>
@@ -32,4 +31,5 @@
 
     <!-- Main JS Scripts -->
     <script src="core/assets/script/main.js"></script>
+
 </head>

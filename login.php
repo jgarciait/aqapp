@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!DOCTYPE html>
 <html>
 
@@ -12,22 +15,10 @@
     
     <!-- Index (login) app CSS Style -->
     <link rel="stylesheet" type="text/css" href="core/assets/css/formsStyle.css">
-
-    <!-- Index JS Scripts -->
-    <script src="core/assets/script/login.js"></script>
 </head>
 
 <body style="background: #34354138;" class="body-container">
-    <?php
-    if (isset($_SESSION['modalMessage'])) {
-        $modalMessage = $_SESSION['modalMessage'];
-        echo "<script>
-                document.getElementById('modal-text').textContent = '$modalMessage';
-                document.getElementById('myModal').style.display = 'block';
-              </script>";
-        unset($_SESSION['modalMessage']); // Clear the session variable
-    }
-    ?>
+
     <header class="header">
         <div class="header-content">
             <p style="" class="shine">Welcome to AQPlatform!</p>
@@ -52,7 +43,7 @@
                     <label for="user_pass">Password:</label>
                     <div class="input-group">
                         <input type="password" autocomplete="on" class="form-control" id="user_pass"
-                            name="user_pass" placeholder="********">
+                            name="user_pass" placeholder="********" required="">
                         <button type="button" class="btn btn-outline-secondary" id="togglePassword">👁️</button>
                     </div>
                 </div>
@@ -68,14 +59,14 @@
                         </label>
                     </div>
                 </div>
-                <div id="robotModal" class="modal">
+                <div id="myModal" class="modal">
                     <div class="modal-content">
                         <div>
-                            <span class="close" id="closeRobotModal">&times;</span>
+                            <span class="close" id="closeModal">&times;</span>
                         </div>
                         <i class="fa-solid fa-robot fa-xl"></i>
-                        <div class="mb-3 p-3">
-                            <p>¿Estas seguro que eres un Robot?</p>
+                        <div class="mb-3 p-3" id="modal-text">
+                            <!-- Dynamic modal content -->
                         </div>
                     </div>
                 </div>
@@ -98,6 +89,7 @@
                     <p id="modal-text"></p>
                 </div>
             </div>
+            
             <div class="modal fade" id="forgotPass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -117,12 +109,51 @@
                                     <button class="btn-menu btn-1 hover-filled-opacity" type="submit"><span>Enlace de recuperación</span></button>
                                 </div>
                             </form>
+                            <!-- Modal for displaying messages -->
+                            <div id="myModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close" id="closeModal">&times;</span>
+                                    <p id="modal-text"></p>
+                                    <div id="mapContainer" style="width: 100%; height: 400px;"></div>
+                                    <p id="coordinates"></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
+    <!-- Your custom script -->
+    <script src="core/assets/script/login.js"></script>
+
+    <!-- Your custom script -->
+    <script src="core/assets/script/gps.js"></script>
+
+    <!-- Index JS Scripts -->
+    <script src="core/assets/script/main.js"></script>
+
+    
+
+    <!-- Include Bing Maps API script -->
+    <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario&key=YOUR_BING_MAPS_API_KEY"></script>
+
+    <?php
+    if (isset($_SESSION['modalMessage'])) {
+        $modalMessage = $_SESSION['modalMessage'];
+        echo "<script>";
+        echo "document.getElementById('modal-text').textContent = '$modalMessage';";
+        echo "document.getElementById('myModal').style.display = 'block';";
+        echo "</script>";
+        unset($_SESSION['modalMessage']); // Clear the session variable
+    }
+    ?>
     <footer id="myFooter" class="footer">
         <p>
             <img src="https://documentcontrol.com/wp-content/uploads/2023/04/logo-dcs_clipped_rev_1.png" 
@@ -131,5 +162,8 @@
         </p>
     </footer>
 </body>
+
+
+   
 
 </html>

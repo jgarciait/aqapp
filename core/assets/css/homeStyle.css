@@ -13,6 +13,39 @@
     margin-left: 1.5rem;
 }
 
+.notification-bar {
+    height: 16px;
+    width: 100%;
+    background: linear-gradient(45deg, #fdff733a, #fbff2238, #ff73496c, #fbff2238, #fdff733a, #76adff8f, #f5f9ff8f, #f5f9ff8f, #f5f9ff8f);
+    background-repeat: repeat;
+    background-size: 70%;
+    animation: animate 30s linear infinite;
+    display: none;
+    position: fixed;
+    top: 52px;
+    left: 0;
+    z-index: 1;
+}
+.notification-content p{
+    z-index: 1;
+    color:#2f2bfa;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Ensure the .header-content takes up the full height */
+}
+@keyframes animate {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+
 body {
     background: #3b3c4717;
 }

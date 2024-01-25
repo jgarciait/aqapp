@@ -3,6 +3,11 @@
          <div class="header-content">
             <p style="" class="shine">AQPlatform</p>
         </div>
+        <div class="notification-bar">
+            <div class="notification-content">
+                <!-- Notification messages will be displayed here -->
+            </div>
+        </div>
         <nav class="profile"><!-- Navigation Bar Starts Here -->
                 <span class="profile-text">
                     <?php echo $_SESSION['first_name'] . " " .
@@ -16,5 +21,5 @@
                <!-- <li><a href="#">Settings</a></li> -->
                 <li><a href="logout.php">Log Out</a></li>
             </ul>
-        </nav><!-- Navigation Bar Ends Here -->
+        </nav>
     </header>

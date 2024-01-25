@@ -155,3 +155,40 @@ $(document).ready(function () {
 
   // Add a scroll event listener to the window
   window.addEventListener('scroll', handleScroll);
+  
+  $(document).ready(function() {
+    function checkNotifications() {
+        $.ajax({
+            url: 'fetch_notifications.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                if (data.length > 0) {
+                    // Display notifications in the notification bar
+                    var notificationContent = $('.notification-content');
+                    notificationContent.empty(); // Clear existing notifications
+                    
+                    // Iterate through the notifications and add them to the notification bar
+                    for (var i = 0; i < data.length; i++) {
+                        notificationContent.append('<p>' + data[i] + '</p>');
+                    }
+                    
+                    $('.notification-bar').show();
+                    
+                    // Change the color of the notification bar or add an alert class
+                    $('.notification-bar').addClass('alert');
+                } else {
+                    // Hide the notification bar if there are no notifications
+                    $('.notification-bar').hide();
+                }
+            },
+            complete: function() {
+                // Schedule the next check after a certain interval (e.g., every 30 seconds)
+                setTimeout(checkNotifications, 30000);
+            }
+        });
+    }
+
+    // Start checking for notifications
+    checkNotifications();
+});
