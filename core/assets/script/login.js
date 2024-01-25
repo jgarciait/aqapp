@@ -11,6 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+// Open the Login Form modal
+document.getElementById('openLoginModal').addEventListener('click', function () {
+    $('#loginModal').modal('show');
+});
 
 // Section 1: Checkbox Event Listener
 const notARobotCheckbox = document.getElementById('iamNotARobot');
@@ -55,13 +59,6 @@ window.addEventListener('click', function (event) {
     }
 });
 
-// Section 6: Sidebar Toggle Functionality
-const toggleButton = document.getElementById('toggleButton');
-const sidebar = document.getElementById('sidebar');
-
-toggleButton.addEventListener('click', () => {
-    sidebar.classList.toggle('expanded');
-});
 
 // Section 7: DataTable Initialization
 $(document).ready(function () {
@@ -117,7 +114,3 @@ function handleScroll() {
 
 window.addEventListener('scroll', handleScroll);
 
-// Section 11: Form Modals
-document.getElementById('openModal-1').addEventListener('click', function () {
-    $('#forgotPass').modal('show');
-});

@@ -78,7 +78,7 @@
                     </button>
                 </div>
                 <div class="mb-3 my-4">
-                    <a type="button" class="btn forgot-password-link" id="openModal-1" href="#">
+                    <a type="button" class="btn forgot-password-link" id="openLoginModal" href="#">
                         <small >I Forgot Password</small>
                     </a>
                 </div>
@@ -90,34 +90,25 @@
                 </div>
             </div>
             
-            <div class="modal fade" id="forgotPass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form  class="p-2 m-1 bg-white shadow rounded" action="transacForgotPass.php" method="post">
+                            <form  class="p-2 m-1 bg-white shadow rounded" action="core/transactions/transacForgotPass.php" method="post">
                                 <div class="mb-3">
-                                    <label for="user_email">Ingrese su correo electrónico:</label>
+                                    <label for="user_email">Insert your email:</label>
                                 </div>
                                 <div class="mb-3">  
                                     <input class="form-control" placeholder="example@email.com" type="email"
                                         name="user_email" required>
                                 </div>
                                 <div class="mb-3 justify-content-center align-items-center">
-                                    <button class="btn-menu btn-1 hover-filled-opacity" type="submit"><span>Enlace de recuperación</span></button>
+                                    <button class="btn-menu btn-1 hover-filled-opacity" type="submit"><span>Recovery Link</span></button>
                                 </div>
                             </form>
-                            <!-- Modal for displaying messages -->
-                            <div id="myModal" class="modal">
-                                <div class="modal-content">
-                                    <span class="close" id="closeModal">&times;</span>
-                                    <p id="modal-text"></p>
-                                    <div id="mapContainer" style="width: 100%; height: 400px;"></div>
-                                    <p id="coordinates"></p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -135,14 +126,6 @@
 
     <!-- Your custom script -->
     <script src="core/assets/script/gps.js"></script>
-
-    <!-- Index JS Scripts -->
-    <script src="core/assets/script/main.js"></script>
-
-    
-
-    <!-- Include Bing Maps API script -->
-    <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario&key=YOUR_BING_MAPS_API_KEY"></script>
 
     <?php
     if (isset($_SESSION['modalMessage'])) {
@@ -162,8 +145,4 @@
         </p>
     </footer>
 </body>
-
-
-   
-
 </html>
