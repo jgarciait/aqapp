@@ -15,8 +15,10 @@
     <?php
 
     // Include necessary libraries and setup database connection
-    require 'vendor/autoload.php'; // Composer autoloader
-    require 'connection.php'; // Database connection setup
+    session_start();
+    include_once '../../core/config/config_db.php';
+    include_once '../../core/vendor/autoload.php';
+    include_once '../../core/assets/util/functions.php';
 
     // Check if the token is provided in the URL
  // ...
