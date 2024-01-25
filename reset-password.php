@@ -16,9 +16,9 @@
 
     // Include necessary libraries and setup database connection
     session_start();
-    include_once '../../core/config/config_db.php';
-    include_once '../../core/vendor/autoload.php';
-    include_once '../../core/assets/util/functions.php';
+    include_once 'core/config/config_db.php';
+    include_once 'core/vendor/autoload.php';
+    include_once 'core/assets/util/functions.php';
 
     // Check if the token is provided in the URL
  // ...
@@ -68,13 +68,13 @@ if (isset($_GET['token'])) {
         ?>
         <!-- Reset Password Form -->
         <h2>Reset Password</h2>
-        <label for="new_password">New Password:</label>
+        <label for="new_password">Insert New Password:</label>
         <div class="mb-3">
             <input class="form-control" type="password" name="new_password" required>
             
         </div>
         <div class="mb-3">
-            <button class="form-control btn btn-sm" type="submit">Reset Password</button>
+            <button class="form-control btn btn-sm" type="submit">Continue</button>
         </div>
         <?php
     } else {
@@ -85,7 +85,7 @@ if (isset($_GET['token'])) {
     // Token is not provided in the URL
     echo "Token not provided. Please use the link from your email to reset your password.";
 }
-    ?><a type="button" class="btn" style="color: #2194a5; font-weight: 500;" href="forgot-password.php"><small>Forgot Password</small></a>
+    ?><a type="button" class="btn" style="color: #2194a5; font-weight: 500;" href="login.php"><small>Go to Login</small></a>
     </form>
 </div>
 
