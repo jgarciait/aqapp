@@ -1,7 +1,8 @@
 <?php
 session_start();
-include_once 'core/config/config_db.php';
-include_once 'core/assets/util/functions.php';
+include_once '../../core/config/config_db.php';
+include_once '../../core/vendor/autoload.php';
+include_once '../../core/assets/util/functions.php';
 
 $modalMessage = ''; // Initialize a message variable to hold the modal message
 
@@ -38,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Insert the token into the reset_tokens table
                 if (insertResetToken($userId, $token, $db)) {
                     // Construct the reset link with the token
-                    $resetLink = "http://http://54.166.125.102//reset-password.php?token=" . $token;
+                    $resetLink = "http://54.166.125.102/reset-password.php?token=" . $token;
                     
                     // Send the reset link email
                     if (sendResetLinkEmail($email, $resetLink)) {
