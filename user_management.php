@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script>
     function confirmDelete(userId) {
         if (confirm("Are you sure you want to delete this user account?")) {
-            window.location.href = 'delUser.php?action=delete&id=' + userId;
+            window.location.href = 'core/transactions/transacDelAcc.php?action=delete&id=' + userId;
         }
     }
 </script>
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <div class="modal-body">
                                 <form style="" class=""
-                                    action="transacUser.php?action=addUser.php" 
+                                    action="core/transactions/transacUser.php?action=addUser.php" 
                                     method="post"
                                     enctype="multipart/form-data">
                                     <div class="mb-3">
@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <div class="modal-body">
                                 <form style="" class=""
-                                    action="invite-user.php"
+                                    action="core/transactions/transacInviteNewUser.php"
                                     method="post"
                                     enctype="multipart/form-data">
                                     <div class="mb-3">
@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             <!-- End invite Modal -->
 
-            <main class="container-fluid my-3 p-5 border border-info content-table bg-white shadow rounded table-responsive">
+            <main class="container-fluid my-1 p-5 border border-info content-table bg-white shadow rounded table-responsive">
                 <div>
                     <a href="#" class="btn-menu btn-1 hover-filled-opacity" id="openModal-1"><span>Add New User</span></a>
                 </div>
@@ -162,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <th>Last Name</th>
                                 <th>Email</th>
                                 <th>System Rol</th>
-                                <th>Manage User Account</th>
+                                <th>Edit</th>
                                 <th>Delete</th>        
                             </tr>
                         </thead>
@@ -191,10 +191,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <td data-title='Nombre de Usuario'><?php echo $row['user_email']?></td>
                                         <td data-title='Rol de Sistema'><?php echo $row['sys_group_name']?></td>                 
                                         <td data-title='Opciones'>
-                                            <?php echo '<a type="button" class="btn btn-xs" style="color:white; background-color:#215f92;" href="viewAdminProfile.php?action=edit&id=' . $row['pid'] . '">Ver</a>'; ?>
+                                            <?php echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="viewAdminProfile.php?action=edit&id=' . $row['pid'] . '"><span><i class="fa-solid fa-pen-to-square"></i></span></a>'; ?>
                                         </td>
                                         <td data-title='Borrar'>
-                                            <?php echo '<a type="button" class="btn btn-xs" style="color:white; background-color:#215f92;" href="javascript:void(0);" onclick="confirmDelete(' . $row['pid'] . ');">Borrar</a>'; ?>
+                                            <?php echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="javascript:void(0);" onclick="confirmDelete(' . $row['pid'] . ');"><span><i class="fa-regular fa-trash-can"></i></span></a>'; ?>
                                         </td>
                                     </tr>
                                     <?php

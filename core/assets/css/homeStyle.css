@@ -290,7 +290,7 @@ body {
             display: flex;
             flex-direction: row;
             flex: 1;
-            margin-top: 5rem;
+            margin-top: 3.5rem;
             margin-bottom: 34px;
             z-index: 2;
             padding: .5px;
@@ -779,9 +779,9 @@ a{
 }
 .btn-menu {
   background: none;
-  border: 1px solid #000;
+  border: 1px solid #313a46;
   border-radius: 5px;
-  color: #000;
+  color: #313a46;
   display: block;
   font-size: 1.6em;
   font-weight: bold;
@@ -792,7 +792,7 @@ a{
 .btn-menu-1 {
   background: none;
   border-radius: 5px;
-  color: #000;
+  color: #313a46;
   display: block;
   font-size: 10px;
   font-weight: bold;

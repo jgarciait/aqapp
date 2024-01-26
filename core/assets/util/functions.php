@@ -471,7 +471,6 @@ function isUserInWorkflow($userId, $workflowName, $pdo) {
     return $count > 0;
 }
 
-
 function displayPunchButtons($pdo, $session_user) {
     $timestamp = date('Y-m-d H:i:s');
     $currentDate = date('Y-m-d');

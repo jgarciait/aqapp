@@ -1,37 +1,37 @@
 //::::Sidebar Scripts::::
 
 document.addEventListener('DOMContentLoaded', function () {
-    // JavaScript to handle the sidebar toggle functionality
     const toggleButton = document.getElementById('toggleButton');
     const sidebar = document.getElementById('sidebar');
 
-    // Function to expand the sidebar
-    function expandSidebar() {
-        sidebar.classList.add('expanded');
-    }
-
-    // Function to check the viewport width and hide the sidebar if it's less than 1700px
-    function checkViewportWidth() {
-        if (window.innerWidth < 1700) {
-            sidebar.classList.remove('expanded');
-        } else {
+    if (toggleButton && sidebar) {
+        // Function to expand the sidebar
+        function expandSidebar() {
             sidebar.classList.add('expanded');
         }
+
+        // Function to check the viewport width and hide the sidebar if it's less than 1700px
+        function checkViewportWidth() {
+            if (window.innerWidth < 1700) {
+                sidebar.classList.remove('expanded');
+            } else {
+                sidebar.classList.add('expanded');
+            }
+        }
+
+        // Add an event listener to check and hide the sidebar when the viewport width changes
+        window.addEventListener('resize', checkViewportWidth);
+
+        // Check the viewport width initially
+        checkViewportWidth();
+
+        // Add the click event listener to the toggle button
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('expanded');
+        });
     }
-    
-    // Function to check the viewport width and expand the sidebar if it's more than 1700px
-
-    // Add an event listener to check and hide the sidebar when the viewport width changes
-    window.addEventListener('resize', checkViewportWidth);
-
-    // Check the viewport width initially
-    checkViewportWidth();
-
-    // Add the click event listener to the toggle button
-    toggleButton.addEventListener('click', () => {
-        sidebar.classList.toggle('expanded');
-    });
 });
+
 
 
 /*
@@ -114,21 +114,30 @@ const checkIn = document.getElementById("openModal-1");
 
 $(document).ready(function () {
     const table = $('#templateTable').DataTable({
-        "pageLength": 5,
+        "pageLength": 10,
         "lengthMenu": [5, 10, 25, 50, 100],
     });
 
-    // Listen for changes in the dropdown
-    $('#filterName').change(function () {
-        const selectedName = $(this).val();
-        table.column(0).search(selectedName).draw();
-    });
-    // Listen for changes in the dropdown
-    $('#filterService').change(function () {
-        const selectedName = $(this).val();
-        table.column(1).search(selectedName).draw();
-    });
+    const filterName = document.getElementById('filterName');
+    const filterService = document.getElementById('filterService');
+
+    if (filterName) {
+        $('#filterName').change(function () {
+            const selectedName = $(this).val();
+            table.column(0).search(selectedName).draw();
+        });
+    }
+
+    if (filterService) {
+        $('#filterService').change(function () {
+            const selectedName = $(this).val();
+            table.column(1).search(selectedName).draw();
+        });
+    }
+
+    // Rest of your code...
 });
+
 
 //::::Footer Script::::
 
@@ -159,24 +168,86 @@ $(document).ready(function () {
 //user_management.php scripts
 document.addEventListener("DOMContentLoaded", function() {
     const addUsers = document.getElementById("openModal-1");
-    addUsers.addEventListener('click', function () {
-        $('#addUsers').modal('show'); // Open the modal
-    });
+
+    if (addUsers) {
+        addUsers.addEventListener('click', function () {
+            $('#addUsers').modal('show'); // Open the modal
+        });
+    }
 
     const invite = document.getElementById("openModal-2");
-    invite.addEventListener('click', function () {
-        $('#invite').modal('show'); // Open the modal
-    });
-});
-document.addEventListener("DOMContentLoaded", function () {
+
+    if (invite) {
+        invite.addEventListener('click', function () {
+            $('#invite').modal('show'); // Open the modal
+        });
+    }
+
+    const createModule = document.getElementById("openModal-3");
+
+    if (createModule) {
+        createModule.addEventListener('click', function () {
+            $('#createModule').modal('show'); // Open the modal
+        });
+    }
+
+    const createProcess = document.getElementById("openModal-4");
+
+    if (createProcess) {
+        createProcess.addEventListener('click', function () {
+            $('#createProcess').modal('show'); // Open the modal
+        });
+    }
+
+    const addUserProcess = document.getElementById("openModal-5");
+
+    if (addUserProcess) {
+        addUserProcess.addEventListener('click', function () {
+            $('#addUserProcess').modal('show'); // Open the modal
+        });
+    }
+
     const passwordInput = document.getElementById("user_pass");
     const toggleButton = document.getElementById("togglePassword");
 
-    toggleButton.addEventListener("click", function () {
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-        } else {
-            passwordInput.type = "password";
-        }
-    });
+    if (toggleButton && passwordInput) {
+        toggleButton.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        });
+    }
 });
+
+function populateWCreator() {
+    var selectedUserId = document.getElementById("userSelect").value;
+    var selectedWorkflowId = document.getElementById("workflowSelect").value;
+    var wcreatorSelect = document.getElementById("wcreatorSelect");
+
+    // Clear previous options
+    wcreatorSelect.innerHTML = '';
+    
+    // Make an AJAX request to fetch data
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var wcreatorData = JSON.parse(xhr.responseText);
+                wcreatorData.forEach(function (item) {
+                    var option = document.createElement("option");
+                    option.value = item.id;
+                    option.text = item.wcreator_name; // Display both id and name
+                    wcreatorSelect.appendChild(option);
+                });
+            } else {
+                console.error("Error fetching data. Status:", xhr.status);
+            }
+        }
+    };
+
+    xhr.open("GET", "core/transactions/transacGetWcreator.php?userId=" + selectedUserId + "&workflowId=" + selectedWorkflowId, true);
+    xhr.send();
+}
+

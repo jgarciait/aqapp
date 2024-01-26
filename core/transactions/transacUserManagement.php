@@ -71,6 +71,6 @@ if (isset($_POST['first_name']) || isset($_POST['last_name']) || isset($_POST['u
 
 ?>
 <script type="text/javascript">
-	alert("Perfil Actualizado Exitósamente.");
+	alert("Profile Succesfully Updated");
 	window.location = "../../user_management.php";
 </script>
