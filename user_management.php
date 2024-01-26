@@ -8,15 +8,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $token = generateToken(); // Generate a unique token for the user
 
     // Create the registration link with the token
-    $registrationLink = "https://www.uccpr.app/aqregistration.php?token=" . $token;
+    $registrationLink = "https://54.166.125.102/aqregistration.php?token=" . $token;
 
     // Send an email to the user with the registration link
     $subject = "Invitation to Register";
     
     // Create an HTML message with the registration link as a hyperlink
     $message = '<html ><body>';
-    $message .= '<p>Hola '. htmlentities($userName, ENT_QUOTES, 'UTF-8') .'!</p>';
-    $message .= '<p>Usted fue invitado a registrarse en AQPlatform.</p>';
+    $message .= '<p>Hi '. htmlentities($userName, ENT_QUOTES, 'UTF-8') .'!</p>';
+    $message .= '<p>You were invited to AQPlatform.</p>';
     $message .= '<a href="' . $registrationLink . '">Register</a>';
     $message .= '</body></html>';
 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <script>
     function confirmDelete(userId) {
-        if (confirm("¿Estás seguro de que quieres eliminar este usuario?")) {
+        if (confirm("Are you sure you want to delete this user account?")) {
             window.location.href = 'delUser.php?action=delete&id=' + userId;
         }
     }
