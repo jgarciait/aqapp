@@ -32,4 +32,9 @@
 
     <!-- Main JS Scripts -->
     <script src="core/assets/script/main.js"></script>
+
+    <link rel="apple-touch-startup-image" href="splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+    <link href="https://unpkg.com/@pqina/flip/dist/flip.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/@pqina/flip/dist/flip.min.js"></script>
+
 </head>

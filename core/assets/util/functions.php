@@ -1,7 +1,4 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
 
 function getUserById($id, $db) {
     // Validate $id as an integer
@@ -63,20 +60,17 @@ function getUserById2($id, $workflow_id, $db) {
         users.user_email, 
         workflows_creator.wlevel_id, 
         workflows.workflow_name,
-        workflows.wsender, 
+        workflows.wsender,
+        workflows.wtype_id,
         workflows.requester_href,
         workflows.evaluator_href,
         workflows_creator.wcreator_name,
         workflows_creator.wcreator_workflows_id,
-        preference_config.header,
-        preference_config.footer,
         workflows_creator.id AS workflows_creator_id  -- Include workflows_creator.id alias
     FROM users 
     INNER JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = users.id
     LEFT JOIN workflows_creator ON workflows_creator.id = users_by_wcreator.wcreator_id
-    LEFT JOIN workflows ON workflows.id = workflows_creator.wcreator_workflows_id
-    INNER JOIN users_by_preference ON users_by_preference.ubp_user_id = users.id
-    LEFT JOIN preference_config ON preference_config.id = users_by_preference.ubp_preference_config_id
+    LEFT JOIN workflows ON workflows.id = workflows_creator.wcreator_workflows_id 
     WHERE ubw_user_id = ?
     AND wcreator_workflows_id = ?";
     
@@ -267,34 +261,7 @@ function insertResetToken($userId, $token, $db) {
 
 // ... Your other functions ...
 
-function sendEmail($recipientEmail, $subject, $message) {
-    // Create a single PHPMailer instance
-    $mail = new PHPMailer(true);
-    $mail->isSMTP();
-    $mail->Host       = 'smtp.gmail.com';
-    $mail->SMTPAuth   = true;
-    $mail->Username   = 'aqnotification@gmail.com';
-    $mail->Password   = 'axzroicoizegvydn';
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port       = 587;
-    
-    try {
-        $mail->clearAddresses(); // Clear previous recipient addresses
-        $mail->addAddress($recipientEmail);
-        $mail->isHTML(true);
-        $mail->Subject = $subject;
-        $mail->Body    = $message;
 
-        $mail->send();
-        // Log success or handle errors
-        return true; // Email sent successfully
-    } catch (Exception $e) {
-        // Capture and log any errors
-        error_log("Email sending failed: " . $mail->ErrorInfo);
-        // Handle errors or continue sending other emails
-        return false; // Email sending failed
-    }
-}
 
 function getWcreatorId($userId, $pdo) {
     try {

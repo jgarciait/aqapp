@@ -52,7 +52,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                             </a>
                  
                             <a class="data-card" href="modulesList.php">
-                                <div><i class="fas fa-network-wired fa-lg" style="color: #11538d;"></i></div>
+                                <div><i class="fas fa-circle-nodes fa-lg" style="color: #11538d;"></i></div>
                                 <p>Module Management</p>
                             </a>
                  

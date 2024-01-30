@@ -47,59 +47,57 @@ $wcreatorQuery = "SELECT * FROM workflows_creator";
             </div>        
       
                 <div >
-                    <a href="#" class="btn-menu btn-1 hover-filled-opacity" id="openModal-1"><span>Add User to Position</span></a>
+                    <a href="#" class="btn-menu btn-1 hover-filled-opacity" id="openModal-5"><span>Add User to Position</span></a>
                 </div>
-               <div class="modal fade" id="addUserProcess" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                              
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                        <form class="shadow p-3" role="form" method="POST" action="transacUserByWcreator.php?action=addWorkflowType.php" id="submitReport">
+            <div class="modal fade" id="addUserProcess" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="shadow p-3" role="form" method="POST" action="core/transactions/transacUserByWcreator.php?action=addWorkflowType.php" id="submitReport">
                                 <div class="mb-3">
-                            <select class="form-control" id="userSelect" name="ubw_user_id" onchange="populateWCreator()">
-                                <option>---</option>
-                                <?php
-                                $result = $db->query($userQuery);
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo '<option value="'. $row["id"] . '">' . $row["first_name"] . ' '. $row["last_name"] . '</option>';
-                                    }
-                                }
-                                ?>      
-                            </select>
-                            </div>
-                            <div class="mb-3">
-                                    <label class="users">Select Module</label>
-                                    <select class="form-control" id="workflowSelect" name="ubw_workflow_id" onchange="populateWCreator()">
-                                    <option>---</option>
-                                            <?php
-                                            $result = $db->query($workflowQuery);
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-                                                    echo '<option value="'. $row["id"] . '">'. $row["workflow_name"] . '</option>';
-                                                }
+                                    <select class="form-control" id="userSelect" name="ubw_user_id" onchange="populateWCreator()">
+                                        <option>---</option>
+                                        <?php
+                                        $result = $db->query($userQuery);
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo '<option value="'. $row["id"] . '">' . $row["first_name"] . ' '. $row["last_name"] . '</option>';
                                             }
-                                        ?>     
+                                        }
+                                        ?>
                                     </select>
                                 </div>
-
-                            <div class="mb-3">
-                            <label class="users">Select Position</label>
-                            <select class="form-control" id="wcreatorSelect" name="wcreator_id">
-                            <option>---</option>
-                                    <!-- Options will be populated dynamically -->
-                                </select>
-                            </div>
+                                <div class="mb-3">
+                                    <label class="users">Select Module</label>
+                                    <select class="form-control" id="workflowSelect" name="ubw_workflow_id" onchange="populateWCreator()">
+                                        <option>---</option>
+                                        <?php
+                                        $result = $db->query($workflowQuery);
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo '<option value="'. $row["id"] . '">'. $row["workflow_name"] . '</option>';
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="users">Select Position</label>
+                                    <select class="form-control" id="wcreatorSelect" name="wcreator_id">
+                                        <option>---</option>
+                                        <!-- Options will be populated dynamically -->
+                                    </select>
+                                </div>
                                 <button type="submit" class="btn-menu btn-1 hover-filled-opacity"><span>Save</span></button>
                             </form>
-                            </div>
-                        
                         </div>
                     </div>
                 </div>
+            </div>
+
                 <div class="container-fluid p-1 ">        
                             <table id="templateTable" class="table table-hover table-striped">
                             <thead class="align-middle">

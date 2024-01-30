@@ -78,6 +78,6 @@ if ($stmt->affected_rows > 0) { // Check if any rows were affected (i.e., if the
 }
 ?>
 <script type="text/javascript">
-	alert("Perfil Actualizado Exitósamente.");
+	alert("Profile Successfully Updated.");
 	window.location = "../../profile.php";
 </script>

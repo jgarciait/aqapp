@@ -43,6 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id'])) {
 ?>
 
 <script type="text/javascript">
-	alert("User Account Succesfuly Deleted");
+	alert("User Account Successfully Deleted");
 	window.location = "../../user_management.php";
 </script>				

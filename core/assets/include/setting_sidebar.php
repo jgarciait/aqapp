@@ -22,7 +22,22 @@
                                 </span>
                             </a>
                         </li>
-            
+                         <li class="has-subnav">
+                            <a href="user_management.php">
+                                <i class="fa fa-users fa-2x"></i>
+                                <span class="nav-text">
+                                    User Management
+                                </span>
+                            </a>
+                        </li>
+                        <li class="has-subnav">
+                            <a href="modulesList.php">
+                                <i class="fa fa-circle-nodes fa-2x"></i>
+                                <span class="nav-text">
+                                    Module Management
+                                </span>
+                            </a>
+                        </li>
                         <li class="has-subnav">
                             <a href="logs.php">
                                 <i class="fa fa-clock-rotate-left fa-2x"></i>
@@ -39,14 +54,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="has-subnav">
-                            <a href="user_management.php">
-                                <i class="fa fa-users fa-2x"></i>
-                                <span class="nav-text">
-                                    User Management
-                                </span>
-                            </a>
-                        </li>
+                  
                     <?php } ?>
                     <?php
 $sql = "SELECT workflows.workflow_name, workflows.wsender, workflows_creator.wcreator_name, workflows_creator.wlevel_id AS wlevelId, workflows.id AS workflow_id

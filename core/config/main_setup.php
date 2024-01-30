@@ -1,6 +1,7 @@
 <?php
 //Time Zone
 date_default_timezone_set('America/Puerto_Rico');
+setlocale(LC_TIME, 'es_ES.UTF-8');
 
 //Database Connection
 include_once 'core/config/config_db.php';

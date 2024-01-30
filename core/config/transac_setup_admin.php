@@ -8,9 +8,6 @@ include_once '../../core/config/config_db.php';
 //Main functions
 include_once '../../core/assets/util/functions.php';
 
-//Main functions
-include_once '../../core/vendor/autoload.php';
-
 // Verify Session
 session_start();
 

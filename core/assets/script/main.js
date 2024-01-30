@@ -104,11 +104,8 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
   return new bootstrap.Popover(popoverTriggerEl)
 })
 
-const checkIn = document.getElementById("openModal-1");
-    checkIn.addEventListener('click', function () {
-        $('#checkIn').modal('show'); // Open the modal
-});
 */
+
 
 //::::Data Table Scripts::::
 
@@ -204,6 +201,14 @@ document.addEventListener("DOMContentLoaded", function() {
     if (addUserProcess) {
         addUserProcess.addEventListener('click', function () {
             $('#addUserProcess').modal('show'); // Open the modal
+        });
+    }
+
+    const checkIn = document.getElementById("openModal-6");
+
+    if (checkIn) {
+        checkIn.addEventListener('click', function () {
+            $('#checkIn').modal('show'); // Open the modal
         });
     }
 

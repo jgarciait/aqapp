@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             <!-- End invite Modal -->
 
-            <main class="container-fluid my-1 p-5 border border-info content-table bg-white shadow rounded table-responsive">
+            <main class="container-fluid my-1 p-4 border border-info content-table bg-white shadow rounded table-responsive">
                 <div>
                     <a href="#" class="btn-menu btn-1 hover-filled-opacity" id="openModal-1"><span>Add New User</span></a>
                 </div>

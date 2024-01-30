@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id'])) {
 
 <script type="text/javascript">
     var workflowId = <?php echo $workflowId; ?>;
-    alert("User Succesfully Removed From Module");
+    alert("User Successfully Removed From Module");
     window.location = "../../workflowsByUser.php?id=" + workflowId;
 </script>
 </body>

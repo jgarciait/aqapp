@@ -3,7 +3,7 @@ include_once 'core/config/setting_setup.php';
 
 ?> 
     <div class="container container-table">
-        <main class="container-fluid my-1 p-5 border border-info content-table bg-white shadow rounded table-responsive">
+        <main class="container-fluid my-1 p-4 border border-info content-table bg-white shadow rounded table-responsive">
             <div class="container">
             <a class="title-table"><span>Logs</span></a>
             </div>    

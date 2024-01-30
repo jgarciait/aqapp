@@ -75,7 +75,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                                 </a>';
                             }
                      
-                            if (($workflow['workflow_name'] == 'Asistencia') && ($workflow['wlevelId'] == '2')) {
+                            if (($workflow['workflow_name'] == 'Check In') && ($workflow['wlevelId'] == '2')) {
                                 $buttonHref = 'checkIn.php';
                                 $dataCardClass = 'data-card'; // Add a class for the third data card style
                             }
@@ -83,11 +83,11 @@ $currentDate = strtr($currentDate, $monthTranslations);
                                 $buttonHref = 'addAppointment.php';
                                 $dataCardClass = 'data-card'; // Add a class for the third data card style
                             }
-                            if (($workflow['workflow_name'] == 'Asistencia') && ($workflow['wlevelId'] >= '3')) {
+                            if (($workflow['workflow_name'] == 'Check In') && ($workflow['wlevelId'] >= '3')) {
                                 $buttonHref = 'attendanceApproval.php';
                                 $dataCardClass = 'data-card'; // Add a class for the third data card style
                             }
-                            if (($workflow['workflow_name'] != 'Asistencia') && ($workflow['wlevelId'] >= '3')) {
+                            if (($workflow['workflow_name'] != 'Check In') && ($workflow['wlevelId'] >= '3')) {
                                 $buttonHref = 'newApproval.php';
                           
                             }
@@ -98,16 +98,24 @@ $currentDate = strtr($currentDate, $monthTranslations);
 
                             // Generate the button HTML with both workflow_id and original buttonHref as query parameters
                             
-                            if ($workflow['workflow_name'] != 'Asistencia' && $workflow['workflow_id'] != '384') {
+                            if ($workflow['workflow_name'] != 'Check In' && $workflow['workflow_id'] != '384') {
                                 echo '<a class="data-card" href="' . $buttonHref . '?workflow_id=' . $workflow['workflow_id'] . '">';
                                 echo '<i class="fas fa-share-nodes" style="color: #11538d;"></i>';
                                 echo '<p>' . $workflow['wsender'] . '</p>';
                                 echo '</a>';
                             } 
-                            if ($workflow['workflow_name'] == 'Asistencia') {
-                                echo '<a class="data-card" id="openModal-1">';
+                            if ($workflow['workflow_name'] == 'Check In') {
+                                echo '<a class="data-card" id="openModal-6">';
                                 echo '<i class="fas fa-share-nodes" style="color: #11538d;"></i>';
                                 echo '<p>' . $workflow['wsender'] . '</p>';
+                                echo '</a>';
+                                $workflow_id = $workflow['workflow_id'];
+                            }
+                            
+                            if ($workflow['workflow_name'] == 'Check In') {
+                                echo '<a class="data-card" href="newAttendance.php?workflow_id=' . $workflow['workflow_id'] . '" id="attendance">';
+                                echo '<i class="fas fa-share-nodes" style="color: #11538d;"></i>';
+                                echo '<p> Attendance </p>';
                                 echo '</a>';
                                 $workflow_id = $workflow['workflow_id'];
                             }
@@ -131,7 +139,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                     }
                     ?>
                 <?php } ?>
-                              <!-- Start CheckIn Modal -->
+             <!-- Start CheckIn Modal -->
                 <div class="container"> <div class="modal fade" id="checkIn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -141,7 +149,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                            
                             </div>
                             <div class="modal-body">
-                      <form class="shadow bg-white p-1" role="form" method="POST" action="transacAttendance.php?workflow_id=<?php echo $workflow_id; ?>" id="submitReport">
+                      <form class="" role="form" method="POST" action="core/transactions/transacAttendance.php?workflow_id=<?php echo $workflow_id; ?>" id="submitReport">
                         
                         <div class="tick-container">
                         <span><?php echo $currentDate; ?></span>

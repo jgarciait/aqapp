@@ -47,6 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action']) && $_GET['acti
 <script type="text/javascript">
    
     var  $wcreator_workflows_id = <?php echo  $wcreator_workflows_id; ?>;
-    alert("Position Succesfully Deleted");
+    alert("Position Successfully Deleted");
     window.location = "../../workflowsByType.php?id=" +  $wcreator_workflows_id;
 </script>

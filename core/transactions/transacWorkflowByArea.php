@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_stmt_execute($stmt);
 
         echo "<script type=\"text/javascript\">
-            alert('Position Created');
+            alert('Position Successfully Created');
             window.location.href = '../../workflowsByType.php?id={$workflow_id}';
         </script>";
         exit();

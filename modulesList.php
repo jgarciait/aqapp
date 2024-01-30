@@ -23,7 +23,7 @@ $wcreatorQuery = "SELECT * FROM workflows_creator";
 
 <body>
     <div class="container container-table">
-        <main class="container-fluid my-3 border border-info content-table bg-white shadow rounded table-responsive">
+        <main class="container-fluid my-1 p-4 border border-info content-table bg-white shadow rounded table-responsive">
             <div class="container">
                 <a class="title-table"><span>Modules</span></a>
             </div>
@@ -39,7 +39,7 @@ $wcreatorQuery = "SELECT * FROM workflows_creator";
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="shadow p-3" role="form" method="POST" action="core/transactions/transacWorkflowType.php?" id="submitReport">
+                            <form class="" role="form" method="POST" action="core/transactions/transacWorkflowType.php?" id="submitReport">
                                 <div></div>
                                 <div class="mb-3">
                                     <label class="">Add Module</label>
@@ -50,7 +50,7 @@ $wcreatorQuery = "SELECT * FROM workflows_creator";
                                     >
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Category</label>
+                                    <label class="form-label">Select Category</label>
                                     <select class="form-control" name="wsender">
                                         <option>---</option>
                                         <option value="Time Clock">Time Clock</option>
@@ -98,7 +98,7 @@ $wcreatorQuery = "SELECT * FROM workflows_creator";
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="shadow p-3" role="form" method="POST" action="core/transactions/transacWorkflowByArea.php?action=addWorkflowType.php" id="submitReport">
+                            <form class="" role="form" method="POST" action="core/transactions/transacWorkflowByArea.php?action=addWorkflowType.php" id="submitReport">
                                 <div class="mb-3">
                                     <label class="">Select Module (Group)</label>
                                     <select class="form-control" id="wcreator_workflows_id" name="wcreator_workflows_id">
@@ -172,7 +172,7 @@ $wcreatorQuery = "SELECT * FROM workflows_creator";
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="shadow p-3" role="form" method="POST" action="core/transactions/transacUserByWcreator.php?action=addWorkflowType.php" id="submitReport">
+                            <form class="" role="form" method="POST" action="core/transactions/transacUserByWcreator.php?action=addWorkflowType.php" id="submitReport">
                                 <div class="mb-3">
                                     <select class="form-control" id="userSelect" name="ubw_user_id" onchange="populateWCreator()">
                                         <option>---</option>

@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             // Your audit trail and other logic
             echo "<script type=\"text/javascript\">
-                alert('User Added to Position');
+                alert('User Successfully Added to Position');
                 window.location.href = '../../workflowsByUser.php?id={$wsId}';
             </script>";
             exit();
