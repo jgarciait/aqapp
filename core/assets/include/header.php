@@ -1,5 +1,6 @@
 <body>
     <header class="header">
+
          <div class="header-content">
             <p style="" class="shine">AQPlatform</p>
         </div>

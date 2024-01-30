@@ -4,50 +4,55 @@
             <button type="button" class="icon-sm" id="toggleButton2"><i class="fa fa-circle-dot"></i></button>
         </div>
         <nav>
+            <p>DCS Team</p>
+            <div class="scroll-container" style="height: 200px; overflow-y: auto;">
+                <ul id="start-time"></ul>
+            </div>
 
-<p>DCS Team</p>
+            <script>
+                function updateStartTime() {
+                    console.log('Sending AJAX request...');
+                    $.ajax({
+                        url: 'core/assets/ajax/get_start_time.php',
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log('Received data:', data);
+                            var $startTime = $('#start-time');
+                            $startTime.empty(); // Clear the list before adding new data
 
-        <?php
+                            if (data.length > 0) {
+                                data.forEach(function (wtc) {
+                                    var $li = $('<li class="has-subnav">');
+                                    $li.append('<i class="fa fa-user fa-1x"></i>');
+                                    $li.append('<span class="nav-text">' + wtc.first_name + ' ' + wtc.last_name + ' start at:</span>');
 
-        // SQL query to fetch all user workflows for the current date
-        $sql = "SELECT first_name, last_name, start_time FROM users
-                INNER JOIN shift_table ON shift_table.sst_user_id = users.id
-                WHERE DATE(start_time) = CURDATE() 
-                ORDER BY start_time ASC";
+                                    var timestamp = new Date(wtc.start_time);
+                                    var formattedDate = timestamp.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                                    var formattedTime = timestamp.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 
-        // Prepare and execute the SQL query
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
+                                    $li.append(formattedDate + ' ' + formattedTime);
+                                    $li.append('<hr>');
 
-        // Fetch all the users' workflows into an array
-        $workers_time_clock = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                    $startTime.append($li);
+                                });
+                            } else {
+                                $startTime.append('<li>No data available.</li>');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Failed to fetch data. Status:', status, 'Error:', error);
+                        }
+                    });
+                }
 
-// Check if workers time clock data is found
-if (!empty($workers_time_clock)) {
-    echo '<div class="scroll-container" style="height: 200px; overflow-y: auto;">'; // Start the scrollable container with styles
-    echo '<ul>'; // Start the list here
+                // Call the function initially to load the data
+                updateStartTime();
 
-    foreach ($workers_time_clock as $wtc) {
-        echo '<li class="has-subnav">';
-        echo '<i class="fa fa-user fa-1x"></i>';
-        echo '<span class="nav-text">';
-        echo $wtc['first_name'] . " " . $wtc['last_name'] . " start at:";
-    
-        echo '</span>';
-        // Format and display the date and time
-        $timestamp = strtotime($wtc['start_time']);
-        $formattedDate = date('F j, Y', $timestamp); // Date in words
-        $formattedTime = date('h:i A', $timestamp);   // Time in AM/PM format
+                // Set an interval to refresh the data every X seconds (e.g., 30 seconds)
+                setInterval(updateStartTime, 5000); // 30 seconds
+            </script>
 
-        echo $formattedDate . " " . $formattedTime;
-        echo '<hr>';
-        echo '</li>';
-    }
-
-    echo '</ul>'; // End the list here
-    echo '</div>'; // End the scrollable container
-}
-?>
         </nav>
     </aside>
 </div>

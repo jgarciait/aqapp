@@ -1,4 +1,6 @@
 <?php
+
+
 // PDO Connection
 $dbHostPDO = 'aqdb.cn2yi20ywt02.us-east-1.rds.amazonaws.com';
 $dbNamePDO = 'AQDB';
