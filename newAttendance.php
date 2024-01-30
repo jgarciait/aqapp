@@ -60,9 +60,9 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                             first_name, 
                             last_name, 
                             start_time,
-                           /* start_b1_time,
+                            start_b1_time,
                             end_b1_time,
-                            start_lunch,
+/*                          start_lunch,
                             end_lunch,
                             start_b2_time,
                             end_b2_time,
@@ -74,15 +74,15 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                             LEFT JOIN users_by_shift ON users_by_shift.ubs_user_id = users.id
                             LEFT JOIN shift_groups ON shift_groups.id = users_by_shift.ubs_groups_id
                             LEFT JOIN shift_config ON shift_config.id = shift_groups.sg_shift_config_id
-                           /* LEFT JOIN startb1 ON startb1.b1_shift_id= shift_table.id
+                            LEFT JOIN startb1 ON startb1.b1_shift_id= shift_table.id
                             LEFT JOIN endb1 ON endb1.eb1_shift_id= shift_table.id
-                            LEFT JOIN startlunch ON startlunch.sl_shift_id= shift_table.id
+/*                          LEFT JOIN startlunch ON startlunch.sl_shift_id= shift_table.id
                             LEFT JOIN endlunch ON endlunch.el_shift_id= shift_table.id
                             LEFT JOIN startb2 ON startb2.b2_shift_id= shift_table.id
                             LEFT JOIN endb2 ON endb2.eb2_shift_id= shift_table.id
                             LEFT JOIN endshift_time ON endshift_time.est_shift_id= shift_table.id */
                             WHERE users.id = $session_user
-                            ORDER BY shift_table.id DESC";
+                            ORDER BY shift_table.start_time DESC";
 
                             $result = mysqli_query($db, $sql); // Execute the query
                             
@@ -97,13 +97,13 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
 
 
                                 $startDate = date('F j, Y h:i A', strtotime($row['start_time']));
-                               /* 
+                              
                                 if ($row['start_b1_time'] != 0) {
                                     $startB1 = date('F j, Y h:i A', strtotime($row['start_b1_time']));
                                 } else {
                                     $startB1 = '---'; // Empty string if start_b1_time is 0
                                 }
-
+ /* 
                                 if ($row['end_b1_time'] != 0) {
                                     $endB1 = date('F j, Y h:i A', strtotime($row['end_b1_time']));
                                 } else {
@@ -145,7 +145,7 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                             echo "<td data-title='Nombre y Apellido'>" . $row['first_name'] . ' ' . $row['last_name'] . '</td>';
                             echo "<td data-title='Entrada al Turno' style='white-space: normal; color: #467aaa;'>" . $startDate . "</td>";
 
-                            echo "<td data-title='Entrada Break AM'></td>"; // . $startB1 . 
+                            echo "<td data-title='Entrada Break AM'>". $startB1 ."</td>"; 
                             echo "<td data-title='Salida Break AM'></td>"; //. $endB1 .
                             echo "<td data-title='Entrada Almuerzo'></td>"; //. $start_lunch .
                             echo "<td data-title='Salida Almuerzo'></td>"; //. $end_lunch .

@@ -32,7 +32,37 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton2 = document.getElementById('toggleButton2');
+    const sidebar = document.getElementById('sidebar2');
 
+    if (toggleButton2 && sidebar) {
+        // Function to expand the sidebar
+        function expandSidebar() {
+            sidebar.classList.add('expanded');
+        }
+
+        // Function to check the viewport width and hide the sidebar if it's less than 1700px
+        function checkViewportWidth() {
+            if (window.innerWidth < 1700) {
+                sidebar.classList.remove('expanded');
+            } else {
+                sidebar.classList.add('expanded');
+            }
+        }
+
+        // Add an event listener to check and hide the sidebar when the viewport width changes
+        window.addEventListener('resize', checkViewportWidth);
+
+        // Check the viewport width initially
+        checkViewportWidth();
+
+        // Add the click event listener to the toggle button
+        toggleButton2.addEventListener('click', () => {
+            sidebar.classList.toggle('expanded');
+        });
+    }
+});
 
 /*
 const expandButton = document.getElementById("expandButton");

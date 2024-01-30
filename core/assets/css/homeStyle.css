@@ -84,7 +84,7 @@ body {
 .profile {
     display: flex;
     align-items: center;
-    padding: 0 4rem;
+    padding: 0 15rem;
     position: absolute;
     right: 0;
     top: 0;
@@ -204,7 +204,7 @@ body {
     padding: 10px 20px;
     list-style: none;
     position: absolute;
-    margin-right: 2rem;
+    margin-right: 15rem;
     top: 100%;
     right: 0;
 }
@@ -558,6 +558,95 @@ body {
             bottom: 0;
         }
 
+        /* Social Sidebar Styles */
+        .socialSidebar {
+            width: 50px;
+            background: #313a46;
+            color: #fff;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            padding-top: 0;
+            right: 0;
+            height: 100%;
+            z-index: 2;
+            overflow: hidden;
+            transition: width 0.3s;
+        }
+
+        .socialSidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 20px 0;
+        }
+
+        .socialSidebar a:hover {
+            background-color: #37709e;
+        }
+
+        .socialSidebar.expanded {
+            width: 200px;
+        }
+
+        .socialSidebar > ul {
+            margin: 7px 0;
+            overflow: hidden;
+        }
+
+        .socialSidebar li {
+            position: relative;
+            display: block;
+        }
+
+        .socialSidebar li > a {
+            position: relative;
+            display: table;
+            border-collapse: collapse;
+            border-spacing: 0;
+            color: #ffff;
+            font-family: arial;
+            font-size: 16px;
+            text-decoration: none;
+            -webkit-transform: translateZ(0) scale(1, 1);
+            -webkit-transition: all .1s linear;
+            transition: all .1s linear;
+        }
+
+        .socialSidebar .nav-icon {
+            position: relative;
+            display: table-cell;
+            width: 60px;
+            height: 36px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 18px;
+        }
+
+        .socialSidebar .nav-text {
+            position: relative;
+            display: table-cell;
+            vertical-align: middle;
+            width: 190px;
+            font-family: 'Titillium Web', sans-serif;
+            display: none;
+            font-size: small;
+        }
+
+        .socialSidebar.expanded .nav-text {
+            display: table-cell;
+        }
+
+        /* Miscellaneous Styles */
+        /* Add other styles here as needed */
+
+        .socialSidebar>ul.logout {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+
+
         .no-touch .scrollable.hover {
             overflow-y: hidden;
         }
@@ -636,7 +725,27 @@ body {
             border: 1px solid #7095da;
         }
     
+     #toggleButton2 {
+          background-color: #122f4600;
+          border: solid #122f4600;
+          color: #fff; /* Light blue text color */
+          border-radius: 25px;
+          padding: 1px;
+          font-size: 10px;
+          cursor: pointer;
+        }
 
+           .toggle-button-container2 {
+            display: flex;
+            flex-direction: column; /* Change to column direction to place the button at the top */
+            align-items: center;
+            padding: 10px; /* Add padding to the top of the container */
+        }
+
+        #toggleButton2:hover {
+            color: #e6eaff; /* White text color on hover */
+            border: 1px solid #7095da;
+        }
 
 .display-picture{
   margin-left: auto;
