@@ -145,10 +145,15 @@ $currentDate = strtr($currentDate, $monthTranslations);
 
                     }
                     if (empty($user_workflows)) {
-                        // Display a message when $user_workflows is empty
+                       /* // Display a message when $user_workflows is empty
                         echo '<div class="data-card">';
                         echo '    <p>There are no modules assigned to you at this moment.</p>';
                         echo '</div>';
+                        */
+                        echo '<a class="data-card" href="checkInMedico.php">';
+                        echo '<i class="fas fa-hospital" style="color: #11538d;"></i>';
+                        echo '<p>Registro de Pacientes</p>';
+                        echo '</a>';
                     }
                     ?>
                 <?php } ?>
@@ -200,8 +205,10 @@ $currentDate = strtr($currentDate, $monthTranslations);
             <!-- End CheckIn Modal -->
         </main>
     </div>
-    <footer id="myFooter" class="footer">
-    <p>Document Control Systems Inc.</p>
+   <footer id="myFooter" class="footer">
+        <p>
+            © 2024 All Rights Reserved - Ricoh.
+        </p>
     </footer>
 </body>
 </html>

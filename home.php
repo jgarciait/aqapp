@@ -136,6 +136,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                         echo '<div class="data-card">';
                         echo '    <p>There are no modules assigned to you at this moment.</p>';
                         echo '</div>';
+
                     }
                     ?>
                 <?php } ?>

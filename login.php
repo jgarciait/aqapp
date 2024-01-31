@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AQPlatform</title>
+    <title>Demo</title>
     
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
@@ -21,7 +21,7 @@
 
     <header class="header">
         <div class="header-content">
-            <p style="" class="shine">Welcome to AQPlatform!</p>
+            <p style="" class="shine">CANOVANAS ONLINE</p>
         </div>
     </header>
     <div class="container p-3">
@@ -30,7 +30,7 @@
                 method="post" id="loginForm">
                 <a href="" class="logo">
                     <div style="margin-top: 0%; text-align: center;">
-                        <img src="core/assets/css/src/logo-dcs.png" alt="" style="width: 10rem; margin: 1rem;"
+                        <img src="https://canovanasgov.org/wp-content/uploads/2023/07/escudo-background.png" alt="" style="width: 10rem; margin: 1rem;"
                             class="brand-img pb-2">
                     </div>
                 </a>
@@ -139,9 +139,7 @@
     ?>
     <footer id="myFooter" class="footer">
         <p>
-            <img src="https://documentcontrol.com/wp-content/uploads/2023/04/logo-dcs_clipped_rev_1.png" 
-                alt="Document Control System Inc." style="width: 2rem; margin: .2rem;" class="brand-img pb-1">
-            © 2023 All Rights Reserved - Document Control Systems Inc.
+            © 2024 All Rights Reserved - Ricoh.
         </p>
     </footer>
 </body>

@@ -2,7 +2,7 @@
     <header class="header">
 
          <div class="header-content">
-            <p style="" class="shine">AQPlatform</p>
+            <p style="" class="shine">CANOVANS ONLINE</p>
         </div>
         <div class="notification-bar">
             <div class="notification-content">
