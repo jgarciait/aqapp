@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Store the exact timestamp in the session
                 $_SESSION['logs_timestamp'] = $timestamp;
                 header('Content-Type: text/html; charset=utf-8');
-                header("Location: ../../home.php");
+                header("Location: ../../socialHome.php");
                 exit();
             } else {
                 $modalMessage = "La contraseña o nombre de usuario ingresado es incorrecto.";
