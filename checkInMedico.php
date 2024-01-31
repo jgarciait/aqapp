@@ -189,8 +189,8 @@ label {
 </head>
 
 
-<main class="container-login mt-3" id="chart-container">
-    <div class="container-form my-1 mb-5 bg-white shadow rounded" >
+<main class="container-login mt-5" id="chart-container">
+    <div class="container-form my-2 mb-5 bg-white shadow rounded" >
         <div class="boximage"></div>
   <form style="width: 55em;" class="form-content p-3 m-2" id="regForm" action="transacCheckInMed.php" method="post">
         <input type="hidden" name="workflow_id" value="<?php echo $workflow_id; ?>">
