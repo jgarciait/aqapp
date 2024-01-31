@@ -37,6 +37,6 @@ include_once 'core/assets/include/header.php';
 
 //Main Sidebar
 include_once 'core/assets/include/sidebar.php';
-include_once 'core/assets/include/socialSidebar.php';
+//include_once 'core/assets/include/socialSidebar.php';
 ?>
 

@@ -84,7 +84,7 @@ body {
 .profile {
     display: flex;
     align-items: center;
-    padding: 0 15rem;
+    padding: 0 5rem;
     position: absolute;
     right: 0;
     top: 0;
@@ -204,7 +204,7 @@ body {
     padding: 10px 20px;
     list-style: none;
     position: absolute;
-    margin-right: 15rem;
+    margin-right: 5rem;
     top: 100%;
     right: 0;
 }
