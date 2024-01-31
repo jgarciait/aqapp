@@ -482,7 +482,7 @@ body {
             top: 0;
             left: 0;
             height: 100%;
-            z-index: 2;
+            z-index: 4;
             overflow: hidden;
             transition: width 0.3s;
         }
@@ -569,7 +569,7 @@ body {
             padding-top: 0;
             right: 0;
             height: 100%;
-            z-index: 2;
+            z-index: 4;
             overflow: hidden;
             transition: width 0.3s;
         }
