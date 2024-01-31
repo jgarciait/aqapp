@@ -104,7 +104,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                                 echo '<p>' . $workflow['wsender'] . '</p>';
                                 echo '</a>';
                             } 
-                            if ($workflow['workflow_name'] == 'Check In') {
+                            if ($workflow['workflow_name'] == 'Check In' && $workflow['wlevelId'] < '2') {
                                 echo '<a class="data-card" id="openModal-6">';
                                 echo '<i class="fas fa-share-nodes" style="color: #11538d;"></i>';
                                 echo '<p>' . $workflow['wsender'] . '</p>';
@@ -112,10 +112,23 @@ $currentDate = strtr($currentDate, $monthTranslations);
                                 $workflow_id = $workflow['workflow_id'];
                             }
                             
-                            if ($workflow['workflow_name'] == 'Check In') {
+                            if ($workflow['workflow_name'] == 'Check In' && $workflow['wlevelId'] < '1') {
                                 echo '<a class="data-card" href="newAttendance.php?workflow_id=' . $workflow['workflow_id'] . '" id="attendance">';
                                 echo '<i class="fas fa-share-nodes" style="color: #11538d;"></i>';
                                 echo '<p> Attendance </p>';
+                                echo '</a>';
+                                $workflow_id = $workflow['workflow_id'];
+                            }
+
+                            if ($workflow['workflow_name'] == 'Check In' && $workflow['wlevelId'] <= '2') {
+                                echo '<a class="data-card" href="generalAttendance.php?workflow_id=' . $workflow['workflow_id'] . '" id="attendance">';
+                                echo '<i class="fas fa-share-nodes" style="color: #11538d;"></i>';
+                                echo '<p> General Attendance </p>';
+                                echo '</a>';
+
+                                echo '<a class="data-card" href="approvalAttendance.php?workflow_id=' . $workflow['workflow_id'] . '" id="attendance">';
+                                echo '<i class="fas fa-share-nodes" style="color: #11538d;"></i>';
+                                echo '<p> Attendance Requests </p>';
                                 echo '</a>';
                                 $workflow_id = $workflow['workflow_id'];
                             }

@@ -165,6 +165,58 @@ $(document).ready(function () {
     // Rest of your code...
 });
 
+$(document).ready(function() {
+    const dataTable = $('#myTable').DataTable();
+
+    // Add event listener for the filter dropdown
+    $('#filterDate').on('change', function() {
+            const filterValue = this.value; // Get the selected option value
+        if (filterValue === 'todo') {
+            // Show all rows when "Mostrar todos" is selected
+            dataTable.column(2).search('').draw();
+        } else if (filterValue === 'hoy') {
+            // Get the current date in the desired format
+            var currentDate = new Date();
+            var currentDateFormat = currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Set the default filter value to the current date
+            dataTable.column(2).search(currentDateFormat, true, false).draw();   
+        } else {
+            dataTable.column(2).search(filterValue, true, false).draw();
+        }
+    });
+           // Get the current date in the desired format
+            var currentDate = new Date();
+            var currentDateFormat = currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Set the default filter value to the current date
+            dataTable.column(2).search(currentDateFormat, true, false).draw(); 
+
+    // Add event listener for the filter dropdown for first name (if needed).
+    $('#filterFirstName').on('change', function() {
+            const filterValue = this.value; // Get the selected option value
+        if (filterValue === '') {
+            // Show all rows when "Mostrar todos" is selected
+            dataTable.column(1).search('').draw();
+        } else {
+            // Filter based on the selected option
+            dataTable.column(1).search(filterValue, true, false).draw();
+        }
+    });
+
+    // Add event listener for the filter dropdown for first name (if needed).
+    $('#filterStatus').on('change', function() {
+            const filterValue = this.value; // Get the selected option value
+        if (filterValue === '') {
+            // Show all rows when "Mostrar todos" is selected
+            dataTable.column(12).search('').draw();
+        } else {
+            // Filter based on the selected option
+            dataTable.column(12).search(filterValue, true, false).draw();
+        }
+    });
+    
+});
 
 //::::Footer Script::::
 

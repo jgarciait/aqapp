@@ -62,12 +62,12 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                             start_time,
                             start_b1_time,
                             end_b1_time,
-/*                          start_lunch,
+                            start_lunch,
                             end_lunch,
                             start_b2_time,
                             end_b2_time,
                             end_shift_time,
-                            salary_ph, */
+                            salary_ph,
                             start_time_status
                             FROM users
                             LEFT JOIN shift_table ON shift_table.sst_user_id = users.id
@@ -76,11 +76,11 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                             LEFT JOIN shift_config ON shift_config.id = shift_groups.sg_shift_config_id
                             LEFT JOIN startb1 ON startb1.b1_shift_id= shift_table.id
                             LEFT JOIN endb1 ON endb1.eb1_shift_id= shift_table.id
-/*                          LEFT JOIN startlunch ON startlunch.sl_shift_id= shift_table.id
+                            LEFT JOIN startlunch ON startlunch.sl_shift_id= shift_table.id
                             LEFT JOIN endlunch ON endlunch.el_shift_id= shift_table.id
                             LEFT JOIN startb2 ON startb2.b2_shift_id= shift_table.id
                             LEFT JOIN endb2 ON endb2.eb2_shift_id= shift_table.id
-                            LEFT JOIN endshift_time ON endshift_time.est_shift_id= shift_table.id */
+                            LEFT JOIN endshift_time ON endshift_time.est_shift_id= shift_table.id
                             WHERE users.id = $session_user
                             ORDER BY shift_table.start_time DESC";
 
@@ -103,7 +103,7 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                                 } else {
                                     $startB1 = '---'; // Empty string if start_b1_time is 0
                                 }
- /* 
+  
                                 if ($row['end_b1_time'] != 0) {
                                     $endB1 = date('F j, Y h:i A', strtotime($row['end_b1_time']));
                                 } else {
@@ -138,7 +138,7 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                                     $endDate = date('F j, Y h:i A', strtotime($row['end_shift_time']));
                                 } else {
                                     $endDate = '---'; // Empty string if start_b1_time is 0
-                                } */
+                                } 
 
                             echo "<tr>";
                             echo "<td data-title='#'>" . $count . "</td>";
@@ -146,13 +146,13 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                             echo "<td data-title='Entrada al Turno' style='white-space: normal; color: #467aaa;'>" . $startDate . "</td>";
 
                             echo "<td data-title='Entrada Break AM'>". $startB1 ."</td>"; 
-                            echo "<td data-title='Salida Break AM'></td>"; //. $endB1 .
-                            echo "<td data-title='Entrada Almuerzo'></td>"; //. $start_lunch .
-                            echo "<td data-title='Salida Almuerzo'></td>"; //. $end_lunch .
-                            echo "<td data-title='Entrada Break PM'></td>"; //. $startB2 .
-                            echo "<td data-title='Salida Break PM'></td>"; //. $endB2 .
-                            echo "<td data-title='Salida del Turno' style='white-space: normal; color: #467aaa;'></td>";//. $endDate .
-/*
+                            echo "<td data-title='Salida Break AM'>". $endB1 ."</td>"; //
+                            echo "<td data-title='Entrada Almuerzo'>". $start_lunch ."</td>";
+                            echo "<td data-title='Salida Almuerzo'>". $end_lunch ."</td>";
+                            echo "<td data-title='Entrada Break PM'>". $startB2 ."</td>";
+                            echo "<td data-title='Salida Break PM'>". $endB2 ."</td>";
+                            echo "<td data-title='Salida del Turno' style='white-space: normal; color: #467aaa;'>". $endDate ."</td>";
+
                             // Calculate the time difference for start_b1_time and end_b1_time
                             $timeDifferenceB1 = 0;
                             if ($row['start_b1_time'] != 0 && $row['end_b1_time'] != 0) {
@@ -177,7 +177,7 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                                 $timeDifferenceB2 = $endB2Time - $startB2Time;
                             }
 
-                            // Calculate the time difference for start_time and end_shift_time
+                            // Calculate the time difference for start_time and end_shift_timefffffffffffffffffffffffffff
                             if ($row['start_time'] != 0 && $row['end_shift_time'] != 0) {
                                 $startTime = strtotime($row['start_time']);
                                 $endTime = strtotime($row['end_shift_time']);
@@ -191,9 +191,9 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                                 // Format the total worked time
                                 $hours = floor($totalWorkedSeconds / 3600);
                                 $minutes = floor(($totalWorkedSeconds % 3600) / 60);
-*/
-                                echo "<td data-title='Horas Trabajadas'></td>"; //$hours:$minutes Hrs
-/*
+
+                                echo "<td data-title='Horas Trabajadas'>$hours:$minutes Hrs </td>"; //
+
                                 // Calculate salary
                                 $salaryPh = $row['salary_ph'];
 
@@ -202,9 +202,9 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
 
                                 // Format the total salary as dollars and cents
                                 $formattedSalary = number_format($totalSalary, 2);
-*/
-                                echo "<td data-title='Salario'></td>"; //$formattedSalary - $salaryPh/ph
-/*
+
+                                echo "<td data-title='Salario'>$$formattedSalary - $salaryPh/PH</td>";
+
                                 // Accumulate the values
                                 $totalsHorasTrabajadas += $totalWorkedSeconds;
                                 $totalsSalary += $totalSalary;
@@ -212,7 +212,7 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                                 echo "<td>---</td>";
                                 echo "<td>---</td>";
                             }
-*/
+
                             // Estatus
                             if ($row['start_time_status'] === 'On Time') {
                                 echo "<td data-title='Estatus' style='white-space: normal; font-weight: 600; color: #5cba46;'>" . $row['start_time_status'] . "</td>";

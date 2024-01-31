@@ -31,11 +31,11 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                                 <select class="form-select" id="filterDate">
                                <?php
                                     // Fetch unique dates (date part only) from your data
-                                    $dateQuery = "SELECT DISTINCT DATE(start_time) AS date_part FROM shift_table";
+                                    $dateQuery = "SELECT DISTINCT DATE(start_time) AS date_part FROM shift_table ORDER BY start_time DESC";
                                     $dateResult = mysqli_query($db, $dateQuery);
 
                                     if ($dateResult) {
-                                        echo '<option value="hoy">Hoy</option>';  
+                                        echo '<option value="hoy">Today</option>';  
                                       
                                         while ($row = mysqli_fetch_assoc($dateResult)) {
                                             $selectedDate = date('F j, Y', strtotime($row['date_part']));
@@ -45,7 +45,7 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                                     } else {
                                         echo "Error fetching date options: " . mysqli_error($db);
                                     }
-                                      echo '<option value="todo">Mostrar Todo</option>';
+                                      echo '<option value="todo">All</option>';
                                     ?>
                                     <!-- Add date filter options here -->
                                 </select>
@@ -61,7 +61,7 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
 
                                         if ($usersResult) {
 
-                                        echo '<option value="">Seleccione Empleado</option>';
+                                        echo '<option value="">Select Employee Name</option>';
                                             while ($row = mysqli_fetch_assoc($usersResult)) {
                                                 $firstName = $row['first_name'];
                                                 $lastName = $row['last_name'];
@@ -75,6 +75,27 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                                     <!-- Add user first name filter options here -->
                                 </select>
                             </div>
+                      <div class="col-sm-3 mb-3">
+                        <select class="form-select" id="filterStatus">
+                            <?php
+                            // Fetch unique statuses from the shift_table
+                            $statusQuery = "SELECT DISTINCT start_time_status FROM shift_table";
+                            $shiftStatus = mysqli_query($db, $statusQuery);
+
+                            if ($shiftStatus) {
+                                echo '<option value="">Select Status</option>';
+                                while ($row = mysqli_fetch_assoc($shiftStatus)) {
+                                    $shift_status = $row['start_time_status'];
+                                    echo "<option value='$shift_status'>$shift_status</option>";
+                                }
+                                mysqli_free_result($shiftStatus);
+                            } else {
+                                echo "Error fetching status options: " . mysqli_error($db);
+                            }
+                            ?>
+                        </select>
+                    </div>
+
                     <?php if ($user_data2['wtype_id'] == 1) { ?>  
                     <div>
                         <a href="addApprovalRequest.php?action=add&workflow_id=<?php echo $workflow_id ?>" type="button" class="btn2 btn-xs"><h5 class="nreq"><?php echo $user_data2['wsender']; ?></h5></a>
@@ -98,7 +119,7 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                     <?php } ?>
                 
             <div class="container-fluid p-1">
-                <table style="width: 100%; padding: 1rem;" id="templateTable" class="table table-bordered table-condensed table-hover">
+                <table style="width: 100%; padding: 1rem;" id="myTable" class="table table-bordered table-condensed table-hover">
                     <thead class="align-middle">
                         <tr>
                             <th>#</th>
@@ -122,27 +143,27 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                         first_name, 
                         last_name, 
                         start_time,
-                        /*start_b1_time,
+                        start_b1_time,
                         end_b1_time,
                         start_lunch,
                         end_lunch,
                         start_b2_time,
                         end_b2_time,
                         end_shift_time,
-                        salary_ph,*/
+                        salary_ph,
                         start_time_status
                         FROM users
                         LEFT JOIN shift_table ON shift_table.sst_user_id = users.id
                          LEFT JOIN users_by_shift ON users_by_shift.ubs_user_id = users.id
                         LEFT JOIN shift_groups ON shift_groups.id = users_by_shift.ubs_groups_id
                         LEFT JOIN shift_config ON shift_config.id = shift_groups.sg_shift_config_id
-                       /* LEFT JOIN startb1 ON startb1.b1_shift_id= shift_table.id
+                        LEFT JOIN startb1 ON startb1.b1_shift_id= shift_table.id
                         LEFT JOIN endb1 ON endb1.eb1_shift_id= shift_table.id
                         LEFT JOIN startlunch ON startlunch.sl_shift_id= shift_table.id
                         LEFT JOIN endlunch ON endlunch.el_shift_id= shift_table.id
                         LEFT JOIN startb2 ON startb2.b2_shift_id= shift_table.id
                         LEFT JOIN endb2 ON endb2.eb2_shift_id= shift_table.id
-                        LEFT JOIN endshift_time ON endshift_time.est_shift_id= shift_table.id*/
+                        LEFT JOIN endshift_time ON endshift_time.est_shift_id= shift_table.id
                         ORDER BY start_time DESC";
 
                         $result = mysqli_query($db, $sql); // Execute the query
@@ -169,7 +190,7 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                         } else {
                             $startDate = '---'; // Empty string if start_b1_time is 0
                         }
-                        /*
+                        
                         
                         if ($row['start_b1_time'] != 0) {
                             $startB1 = date('F j, Y h:i A', strtotime($row['start_b1_time']));
@@ -212,14 +233,14 @@ if (isset($_GET['success']) && $_GET['success'] === 'true') {
                         } else {
                             $endDate = '---'; // Empty string if start_b1_time is 0
                         }
-*/
+
                         
                     
                 echo "<tr>";
 echo "<td>" . $count . "</td>";
 echo '<td>' . $firstName . ' ' . $lastName . '</td>';
 echo '<td style="white-space: normal; color: #467aaa;">' . $startDate . "</td>";
-/*
+
 echo "<td>" . $startB1 . "</td>";
 echo "<td>" . $endB1 . "</td>";
 echo "<td>" . $start_lunch . "</td>";
@@ -283,7 +304,7 @@ if ($row['start_time'] != 0 && $row['end_shift_time'] != 0) {
     echo "<td>---</td>";
     echo "<td>---</td>";
 }
-*/
+
 // Estatus
 if ($row['start_time_status'] === 'On Time') {
     echo '<td style="white-space: normal; font-weight: 600; color: #5cba46;">' . $row['start_time_status'] . "</td>";

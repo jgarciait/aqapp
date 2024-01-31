@@ -96,7 +96,7 @@ if (isset($_POST['start_time'])) {
 
                     echo "<script type=\"text/javascript\">
                             alert('On Time.');
-                            window.location.href = '../../home.php';
+                            window.location.href = '../../socialhome.php';
                         </script>";
                     exit();
                 }
@@ -115,7 +115,7 @@ if (isset($_POST['start_time'])) {
 
                     echo "<script type=\"text/javascript\">
                             alert('Early. Su ponche será enviado al personal de recursos humanos.');
-                            window.location.href = '../../../../checkIn2.php?workflow_id={$workflow_id}&shift_table_id={$lastInsertedId}';
+                            window.location.href = '../../checkIn2.php?workflow_id={$workflow_id}&shift_table_id={$lastInsertedId}';
                         </script>";
                     exit();
                 }
@@ -221,7 +221,7 @@ if (isset($_POST['start_b1_time'])) {
                 if ($stmtInsertStartShift->execute()) {
                     echo "<script type=\"text/javascript\">
                         alert('Punch Processed');
-                        window.location.href = '../../home.php'; // Corrected URL
+                        window.location.href = '../../socialHome.php'; // Corrected URL
                     </script>";
                     exit();
                 }
@@ -326,7 +326,7 @@ if (isset($_POST['end_b1_time'])) {
             if ($stmtInsertStartShift->execute()) {
                 echo "<script type=\"text/javascript\">
                     alert('Ponche Procesado.');
-                    window.location.href = 'home.php'; // Corrected URL
+                    window.location.href = '../../socialhome.php'; // Corrected URL
                 </script>";
                 exit();
             }
@@ -424,7 +424,7 @@ if (isset($_POST['start_lunch'])) {
             if ($stmtInsertStartShift->execute()) {
                 echo "<script type=\"text/javascript\">
                     alert('Ponche Procesado.');
-                    window.location.href = 'home.php'; // Corrected URL
+                    window.location.href = '../../socialhome.php'; // Corrected URL
                 </script>";
                 exit();
             }
@@ -521,7 +521,7 @@ if (isset($_POST['end_lunch'])) {
             if ($stmtInsertStartShift->execute()) {
                 echo "<script type=\"text/javascript\">
                     alert('Ponche Procesado.');
-                    window.location.href = 'home.php'; // Corrected URL
+                    window.location.href = '../../socialhome.php'; // Corrected URL
                 </script>";
                 exit();
             }
@@ -618,7 +618,7 @@ if (isset($_POST['start_b2_time'])) {
             if ($stmtInsertStartShift->execute()) {
                 echo "<script type=\"text/javascript\">
                     alert('Ponche Procesado.');
-                    window.location.href = 'home.php'; // Corrected URL
+                    window.location.href = '../../socialhome.php'; // Corrected URL
                 </script>";
                 exit();
             }
@@ -723,7 +723,7 @@ if (isset($_POST['end_b2_time'])) {
                 if ($stmtInsertEndShift->execute()) {
                     echo "<script type=\"text/javascript\">
                         alert('Ponche Procesado.');
-                        window.location.href = 'home.php'; // Corrected URL
+                        window.location.href = '../../socialhome.php'; // Corrected URL
                     </script>";
                     exit();
                 }
@@ -823,7 +823,7 @@ if (isset($_POST['end_shift_time'])) {
                 if ($stmtInsertEndShift->execute()) {
                     echo "<script type=\"text/javascript\">
                         alert('Ponche Procesado.');
-                        window.location.href = 'home.php'; // Corrected URL
+                        window.location.href = '../../socialhome.php'; // Corrected URL
                     </script>";
                     exit();
                 }
