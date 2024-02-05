@@ -153,7 +153,7 @@ function getSysRol($id, $db) {
 
 function getFormData($id, $db) {
     mysqli_set_charset($db, "utf8mb4");
-    $sql = "SELECT form_001.id AS fId, firstName, lastName, receiver_division.wcreator_name AS receiver_division_name, form_name, signature, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
+    $sql = "SELECT form_001.id AS fId, process_level_id, firstName, lastName, age, gender, physical_address, postal_address, sector, phone, email, receiver_division.wcreator_name AS receiver_division_name, form_name, signature, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
             FROM workflows
             LEFT JOIN form_metadata ON form_metadata.fm_workflows_id = workflows.id
             LEFT JOIN form_001 ON form_001.form_metadata_id = form_metadata.id
@@ -228,6 +228,27 @@ function getWCreatorAndMetadataId($id, $db) {
     }
 }
 
+function getReceiverUser($id, $db) {
+    mysqli_set_charset($db, "utf8mb4");
+    $sql = "SELECT ubw_user_id, workflow_name FROM AQDB.workflows
+    LEFT JOIN AQDB.workflows_creator ON workflows_creator.wcreator_workflows_id = workflows.id
+    LEFT JOIN AQDB.users_by_wcreator ON users_by_wcreator.wcreator_id = workflows_creator.id
+    LEFT JOIN AQDB.users ON users.id = users_by_wcreator.ubw_user_id
+    WHERE workflows_creator.wlevel_id = 2
+    AND workflows.id = ?";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $receiverUser = $result->fetch_assoc();
+        return $receiverUser;
+    } else {
+        return false;
+    }
+}
 
 function getModuleById($id, $db) {
     mysqli_set_charset($db, "utf8mb4");

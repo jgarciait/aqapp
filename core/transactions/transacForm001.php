@@ -17,9 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the workflows_creator.id and form_metadata.id
     $workflowData = getWCreatorAndMetadataId($workflow_id, $db);
 
+    $receiverUser = getReceiverUser($workflow_id, $db);
+
     if ($workflowData !== false) {
         $workflows_creator_id = $workflowData['wcId'];
         $formMetadataId = $workflowData['fmId'];
+        $receiverUserId = $receiverUser['ubw_user_id'];
         $processStatus = "Sent";
 
         // Generate a new reference number
@@ -34,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $form_001_id = mysqli_insert_id($db);
 
             // Insert data into forms_log table
-            $stmt = $db->prepare('INSERT INTO forms_log (fl_sender_user_id, process_status, forms_id, process_level_id, receiver_division_wcid) VALUES (?, ?, ?, ?, ?)');
-            $stmt->execute([$session_user, $processStatus, $form_001_id, 2, $workflows_creator_id]);
+            $stmt = $db->prepare('INSERT INTO forms_log (fl_sender_user_id, fl_receiver_user_id, process_status, forms_id, process_level_id, receiver_division_wcid) VALUES (?, ?, ?, ?, ?, ?)');
+            $stmt->execute([$session_user, $receiverUserId, $processStatus, $form_001_id, 2, $workflows_creator_id]);
 
             // Commit the transaction
             $db->commit();

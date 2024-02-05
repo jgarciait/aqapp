@@ -131,7 +131,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                                 
                                 echo '<a class="data-card" href="' . $rDataTableHref . '?workflow_id=' . $workflow['workflow_id'] . '">';
                                 echo '<div><i class="fas fa-share-nodes" style="color: #11538d;"></i>';
-                                echo '<p>' . $workflow['workflow_name'] . " - " . $workflow['wcreator_name'] .  '</p>';
+                                echo '<p>Attend Services</p>';
                                 echo '</div></a>';
                             }
 
