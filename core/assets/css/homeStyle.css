@@ -336,6 +336,7 @@ body {
         .data-card {
             flex: 1;
             background: #fff;
+            align-items: center;
             height: 100px;
             text-align: center;
             justify-content: center; /* Center-align the cards within the container */
@@ -380,7 +381,6 @@ body {
             background: #fff;
             height: 25rem;
             color:#2a3844;
-            text-align: center;
             justify-content: center; /* Center-align the cards within the container */
             border: 1px solid #b4befc; /* Border */
             padding: 1rem; /* Padding inside the data card */
@@ -421,13 +421,15 @@ body {
 
           /* Style for the links within data-card */
           .data-card a, .data-card p {
-              text-decoration: none; /* Remove underlines from links */
-              color: #333; /* Link text color */
-              font-weight: bold; /* Bold font */
-              display: block; /* Make the links block-level elements */
-              margin-bottom: 8px; /* Spacing between links */
-              font-size: 16px;
-          }
+                text-decoration: none;
+                color: #333;
+                font-weight: bold;
+                font-size: 16px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+            }
 
                 /* Style for the links within data-card */
           .data-card-2 a, .data-card-2 p {

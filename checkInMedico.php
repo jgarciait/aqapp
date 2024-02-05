@@ -195,16 +195,16 @@ label {
   <form style="width: 55em;" class="form-content p-3 m-2" id="regForm" action="transacCheckInMed.php" method="post">
         <input type="hidden" name="workflow_id" value="<?php echo $workflow_id; ?>">
             <div class="text-center">
-                <h2>Registro de Pacientes Canóvanas Saludable</h2>
-                <p>Este formulario está creado para recopilar información del Programa Canóvanas Saludable</p>
+                <h2>Service Template</h2>
+                <p></p>
             </div>
             <hr>
             <div class="text-center">
                 <ul id="progressbar">
-                    <li class="active" id="personal"><strong>Info Paciente</strong></li>
-                    <li id="vaccine"><strong>Vacunación</strong></li>
-                    <li id="health"><strong>Signos Vitales</strong></li>
-                    <li id="confirm"><strong>Finalizar</strong></li>
+                    <li class="active" id="personal"><strong>Step 1</strong></li>
+                    <li id="vaccine"><strong>Step 2</strong></li>
+                    <li id="health"><strong>Step 3</strong></li>
+                    <li id="confirm"><strong>Submit</strong></li>
                 </ul>
             </div>
             <!-- One "tab" for each step in the form: -->
@@ -501,7 +501,7 @@ label {
       </main>
    <footer id="myFooter" class="footer">
         <p>
-            © 2024 All Rights Reserved - Ricoh.
+            © 2024 All Rights Reserved - Document Control System.
         </p>
     </footer>
 </body>

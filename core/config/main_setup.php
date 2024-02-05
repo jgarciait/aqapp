@@ -15,8 +15,8 @@ session_start();
 // Check if the user is not logged in and redirect to the login page
 if (!isset($_SESSION['id']) || !isset($_SESSION['first_name'])) {
     echo "<script type=\"text/javascript\">
-        alert('Para continuar debes iniciar sesión.');
-        window.location.href = '../../login.php';
+        alert('To continue you must log in.');
+        window.location.href = 'login.php';
     </script>";
     exit();
 }

@@ -151,6 +151,61 @@ function getSysRol($id, $db) {
     }
 }
 
+function getFormData($id, $db) {
+    mysqli_set_charset($db, "utf8mb4");
+    $sql = "SELECT form_001.id AS fId, firstName, lastName, receiver_division.wcreator_name AS receiver_division_name, form_name, signature, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
+            FROM workflows
+            LEFT JOIN form_metadata ON form_metadata.fm_workflows_id = workflows.id
+            LEFT JOIN form_001 ON form_001.form_metadata_id = form_metadata.id
+            LEFT JOIN forms_log ON forms_log.forms_id = form_001.id
+            LEFT JOIN users AS sender ON sender.id = forms_log.fl_sender_user_id
+            LEFT JOIN users AS receiver ON receiver.id = forms_log.fl_receiver_user_id
+            LEFT JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = fl_sender_user_id
+            LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
+            LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_log.receiver_division_wcid
+            WHERE form_001.id  = ?";
+    
+$stmt = $db->prepare($sql);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $edit_profile = $result->fetch_assoc();
+        return $edit_profile;
+    } else {
+        return false;
+    }
+}
+
+function getFormData2($id, $db) {
+    mysqli_set_charset($db, "utf8mb4");
+    $sql = "SELECT form_001.id AS fId, firstName, lastName, receiver_division.wcreator_name AS receiver_division_name, form_name, signature, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
+            FROM workflows
+            LEFT JOIN form_metadata ON form_metadata.fm_workflows_id = workflows.id
+            LEFT JOIN form_001 ON form_001.form_metadata_id = form_metadata.id
+            LEFT JOIN forms_log ON forms_log.forms_id = form_001.id
+            LEFT JOIN users AS sender ON sender.id = forms_log.fl_sender_user_id
+            LEFT JOIN users AS receiver ON receiver.id = forms_log.fl_receiver_user_id
+            LEFT JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = fl_sender_user_id
+            LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
+            LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_log.receiver_division_wcid
+            WHERE workflows.id  = ?";
+    
+$stmt = $db->prepare($sql);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $edit_profile = $result->fetch_assoc();
+        return $edit_profile;
+    } else {
+        return false;
+    }
+}
+
+
 function getModuleById($id, $db) {
     mysqli_set_charset($db, "utf8mb4");
     $sql = "SELECT workflows.wsender, workflows.id, workflows.workflow_name

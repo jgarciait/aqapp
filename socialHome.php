@@ -44,10 +44,11 @@ $currentDate = strtr($currentDate, $monthTranslations);
                 <?php if (!empty($sysRol)) { // Check if $user_data is not empty ?>
                     <?php
                     // SQL query to fetch user workflows and check if the user is associated with each workflow
-                    $sql = "SELECT workflows.workflow_name, workflows.wsender, workflows_creator.wcreator_name, workflows_creator.wlevel_id AS wlevelId, workflows.id AS workflow_id
+                    $sql = "SELECT workflows.workflow_name, form_name, workflows.wsender, workflows_creator.wcreator_name, workflows_creator.wlevel_id AS wlevelId, workflows.id AS workflow_id
                         from users_by_wcreator
                         INNER JOIN workflows_creator ON workflows_creator.id = users_by_wcreator.wcreator_id
-                        left JOIN workflows ON workflows.id = workflows_creator.wcreator_workflows_id
+                        LEFT JOIN workflows ON workflows.id = workflows_creator.wcreator_workflows_id
+                        LEFT JOIN form_metadata ON form_metadata.fm_workflows_id = workflows_creator.wcreator_workflows_id
                         WHERE ubw_user_id = ?
                         ";
 
@@ -74,7 +75,8 @@ $currentDate = strtr($currentDate, $monthTranslations);
                                     <p class="button2">Monitor</p>
                                 </a>';
                             }
-                     
+                           
+
                             if (($workflow['workflow_name'] == 'Check In') && ($workflow['wlevelId'] == '2')) {
                                 $buttonHref = 'checkIn.php';
                                 $dataCardClass = 'data-card'; // Add a class for the third data card style
@@ -95,15 +97,44 @@ $currentDate = strtr($currentDate, $monthTranslations);
                                 $buttonHref = 'addServiceRequest.php';
                           
                             }
-
-                            // Generate the button HTML with both workflow_id and original buttonHref as query parameters
                             
-                            if ($workflow['workflow_name'] != 'Check In' && $workflow['workflow_id'] != '384') {
-                                echo '<a class="data-card" href="' . $buttonHref . '?workflow_id=' . $workflow['workflow_id'] . '">';
-                                echo '<i class="fas fa-share-nodes" style="color: #11538d;"></i>';
-                                echo '<p>' . $workflow['wsender'] . '</p>';
-                                echo '</a>';
-                            } 
+
+                            // ******* SENDER *******
+                            // FORM PAGE
+                            if ($workflow['wlevelId'] < '2') {
+                                $sDataTableHref = 'newForm_001.php';
+                                echo '<a class="data-card" href="' . $sDataTableHref . '?workflow_id=' . $workflow['workflow_id'] . '">';
+                                echo '<div><i class="fas fa-share-nodes" style="color: #11538d;"></i>';
+                                echo '<p>' . $workflow['workflow_name'] . " - " . $workflow['form_name'] . '</p>';
+                                echo '</div></a>';
+                            }
+                            // DATA TABLE
+                            if ($workflow['wlevelId'] < '2') {
+                                $sDataTableHref = 'senderDataTable.php';
+                                
+                                echo '<a class="data-card" href="' . $sDataTableHref . '?workflow_id=' . $workflow['workflow_id'] . '">';
+                                echo '<div><i class="fas fa-share-nodes" style="color: #11538d;"></i>';
+                                echo '<p>' . $workflow['workflow_name'] . " - " . $workflow['wcreator_name'] . '</p>';
+                                echo '</div></a>';
+                            }
+                            // DASHBOARD
+
+                            
+                            // ******* RECEIVER *******
+                            // FORM PAGE
+
+                            // DATA TABLE
+
+                            // DASHBOARD
+                            if ($workflow['wlevelId'] > '1') {
+                                $rDataTableHref = 'receiverDataTable.php';
+                                
+                                echo '<a class="data-card" href="' . $rDataTableHref . '?workflow_id=' . $workflow['workflow_id'] . '">';
+                                echo '<div><i class="fas fa-share-nodes" style="color: #11538d;"></i>';
+                                echo '<p>' . $workflow['workflow_name'] . " - " . $workflow['wcreator_name'] .  '</p>';
+                                echo '</div></a>';
+                            }
+
                             if ($workflow['workflow_name'] == 'Check In' && $workflow['wlevelId'] < '2') {
                                 echo '<a class="data-card" id="openModal-6">';
                                 echo '<i class="fas fa-share-nodes" style="color: #11538d;"></i>';
@@ -145,15 +176,10 @@ $currentDate = strtr($currentDate, $monthTranslations);
 
                     }
                     if (empty($user_workflows)) {
-                       /* // Display a message when $user_workflows is empty
+                        // Display a message when $user_workflows is empty
                         echo '<div class="data-card">';
                         echo '    <p>There are no modules assigned to you at this moment.</p>';
                         echo '</div>';
-                        */
-                        echo '<a class="data-card" href="checkInMedico.php">';
-                        echo '<i class="fas fa-hospital" style="color: #11538d;"></i>';
-                        echo '<p>Registro de Pacientes</p>';
-                        echo '</a>';
                     }
                     ?>
                 <?php } ?>
@@ -207,7 +233,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
     </div>
    <footer id="myFooter" class="footer">
         <p>
-            © 2024 All Rights Reserved - Ricoh.
+            © 2024 All Rights Reserved - Document Control System.
         </p>
     </footer>
 </body>

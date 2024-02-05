@@ -47,31 +47,31 @@ $currentDate = strtr($currentDate, $monthTranslations);
                 <?php if ($sysRol['ubs_sys_groups_id'] == '1') { ?>
                      
                             <a class="data-card" href="user_management.php">
-                                <div><i class="fas fa-users fa-lg" style="color: #11538d;"></i></div>
-                                <p>User Management</p>
+                                <div><i class="fas fa-users fa-lg" style="color: #11538d;"></i>
+                                <p>User Management</p></div>
                             </a>
                  
                             <a class="data-card" href="modulesList.php">
-                                <div><i class="fas fa-circle-nodes fa-lg" style="color: #11538d;"></i></div>
-                                <p>Module Management</p>
+                                <div><i class="fas fa-circle-nodes fa-lg" style="color: #11538d;"></i>
+                                <p>Module Management</p></div>
                             </a>
                  
                             <a class="data-card" href="settingsShift.php">
-                                <div><i class="fas fa-business-time fa-lg" style="color: #11538d;"></i></div>
-                                <p>Shift Settings</p>
+                                <div><i class="fas fa-business-time fa-lg" style="color: #11538d;"></i>
+                                <p>Shift Settings</p></div>
                             </a>
 
                             <a class="data-card" href="invite-user.php">
-                                <div><i class="fas fa-share" style="color: #11538d;"></i></div>
-                                <p>Invite to AQPlatform</p>
+                                <div><i class="fas fa-share" style="color: #11538d;"></i>
+                                <p>Invite to AQPlatform</p></div>
                             </a>
                             <a class="data-card" href="logs.php">
-                                <div><i class="fas fa-clock-rotate-left" style="color: #11538d;"></i></div>
-                                <p>Logs Monitor</p>
+                                <div><i class="fas fa-clock-rotate-left" style="color: #11538d;"></i>
+                                <p>Logs Monitor</p></div>
                             </a>
                             <a class="data-card" href="audit_trail.php">
-                                <div><i class="fas fa-user-secret" style="color: #11538d;"></i></div>
-                                <p>Audit Trail Monitor</p>
+                                <div><i class="fas fa-user-secret" style="color: #11538d;"></i>
+                                <p>Audit Trail Monitor</p></div>
                             </a>
              
             <?php }} ?>

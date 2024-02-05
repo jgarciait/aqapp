@@ -21,7 +21,7 @@
 
     <header class="header">
         <div class="header-content">
-            <p style="" class="shine">CANOVANAS ONLINE</p>
+            <p style="" class="shine">AQPlatform</p>
         </div>
     </header>
     <div class="container p-3">
@@ -30,7 +30,7 @@
                 method="post" id="loginForm">
                 <a href="" class="logo">
                     <div style="margin-top: 0%; text-align: center;">
-                        <img src="https://canovanasgov.org/wp-content/uploads/2023/07/escudo-background.png" alt="" style="width: 10rem; margin: 1rem;"
+                        <img src="core/assets/css/src/logo-dcs.png" alt="" style="width: 10rem; margin: 1rem;"
                             class="brand-img pb-2">
                     </div>
                 </a>
@@ -139,7 +139,7 @@
     ?>
     <footer id="myFooter" class="footer">
         <p>
-            © 2024 All Rights Reserved - Ricoh.
+            © 2024 All Rights Reserved - Document Control System.
         </p>
     </footer>
 </body>

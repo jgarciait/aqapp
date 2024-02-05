@@ -215,8 +215,28 @@ $(document).ready(function() {
             dataTable.column(12).search(filterValue, true, false).draw();
         }
     });
-    
+
 });
+
+$(document).ready(function() {
+    const dataTable = $('#senderTable').DataTable({
+        "pageLength": 10,
+        "lengthMenu": [5, 10, 25, 50, 100],
+    });
+
+    // Add event listener for the filter dropdown for first name (if needed).
+    $('#filterFormStatus').on('change', function() {
+        const filterValue = this.value; // Get the selected option value
+        if (filterValue === '') {
+            // Show all rows when "Mostrar todos" is selected
+            dataTable.column(3).search('').draw();
+        } else {
+            // Filter based on the selected option
+            dataTable.column(3).search(filterValue, true, false).draw();
+        }
+    });
+});
+
 
 //::::Footer Script::::
 
