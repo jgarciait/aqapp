@@ -205,6 +205,29 @@ $stmt = $db->prepare($sql);
     }
 }
 
+function getWCreatorAndMetadataId($id, $db) {
+    mysqli_set_charset($db, "utf8mb4");
+    $sql = " SELECT workflows_creator.id AS wcId, form_metadata.id AS fmId
+    FROM workflows
+    LEFT JOIN workflows_creator ON workflows_creator.wcreator_workflows_id = workflows.id
+    LEFT JOIN form_metadata ON form_metadata.fm_workflows_id = workflows.id
+    WHERE wcreator_workflows_id = ? 
+    AND wlevel_id = 2
+    AND form_metadata.fm_workflows_id = workflows.id";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $workflowData = $result->fetch_assoc();
+        return $workflowData;
+    } else {
+        return false;
+    }
+}
+
 
 function getModuleById($id, $db) {
     mysqli_set_charset($db, "utf8mb4");
@@ -223,6 +246,7 @@ function getModuleById($id, $db) {
         return false;
     }
 }
+
 function getWorkflowsById($id, $db) {
     mysqli_set_charset($db, "utf8mb4");
     $sql = "SELECT *, users.id AS userid
@@ -390,10 +414,51 @@ function insertRequest($referenceNumber, $requestName, $requestDescription, $req
         return false;
     }
 }
-   
-function getLastReferenceNumber($pdo) {
-    $sql = "SELECT MAX(ref_request_num) AS last_reference_number FROM requests";
+function generateNewReferenceNumber($session_user, $pdo) {
+    // Check if there is a previous reference number
+    $sql = "SELECT MAX(ref_number) AS last_reference_number FROM form_001
+    INNER JOIN forms_log ON forms_log.forms_id = form_001.id
+    WHERE fl_sender_user_id = :session_user";
     $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':session_user', $session_user, PDO::PARAM_INT);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($row['last_reference_number']) {
+        // Extract the year and numeric part of the last reference number
+        preg_match('/(\d{4})-(\d+)/', $row['last_reference_number'], $matches);
+
+        if (count($matches) === 3) {
+            $lastYear = $matches[1];
+            $lastNumber = intval($matches[2]);
+
+            // Check if the current year matches the last year
+            $currentYear = date('Y');
+            if ($currentYear == $lastYear) {
+                // Increment the last number by 1
+                $newNumber = $lastNumber + 1;
+            } else {
+                // Start a new numbering for the current year
+                $newNumber = 1;
+            }
+
+            // Format the new reference number with leading zeros
+            $formattedNumber = str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+
+            return "GMC-$currentYear-$formattedNumber";
+        }
+    }
+
+    // If no last reference number found or error occurred, use a default value
+    return "GMC-" . date('Y') . "-0001";
+}
+  
+function getLastReferenceNumber($session_user, $pdo) {
+    $sql = "SELECT MAX(ref_number) AS last_reference_number FROM form_001
+    INNER JOIN forms_log ON forms_log.forms_id = form_001.id
+    WHERE fl_sender_user_id = :session_user";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':session_user', $session_user, PDO::PARAM_INT);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -423,7 +488,7 @@ function getLastReferenceNumber($pdo) {
     }
 
     // If no last reference number found or error occurred, use a default value
-    return "DCS-" . date('Y') . "-0001";
+    return "GMC-" . date('Y') . "-0001";
 }
 
 // functions.php

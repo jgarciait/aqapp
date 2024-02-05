@@ -38,7 +38,6 @@ $user_data2 = getUserById2($session_user, $workflow_id, $db);
                                     <th>Servicio</th>
                                     <th>Estatus</th>
                                     <th>Asignado a:</th>
-                                    <th>Comentarios</th>    
                                     <th>Fecha</th> 
                                     <th>Form Options</th>         
                                 </tr>
@@ -46,7 +45,7 @@ $user_data2 = getUserById2($session_user, $workflow_id, $db);
                             <tbody>
         <?php
             mysqli_set_charset($db, "utf8");
-            $sql = "SELECT form_001.id AS fId, receiver_division.wcreator_name AS receiver_division_name, form_name, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp, comments
+            $sql = "SELECT form_001.id AS fId, receiver_division.wcreator_name AS receiver_division_name, form_name, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
             FROM workflows
             LEFT JOIN form_metadata ON form_metadata.fm_workflows_id = workflows.id
             LEFT JOIN form_001 ON form_001.form_metadata_id = form_metadata.id
@@ -74,7 +73,6 @@ $user_data2 = getUserById2($session_user, $workflow_id, $db);
                         <td data-title='Nombre del Form'><?php echo $row['service_request']?></td>
                         <td data-title='Estatus'><?php echo $row['process_status']?></td>
                         <td data-title='Atendido por:'><?php echo $row['receiver_division_name']?></td>
-                        <td data-title='Comentarios'><?php echo $row['comments']?></td>
                         <td data-title='Fecha'><?php echo $timestamp; ?></td>
                        <td data-title='Ver Formulario'>
                             <?php

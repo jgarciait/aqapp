@@ -192,7 +192,7 @@ label {
 <main class="container-login mt-5" id="chart-container">
     <div class="container-form my-2 mb-5 bg-white shadow rounded" >
         <div class="boximage"></div>
-  <form style="width: 55em;" class="form-content p-3 m-2" id="regForm" action="transacCheckInMed.php" method="post">
+  <form style="width: 55em;" class="form-content p-3 m-2" id="regForm" action="core/transactions/transacForm001.php" method="post">
         <input type="hidden" name="workflow_id" value="<?php echo $workflow_id; ?>">
             <div class="text-center">
                 <h2>Service Template</h2>
@@ -371,21 +371,16 @@ label {
               </div>
 
               <div class="tab mb-3 fs-title">Step 2:
-                <div class="mt-4 mb-3">
-                  <label>Field 1</label>
-                    <div class="mt-4 mb-3 form-check">
-                      <input class="form-check-input" type="radio" name="" id="" value="si">
-                      <label class="form-check-label" for="">
-                        Sí
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="" id="" value="no">
-                      <label class="form-check-label" for="">
-                        No
-                      </label>
-                    </div>
-                </div>
+             <div class="col mb-3">
+                <label for="service_request">Tipo de Solicitud:<span class="required-label">*</span></label>
+                <select autocomplete="service_request" class="form-select" id="service_request" name="service_request">
+                    <option value="" disabled selected>---</option>
+                    <option value="Agua Potable">Agua Potable</option>
+                    <option value="Alcantarillado Tapado">Alcantarillado Tapado</option>
+                    <option value="Deslizamiento">Deslizamiento</option>
+                </select>
+            </div>
+
                 <label class="mb-3 mt-4">Field 2</label>
                 <div class="scale-container">
                     <div class="scale-label">
