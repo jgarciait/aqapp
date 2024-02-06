@@ -6,6 +6,7 @@ $edit_form = $_GET['id'];
 $formData = getFormData($edit_form, $db);
 $form_level_id = $formData['process_level_id'];
 $formId = $formData['fId'];
+$workflow_id = $formData['wId'];
 ?>
 <html>
 <head>

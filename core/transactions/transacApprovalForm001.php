@@ -7,25 +7,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form_id = $_POST['formId'];
     $action = $_POST['action'];
 
+
+
         try {
             // Update process_level_id and process_status based on the action
             if ($action === "approve") {
                 // Increase the process level by 1 for approval
                 $formLevel_Id++;
+                $workflowData = getLevelWcreateId($formLevel_Id, $workflow_id, $db);
+                $receiverDivisionId = $workflowData['wcId'];
                 $processStatus = "Approved";
             } elseif ($action === "revert") {
                 // Decrease the process level by 1 for revert
                 $formLevel_Id--;
+                $workflowData = getLevelWcreateId($formLevel_Id, $workflow_id, $db);
+                $receiverDivisionId = $workflowData['wcId'];
                 $processStatus = "Reverted";
             } elseif ($action === "reject") {
                 // Decrease the process level by 1 for rejection
                 $formLevel_Id--;
+                $workflowData = getLevelWcreateId($formLevel_Id, $workflow_id, $db);
+                $receiverDivisionId = $workflowData['wcId'];
                 $processStatus = "Rejected";
             }
 
             // Update process_level_id and process_status in the forms_log table
-            $stmt = $db->prepare('UPDATE forms_log SET process_level_id = ?, process_status = ? WHERE forms_id = ?');
-            $stmt->execute([$formLevel_Id, $processStatus, $form_id]);
+            $stmt = $db->prepare('UPDATE forms_log SET process_level_id = ?, process_status = ?, receiver_division_wcid = ? WHERE forms_id = ?');
+            $stmt->execute([$formLevel_Id, $processStatus, $receiverDivisionId, $form_id]);
 
             // Commit the transaction
             $db->commit();
