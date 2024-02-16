@@ -46,6 +46,7 @@ $workflowLevelId = $workflow['wlevelId'];
                             </thead>
                             <tbody>
         <?php
+            date_default_timezone_set('America/Puerto_Rico');
             mysqli_set_charset($db, "utf8");
             $sql = "SELECT form_001.id AS fId, receiver_division.wcreator_name AS receiver_division_name, form_name, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
             FROM workflows
