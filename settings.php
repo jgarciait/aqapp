@@ -69,6 +69,10 @@ $currentDate = strtr($currentDate, $monthTranslations);
                                 <div><i class="fas fa-clock-rotate-left" style="color: #11538d;"></i>
                                 <p>Logs Monitor</p></div>
                             </a>
+                            <a class="data-card" href="loginsAttemps.php">
+                                <div><i class="fas fa-clock-rotate-left" style="color: #11538d;"></i>
+                                <p>Login Attemps</p></div>
+                            </a>
                             <a class="data-card" href="audit_trail.php">
                                 <div><i class="fas fa-user-secret" style="color: #11538d;"></i>
                                 <p>Audit Trail Monitor</p></div>
