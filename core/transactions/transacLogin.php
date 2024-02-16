@@ -58,8 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: ../../socialHome.php");
             exit();
         } else {
-            $modalMessage = "Your email or password is incorrect ";
-        }
+            $modalMessage = "Your email or password is incorrect";
+            $_SESSION['modalMessage'] = $modalMessage;
+            header("Location: ../../login.php");
+            exit();
+            }
     } else {
         // Email does not exist, redirect with error message
         $modalMessage = "Your email or password is incorrect";

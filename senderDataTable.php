@@ -78,10 +78,10 @@ $workflowLevelId = $workflow['wlevelId'];
                         <td data-title='Fecha'><?php echo $timestamp; ?></td>
                        <td data-title='Ver Formulario'>
                             <?php
-                                if ($row['process_status'] !== "Draft") {
-                                    echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="readOnly_form_001.php?action=edit&id=' . $row['fId'] . '"><span><i class="fa-solid fa-eye"></i></span></a>';
+                                if ($row['process_status'] !== "Draft" && $row['process_status'] !== "Reverted") {
+                                    echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="readOnlyForm_001.php?action=edit&id=' . $row['fId'] . '"><span><i class="fa-solid fa-eye"></i></span></a>';
                                 } else {
-                                    echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="form_001.php?action=edit&id=' . $row['fId'] . '"><span><i class="fa-solid fa-eye"></i></span></a>';
+                                    echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="senderForm_001.php?action=edit&id=' . $row['fId'] . '"><span><i class="fa-solid fa-eye"></i></span></a>';
                                 }
                             ?>
                         </td>           

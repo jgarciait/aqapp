@@ -194,7 +194,7 @@ label {
 <main class="container-login mt-5" id="chart-container">
     <div class="container-form my-2 mb-5 bg-white shadow rounded" >
  
-  <form style="width: 55em;" class="form-content p-3 m-2" id="regForm" action="core/transactions/transacApprovalForm001.php" method="post">
+  <form style="width: 55em;" class="form-content p-3 m-2" id="regForm" action="core/transactions/transacSenderForm001.php" method="post">
         <input type="hidden" name="workflow_id" value="<?php echo $workflow_id; ?>">
         <input type="hidden" name="form_level_id" value="<?php echo $form_level_id; ?>">
         <input type="hidden" name="formId" value="<?php echo $formId; ?>">
@@ -484,9 +484,8 @@ label {
                 <button type="button" class="mb-3 btn-menu btn-1 hover-filled-opacity" id="prevBtn" onclick="nextPrev(-1);">Previous</button>
                 <button type="button" class="mb-3 btn-menu btn-1 hover-filled-opacity" id="nextBtn" onclick="nextPrev(1);">Next</button>
                 <span id="approvalButtons" style="display: none;">
-                    <button type="submit" name="action" value="revert" class="mb-3 btn-menu btn-1 hover-filled-opacity" id="revertBtn" onclick="revertForm();">Revert</button>
-                    <button type="submit" name="action" value="approve" class="mb-3 btn-menu btn-1 hover-filled-opacity" id="approveBtn" onclick="approveForm();">Approve</button>
-                    <button type="submit" name="action" value="reject" class="mb-3 btn-menu btn-1 hover-filled-opacity" id="rejectBtn" onclick="rejectForm();">Reject</button>
+                    <button type="submit" name="action" value="save" class="mb-3 btn-menu btn-1 hover-filled-opacity" id="revertBtn" onclick="revertForm();">Save</button>
+                    <button type="submit" name="action" value="submit" class="mb-3 btn-menu btn-1 hover-filled-opacity" id="approveBtn" onclick="approveForm();">Submit</button>
                 </span>
             </div>
         </div>
@@ -515,40 +514,32 @@ label {
         let currentTab = 0;
         showTab(currentTab); // Display the current tab
 
-// Function to display the completed tabs
-function showTab(n) {
-  var x = document.getElementsByClassName("tab");
-  var progressBarSteps = document.querySelectorAll("#progressbar li");
+        // Function to display the completed tabs
+        function showTab(n) {
+            var x = document.getElementsByClassName("tab");
+            var progressBarSteps = document.querySelectorAll(".step");
 
-  // If you are going back, remove "active" class from all the steps after the current step
-  for (var i = n + 1; i < progressBarSteps.length; i++) {
-    progressBarSteps[i].classList.remove("active");
-  }
+            for (var i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
 
-  // Set the "active" class on the current step
-  progressBarSteps[n].classList.add("active");
+            x[n].style.display = "block";
+            fixStepIndicator(n);
 
-  for (var i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
+            if (n === 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
 
-  x[n].style.display = "block";
-
-  if (n === 0) {
-      document.getElementById("prevBtn").style.display = "none";
-  } else {
-      document.getElementById("prevBtn").style.display = "inline";
-  }
-
-  if (n === x.length - 1) {
-      document.getElementById("nextBtn").style.display = "none";
-      toggleApprovalButtons(true); // Show the approval buttons at the final step
-  } else {
-      document.getElementById("nextBtn").style.display = "inline";
-      toggleApprovalButtons(false); // Hide the approval buttons when not at the final step
-  }
-
-}
+            if (n === x.length - 1) {
+                document.getElementById("nextBtn").style.display = "none";
+                toggleApprovalButtons(true); // Show the approval buttons at the final step
+            } else {
+                document.getElementById("nextBtn").style.display = "inline";
+                toggleApprovalButtons(false); // Hide the approval buttons when not at the final step
+            }
+        }
 
         // Function to handle Next and Previous buttons
         function nextPrev(n) {

@@ -476,7 +476,9 @@ label {
   <!-- Approval Section -->
         <div class="tab mb-3">
             <div class="fs-title">Approval Section:</div>
-            <!-- Your approval form content goes here -->
+                   <div class="col mb-3">
+                    <p>Service:  <?php echo $formData['process_status']; ?></p>
+                  </div>
         </div>
         <hr>
         <div class="mb-3 p-2">
@@ -484,9 +486,7 @@ label {
                 <button type="button" class="mb-3 btn-menu btn-1 hover-filled-opacity" id="prevBtn" onclick="nextPrev(-1);">Previous</button>
                 <button type="button" class="mb-3 btn-menu btn-1 hover-filled-opacity" id="nextBtn" onclick="nextPrev(1);">Next</button>
                 <span id="approvalButtons" style="display: none;">
-                    <button type="submit" name="action" value="revert" class="mb-3 btn-menu btn-1 hover-filled-opacity" id="revertBtn" onclick="revertForm();">Revert</button>
-                    <button type="submit" name="action" value="approve" class="mb-3 btn-menu btn-1 hover-filled-opacity" id="approveBtn" onclick="approveForm();">Approve</button>
-                    <button type="submit" name="action" value="reject" class="mb-3 btn-menu btn-1 hover-filled-opacity" id="rejectBtn" onclick="rejectForm();">Reject</button>
+                    
                 </span>
             </div>
         </div>
@@ -515,40 +515,40 @@ label {
         let currentTab = 0;
         showTab(currentTab); // Display the current tab
 
-// Function to display the completed tabs
-function showTab(n) {
-  var x = document.getElementsByClassName("tab");
-  var progressBarSteps = document.querySelectorAll("#progressbar li");
+        // Function to display the completed tabs
+        function showTab(n) {
+            var x = document.getElementsByClassName("tab");
+             var progressBarSteps = document.querySelectorAll("#progressbar li");
 
-  // If you are going back, remove "active" class from all the steps after the current step
-  for (var i = n + 1; i < progressBarSteps.length; i++) {
-    progressBarSteps[i].classList.remove("active");
-  }
+            // If you are going back, remove "active" class from all the steps after the current step
+            for (var i = n + 1; i < progressBarSteps.length; i++) {
+              progressBarSteps[i].classList.remove("active");
+            }
 
-  // Set the "active" class on the current step
-  progressBarSteps[n].classList.add("active");
+            // Set the "active" class on the current step
+            progressBarSteps[n].classList.add("active");
 
-  for (var i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
+            for (var i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
 
-  x[n].style.display = "block";
+            x[n].style.display = "block";
+            fixStepIndicator(n);
 
-  if (n === 0) {
-      document.getElementById("prevBtn").style.display = "none";
-  } else {
-      document.getElementById("prevBtn").style.display = "inline";
-  }
+            if (n === 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
 
-  if (n === x.length - 1) {
-      document.getElementById("nextBtn").style.display = "none";
-      toggleApprovalButtons(true); // Show the approval buttons at the final step
-  } else {
-      document.getElementById("nextBtn").style.display = "inline";
-      toggleApprovalButtons(false); // Hide the approval buttons when not at the final step
-  }
-
-}
+            if (n === x.length - 1) {
+                document.getElementById("nextBtn").style.display = "none";
+                toggleApprovalButtons(true); // Show the approval buttons at the final step
+            } else {
+                document.getElementById("nextBtn").style.display = "inline";
+                toggleApprovalButtons(false); // Hide the approval buttons when not at the final step
+            }
+        }
 
         // Function to handle Next and Previous buttons
         function nextPrev(n) {
