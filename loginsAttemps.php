@@ -32,12 +32,12 @@ include_once 'core/config/setting_setup.php';
             
                 while ($row = mysqli_fetch_assoc($result)) {
                     // Your table rows here...
-                     $timestamp = date('F j, Y h:i A', strtotime($row['logs_timestamp']));
+                     $timestamp = date('F j, Y h:i A', strtotime($row['timestamp']));
                     ?>
                     <tr>
                         <td data-title='#'><?php echo $count; ?></td>
                         <td data-title='Date'><?php echo $timestamp; ?></td>  
-                        <td data-title='IP'><?php echo $row['ip_address'] . " " . $row['last_name']?></td>
+                        <td data-title='IP'><?php echo $row['ip_address']?></td>
                         <td data-title='Details'><?php echo $row['details']?></td>                     
                     </tr>
                     <?php

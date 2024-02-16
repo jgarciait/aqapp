@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Check if the "iamNotARobot" checkbox is checked
     if (!$prohibitedStringFound && !isset($_POST['iamNotARobot'])) {
-        $details = "I am not a robot checkbox not checked";
+        $details = "Login Failed";
     }
 
     // Get the user's IP address
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_execute($stmt);
         
         // Set session message for user
-        $_SESSION['modalMessage'] = "SQL attack detected. Your IP: $userIP has been recorded.";
+        $_SESSION['modalMessage'] = "Failed login attempt.";
         
         // Redirect user to login page
         header("Location: ../../login.php");
