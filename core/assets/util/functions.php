@@ -249,6 +249,27 @@ function getLevelWcreateId($formLevel_Id, $workflow_id, $db) {
     }
 }
 
+function getSenderUser($session_user, $workflow_id, $db) {
+    mysqli_set_charset($db, "utf8mb4");
+    $sql = "SELECT workflows_creator.wcreator_name AS sender_division_name 
+        FROM users
+        LEFT JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = users.id
+        LEFT JOIN workflows_creator ON workflows_creator.id = users_by_wcreator.wcreator_id
+        WHERE users.id = ?
+        AND wcreator_workflows_id = ?"; 
+
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param('ii', $session_user, $workflow_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $senderUser = $result->fetch_assoc();
+        return $senderUser;
+    } else {
+        return false;
+    }
+}
 
 function getReceiverUser($id, $db) {
     mysqli_set_charset($db, "utf8mb4");

@@ -208,7 +208,7 @@ label {
                     <li class="active" id="personal"><strong>Step 1</strong></li>
                     <li id="vaccine"><strong>Step 2</strong></li>
                     <li id="health"><strong>Step 3</strong></li>
-                    <li id="confirm"><strong>Submit</strong></li>
+                    <li id="confirm"><strong>Approval Evaluation</strong></li>
                 </ul>
             </div>
             <!-- One "tab" for each step in the form: -->

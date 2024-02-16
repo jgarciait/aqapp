@@ -7,28 +7,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form_id = $_POST['formId'];
     $action = $_POST['action'];
 
-
-
         try {
             // Update process_level_id and process_status based on the action
             if ($action === "approve") {
                 // Increase the process level by 1 for approval
                 $formLevel_Id++;
                 $workflowData = getLevelWcreateId($formLevel_Id, $workflow_id, $db);
-                $receiverDivisionId = $workflowData['wcId'];
-                $processStatus = "Approved";
+                $statusSenderName = getSenderUser($session_user, $workflow_id, $db);
+                $receiverDivisionId = $workflowData['wcId']  ;
+                $processStatus = "Approved by " . $statusSenderName['sender_division_name'];
             } elseif ($action === "revert") {
                 // Decrease the process level by 1 for revert
                 $formLevel_Id--;
                 $workflowData = getLevelWcreateId($formLevel_Id, $workflow_id, $db);
+                $statusSenderName = getSenderUser($session_user, $workflow_id, $db);
                 $receiverDivisionId = $workflowData['wcId'];
-                $processStatus = "Reverted";
+                $processStatus = "Reverted by " . $statusSenderName['sender_division_name'];
             } elseif ($action === "reject") {
                 // Decrease the process level by 1 for rejection
                 $formLevel_Id--;
                 $workflowData = getLevelWcreateId($formLevel_Id, $workflow_id, $db);
+                $statusSenderName = getSenderUser($session_user, $workflow_id, $db);
                 $receiverDivisionId = $workflowData['wcId'];
-                $processStatus = "Rejected";
+                $processStatus = "Rejected by " . $statusSenderName['sender_division_name'];
             }
 
             // Update process_level_id and process_status in the forms_log table
