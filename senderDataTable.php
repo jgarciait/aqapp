@@ -57,7 +57,7 @@ $workflowLevelId = $workflow['wlevelId'];
             LEFT JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = fl_sender_user_id
             LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
             LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_log.receiver_division_wcid
-            WHERE forms_log.process_level_id = $workflowLevelId";
+            WHERE forms_log.fl_sender_user_id = $session_user";
 
             $result = mysqli_query($db, $sql); // Execute the query
 
