@@ -7,6 +7,19 @@ $formData = getFormData($edit_form, $db);
 $form_level_id = $formData['process_level_id'];
 $formId = $formData['fId'];
 $workflow_id = $formData['wId'];
+
+// Fetching form audit trail data
+$sql = "SELECT * 
+        FROM forms_audit_trail
+        INNER JOIN users ON users.id = forms_audit_trail.fl_user_id
+        INNER JOIN forms_status ON forms_status.forms_id = forms_audit_trail.fl_forms_id
+        INNER JOIN form_001 ON form_001.id = forms_status.forms_id
+        LEFT JOIN form_metadata ON form_metadata.id = form_001.form_metadata_id
+        WHERE forms_audit_trail.fl_forms_id = $formId
+        ORDER BY forms_audit_trail.fl_timestamp DESC";
+$result = mysqli_query($db, $sql);
+
+$count = 1;
 ?>
 <html>
 <head>
@@ -190,11 +203,10 @@ label {
 
 </style>
 </head>
-
-<main class="container-login mt-5" id="chart-container">
-    <div class="container-form my-2 mb-5 bg-white shadow rounded" >
+    <main class="container-login mt-5" id="chart-container">
+      <div class="container-form my-2 mb-5 bg-white shadow rounded" >
  
-  <form style="width: 55em;" class="form-content p-3 m-2" id="regForm" action="core/transactions/transacApprovalForm001.php" method="post">
+      <form style="width: 55em;" class="form-content p-3 m-2" id="regForm" action="core/transactions/transacApprovalForm001.php" method="post">
         <input type="hidden" name="workflow_id" value="<?php echo $workflow_id; ?>">
         <input type="hidden" name="form_level_id" value="<?php echo $form_level_id; ?>">
         <input type="hidden" name="formId" value="<?php echo $formId; ?>">
@@ -208,7 +220,7 @@ label {
                     <li class="active" id="personal"><strong>Step 1</strong></li>
                     <li id="vaccine"><strong>Step 2</strong></li>
                     <li id="health"><strong>Step 3</strong></li>
-                    <li id="confirm"><strong>Submit</strong></li>
+                    <li id="confirm"><strong>Step 4</strong></li>
                 </ul>
             </div>
             <!-- One "tab" for each step in the form: -->
@@ -490,16 +502,57 @@ label {
                 </span>
             </div>
         </div>
+        <details>
+    <summary>
+            <a>Forms Audit Trail</a>
+    </summary>
+    <div class="container-fluid p-3 mr-2">
+        <table style="width: 100%; padding: 1rem;" id="templateTable" class="table table-bordered table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Ref. Number</th>
+                    <th>Action</th>
+                    <th>User</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if ($result) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $timestamp = date('F j, Y h:i A', strtotime($row['fl_timestamp']));
+                        ?>
+                        <tr>
+                            <td data-title='#'><?php echo $count; ?></td>
+                            <td data-title='Ref. Number'><?php echo $row['ref_number']; ?></td>
+                            <td data-title='Action'><?php echo $row['actions']; ?></td>
+                            <td data-title='User'><?php echo $row['user_email']; ?></td>
+                            <td data-title='Timestamp'><?php echo $timestamp; ?></td>
+                        </tr>
+                        <?php
+                        $count++;
+                    }
+                    mysqli_free_result($result);
+                } else {
+                    echo "Error executing query: " . mysqli_error($db);
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</details>
 
-        <!-- Circles which indicate the steps of the form: -->
-        <div style="display: none; text-align:center;margin-top:40px;">
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
+               <!-- Circles which indicate the steps of the form: -->
+                <div style="display: none; text-align:center;margin-top:40px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+            </form>
         </div>
-    </form>
-
+    </main>
     <script>
         // Function to show or hide the approval buttons
         function toggleApprovalButtons(show) {

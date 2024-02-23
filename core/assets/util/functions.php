@@ -151,18 +151,62 @@ function getSysRol($id, $db) {
     }
 }
 
+function getTableNameByWorkflowId($workflow_id, $db) {
+    mysqli_set_charset($db, "utf8mb4");
+
+    // Retrieve the table_name and table_name based on the workflow_id
+    $sql = "SELECT fm.table_name 
+            FROM form_metadata AS fm
+            WHERE fm.fm_workflows_id = ?";
+    $stmt = $db->prepare($sql);
+    if (!$stmt) {
+        // Handle error, e.g., log or throw an exception
+        return false;
+    }
+    $stmt->bind_param('i', $workflow_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows === 0) {
+        // No form associated with this workflow_id
+        return false;
+    }
+    $metadata = $result->fetch_assoc();
+    $table_name = $metadata['table_name'];
+
+    // Assuming you want to retrieve data such as id from the dynamically determined table
+    // Note: This part might need to adjust based on what 'id' represents in your context
+    // If 'id' is not directly stored in your form tables, you might need a different approach
+    $sql = "SELECT id FROM " . $table_name . " LIMIT 1"; // Example: Getting the first 'id' for demonstration
+    $stmt = $db->prepare($sql);
+    if (!$stmt) {
+        // Handle error
+        return false;
+    }
+    // No parameters to bind in this case
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $formData = $result->fetch_assoc();
+        // Return both the ID and table_name as an associative array
+        return ['id' => $formData['id'], 'table_name' => $table_name];
+    } else {
+        return false;
+    }
+}
+
 function getFormData($id, $db) {
     mysqli_set_charset($db, "utf8mb4");
-    $sql = "SELECT form_001.id AS fId, workflows.id AS wId, process_level_id, firstName, lastName, age, gender, physical_address, postal_address, sector, phone, email, receiver_division.wcreator_name AS receiver_division_name, form_name, signature, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
+    $sql = "SELECT form_001.id AS fId, workflows.id AS wId, process_level_id, firstName, lastName, age, gender, physical_address, postal_address, sector, phone, email, receiver_division.wcreator_name AS receiver_division_name, table_name, signature, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
             FROM workflows
             LEFT JOIN form_metadata ON form_metadata.fm_workflows_id = workflows.id
             LEFT JOIN form_001 ON form_001.form_metadata_id = form_metadata.id
-            LEFT JOIN forms_log ON forms_log.forms_id = form_001.id
-            LEFT JOIN users AS sender ON sender.id = forms_log.fl_sender_user_id
-            LEFT JOIN users AS receiver ON receiver.id = forms_log.fl_receiver_user_id
+            LEFT JOIN forms_status ON forms_status.forms_id = form_001.id
+            LEFT JOIN users AS sender ON sender.id = forms_status.fl_sender_user_id
+            LEFT JOIN users AS receiver ON receiver.id = forms_status.fl_receiver_user_id
             LEFT JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = fl_sender_user_id
             LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
-            LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_log.receiver_division_wcid
+            LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_status.receiver_division_wcid
             WHERE form_001.id  = ?";
     
 $stmt = $db->prepare($sql);
@@ -171,8 +215,8 @@ $stmt = $db->prepare($sql);
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $edit_profile = $result->fetch_assoc();
-        return $edit_profile;
+        $formData = $result->fetch_assoc();
+        return $formData;
     } else {
         return false;
     }
@@ -180,16 +224,16 @@ $stmt = $db->prepare($sql);
 
 function getFormData2($id, $db) {
     mysqli_set_charset($db, "utf8mb4");
-    $sql = "SELECT form_001.id AS fId, firstName, lastName, receiver_division.wcreator_name AS receiver_division_name, form_name, signature, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
+    $sql = "SELECT form_001.id AS fId, firstName, lastName, receiver_division.wcreator_name AS receiver_division_name, table_name, signature, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
             FROM workflows
             LEFT JOIN form_metadata ON form_metadata.fm_workflows_id = workflows.id
             LEFT JOIN form_001 ON form_001.form_metadata_id = form_metadata.id
-            LEFT JOIN forms_log ON forms_log.forms_id = form_001.id
-            LEFT JOIN users AS sender ON sender.id = forms_log.fl_sender_user_id
-            LEFT JOIN users AS receiver ON receiver.id = forms_log.fl_receiver_user_id
+            LEFT JOIN forms_status ON forms_status.forms_id = form_001.id
+            LEFT JOIN users AS sender ON sender.id = forms_status.fl_sender_user_id
+            LEFT JOIN users AS receiver ON receiver.id = forms_status.fl_receiver_user_id
             LEFT JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = fl_sender_user_id
             LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
-            LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_log.receiver_division_wcid
+            LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_status.receiver_division_wcid
             WHERE workflows.id  = ?";
     
 $stmt = $db->prepare($sql);
@@ -481,7 +525,7 @@ function insertRequest($referenceNumber, $requestName, $requestDescription, $req
 function generateNewReferenceNumber($session_user, $pdo) {
     // Check if there is a previous reference number
     $sql = "SELECT MAX(ref_number) AS last_reference_number FROM form_001
-    INNER JOIN forms_log ON forms_log.forms_id = form_001.id
+    INNER JOIN forms_status ON forms_status.forms_id = form_001.id
     WHERE fl_sender_user_id = :session_user";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':session_user', $session_user, PDO::PARAM_INT);
@@ -519,7 +563,7 @@ function generateNewReferenceNumber($session_user, $pdo) {
   
 function getLastReferenceNumber($session_user, $pdo) {
     $sql = "SELECT MAX(ref_number) AS last_reference_number FROM form_001
-    INNER JOIN forms_log ON forms_log.forms_id = form_001.id
+    INNER JOIN forms_status ON forms_status.forms_id = form_001.id
     WHERE fl_sender_user_id = :session_user";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':session_user', $session_user, PDO::PARAM_INT);

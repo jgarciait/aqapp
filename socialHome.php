@@ -44,7 +44,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                 <?php if (!empty($sysRol)) { // Check if $user_data is not empty ?>
                     <?php
                     // SQL query to fetch user workflows and check if the user is associated with each workflow
-                    $sql = "SELECT workflows.workflow_name, form_name, workflows.wsender, workflows_creator.wcreator_name, workflows_creator.wlevel_id AS wlevelId, workflows.id AS workflow_id
+                    $sql = "SELECT workflows.workflow_name, table_name, form_name, workflows.wsender, workflows_creator.wcreator_name, workflows_creator.wlevel_id AS wlevelId, workflows.id AS workflow_id
                         from users_by_wcreator
                         INNER JOIN workflows_creator ON workflows_creator.id = users_by_wcreator.wcreator_id
                         LEFT JOIN workflows ON workflows.id = workflows_creator.wcreator_workflows_id
@@ -66,6 +66,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                         $cardCount = 0; // Initialize card count
 
                         foreach ($user_workflows as $workflow) {
+                            $workflow_id = $workflow['workflow_id']; // Get the workflow ID
 
                             $workflowName = $workflow['wcreator_name'];
                             if ($workflowName === 'Monitor') {
@@ -98,11 +99,11 @@ $currentDate = strtr($currentDate, $monthTranslations);
                           
                             }
                             
-
+                            $table_name = $workflow['table_name'];
                             // ******* SENDER *******
                             // FORM PAGE
                             if ($workflow['wlevelId'] < '2') {
-                                $sDataTableHref = 'newForm_001.php';
+                                $sDataTableHref = $table_name .'.php';
                                 echo '<a class="data-card" href="' . $sDataTableHref . '?workflow_id=' . $workflow['workflow_id'] . '">';
                                 echo '<div><i class="fas fa-share-nodes" style="color: #11538d;"></i>';
                                 echo '<p>' . $workflow['workflow_name'] . " - " . $workflow['form_name'] . '</p>';
@@ -131,7 +132,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                                 
                                 echo '<a class="data-card" href="' . $rDataTableHref . '?workflow_id=' . $workflow['workflow_id'] . '">';
                                 echo '<div><i class="fas fa-share-nodes" style="color: #11538d;"></i>';
-                                echo '<p>Attend Services</p>';
+                                echo '<p>' .$workflow['workflow_name']. ' Requests</p>';
                                 echo '</div></a>';
                             }
 

@@ -55,7 +55,10 @@ $currentDate = strtr($currentDate, $monthTranslations);
                                 <div><i class="fas fa-circle-nodes fa-lg" style="color: #11538d;"></i>
                                 <p>Module Management</p></div>
                             </a>
-                 
+                            <a class="data-card" href="form_management.php">
+                                <div><i class="fas fa-table-list" style="color: #11538d;"></i>
+                                <p>Forms Management</p></div>
+                            </a>
                             <a class="data-card" href="settingsShift.php">
                                 <div><i class="fas fa-business-time fa-lg" style="color: #11538d;"></i>
                                 <p>Shift Settings</p></div>
@@ -77,7 +80,7 @@ $currentDate = strtr($currentDate, $monthTranslations);
                                 <div><i class="fas fa-user-secret" style="color: #11538d;"></i>
                                 <p>Audit Trail Monitor</p></div>
                             </a>
-             
+
             <?php }} ?>
         </main>
         

@@ -53,7 +53,24 @@
                 foreach ($user_workflows as $workflow) {
             
                 $wId = $workflow['workflow_id'];
-                
+                if ($workflow['wlevelId'] > 1) { ?>
+                    <li class="has-subnav">
+                        <a href="<?php echo "receiverDataTable.php" . '?workflow_id=' . $wId; ?>">
+                            <i class="fa fa-file-invoice fa-2x"></i>
+                            <span class="nav-text">
+                                Requests
+                            </span>
+                        </a>
+                    </li>
+                    <li class="has-subnav">
+                        <a href="<?php echo "archiveDataTable.php" . '?workflow_id=' . $wId; ?>">
+                            <i class="fa fa-file-invoice fa-2x"></i>
+                            <span class="nav-text">
+                                Archived
+                            </span>
+                        </a>
+                    </li>
+                <?php }
                 if ($workflow['workflow_name'] == 'Asistencia') { ?>
                     <li class="has-subnav">
                         <a href="<?php echo "newAttendance.php" . '?workflow_id=' . $wId; ?>">
@@ -63,58 +80,50 @@
                             </span>
                         </a>
                     </li>
-                    <li class="has-subnav">
-                        <a href="<?php echo "newRequest.php" . '?workflow_id=' . $wId; ?>">
-                            <i class="fa fa-file-invoice fa-2x"></i>
-                            <span class="nav-text">
-                                Solicitudes
-                            </span>
-                        </a>
-                    </li>
-        <form class="row g-3" action="transacTasksForm.php" method="post">
+                        <form class="row g-3" action="transacTasksForm.php" method="post">
 
-                <?php if (isset($_GET['submitted'])) { ?>
-                <div id="successAlert" class="alert alert-success alert-dismissible">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <strong>Success!</strong> Task Added
-                </div>
-                <?php } ?>
+                            <?php if (isset($_GET['submitted'])) { ?>
+                            <div id="successAlert" class="alert alert-success alert-dismissible">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                <strong>Success!</strong> Task Added
+                            </div>
+                            <?php } ?>
 
-                <?php
-                if (isset($_GET['deleted'])) {
-                ?>
-                <div id="successAlert" class="alert alert-danger alert-dismissible">
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <strong>Success!</strong> Task Deleted
+                            <?php
+                            if (isset($_GET['deleted'])) {
+                            ?>
+                        <div id="successAlert" class="alert alert-danger alert-dismissible">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        <strong>Success!</strong> Task Deleted
 
-                </div>
-                <?php
-                }
+                        </div>
+                        <?php
+                        }
 
-                ?>
-            <div class="col-auto">
-                <div class="form-floating mb-3">
-                    <input name="task_name" type="text" class="form-control" id="floatingInput" placeholder="Task">
-                    <label for="floatingInput">Nombre del Input</label>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-floating mb-3">
-                    <textarea name="task_description" type="text" class="form-control" id="floatingInput" placeholder="Description"></textarea>
-                    <label for="floatingInput">Decripción del Input</label>
-                </div>
-            </div>
-                <div class="col">
-                <div class="form-floating mb-3">
-                    <textarea name="task_description" type="text" class="form-control" id="floatingInput" placeholder="Description"></textarea>
-                    <label for="floatingInput">Nombre de Variable</label>
-                </div>
-            </div>
-            <div class="col-auto">       
-                <button type="submit" class="btn btn-outline-primary mb-3">Submit</button>
-            </div>
-            
-        </form>
+                        ?>
+                    <div class="col-auto">
+                        <div class="form-floating mb-3">
+                            <input name="task_name" type="text" class="form-control" id="floatingInput" placeholder="Task">
+                            <label for="floatingInput">Nombre del Input</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <textarea name="task_description" type="text" class="form-control" id="floatingInput" placeholder="Description"></textarea>
+                            <label for="floatingInput">Decripción del Input</label>
+                        </div>
+                    </div>
+                        <div class="col">
+                        <div class="form-floating mb-3">
+                            <textarea name="task_description" type="text" class="form-control" id="floatingInput" placeholder="Description"></textarea>
+                            <label for="floatingInput">Nombre de Variable</label>
+                        </div>
+                    </div>
+                    <div class="col-auto">       
+                        <button type="submit" class="btn btn-outline-primary mb-3">Submit</button>
+                    </div>
+                    
+                </form>
                 <?php }}
                 if (!empty($user_data)) { // Check if $user_data is not empty
                 

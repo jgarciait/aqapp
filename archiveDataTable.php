@@ -3,19 +3,21 @@ include_once 'core/config/main_setup.php';
 
 $workflow_id = $_GET['workflow_id'];
 $user_data2 = getUserById2($session_user, $workflow_id, $db);
-$table_data = getTableNameByWorkflowId($workflow_id, $db); // Retrieve the dynamic table name
-$table_name = $table_data['table_name']; // Correctly accessing the table name
+
 $workflowLevelId = $workflow['wlevelId'];
+
 ?> 
     <div class="container container-table">
         <main class="container-fluid my-1 p-4 border border-info content-table bg-white shadow rounded table-responsive">
             <div class="container">
             <a class="title-table"><span><?php echo $user_data2['workflow_name'] . " - " . $user_data2['wcreator_name'];  ?></span></a>
+            <p>Historical Records</p>            
             <div class="col-sm-2 mb-3 pt-2">
                     <select class="form-select" id="filterFormStatus">
                         <?php
                         // Fetch unique statuses from the shift_table
-                        $statusQuery = "SELECT DISTINCT process_status AS filter_status FROM forms_status";
+                        $statusQuery = "SELECT DISTINCT process_status AS filter_status FROM forms_status
+                        WHERE forms_status.process_level_id = $workflowLevelId";
                         $formStatus = mysqli_query($db, $statusQuery);
 
                         if ($formStatus) {
@@ -46,53 +48,43 @@ $workflowLevelId = $workflow['wlevelId'];
                                 </tr>
                             </thead>
                             <tbody>
-           <?php
-       
-                if ($table_name) { // Check if table name was successfully retrieved
-                mysqli_set_charset($db, "utf8");
-                $sql = "SELECT {$table_name}.id AS fId, 
-                            receiver_division.wcreator_name AS receiver_division_name, 
-                            '{$table_name}' AS table_name, 
-                            ref_number, 
-                            process_status, 
-                            service_request, 
-                            sender.first_name AS sender_name, 
-                            receiver.first_name AS receiver_name, 
-                            timestamp
-                        FROM {$table_name}
-                        INNER JOIN forms_status ON forms_status.forms_id = {$table_name}.id
-                        LEFT JOIN users AS sender ON sender.id = forms_status.fl_sender_user_id
-                        LEFT JOIN users AS receiver ON receiver.id = forms_status.fl_receiver_user_id
-                        LEFT JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = forms_status.fl_sender_user_id
-                        LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
-                        LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_status.receiver_division_wcid
-                        WHERE forms_status.fl_sender_user_id = ?";
+        <?php
+            mysqli_set_charset($db, "utf8");
+            $sql = "SELECT form_001.id AS fId, receiver_division.wcreator_name AS receiver_division_name, users_by_wcreator.ubw_user_id, form_name, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
+            FROM workflows
+            LEFT JOIN form_metadata ON form_metadata.fm_workflows_id = workflows.id
+            LEFT JOIN form_001 ON form_001.form_metadata_id = form_metadata.id
+            LEFT JOIN forms_status ON forms_status.forms_id = form_001.id
+            LEFT JOIN forms_audit_trail ON forms_audit_trail.fl_forms_id = form_001.id
+            LEFT JOIN users AS sender ON sender.id = forms_status.fl_sender_user_id
+            LEFT JOIN users AS receiver ON receiver.id = forms_status.fl_receiver_user_id
+            LEFT JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = fl_sender_user_id
+            LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
+            LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_status.receiver_division_wcid
+            WHERE forms_status.process_level_id = 1
+            AND forms_audit_trail.fl_user_id = $session_user
+            GROUP BY forms_status.forms_id"; 
 
-            $stmt = mysqli_prepare($db, $sql);
-            mysqli_stmt_bind_param($stmt, 'i', $session_user);
-            mysqli_stmt_execute($stmt);
-            $result = mysqli_stmt_get_result($stmt);
+            $result = mysqli_query($db, $sql); // Execute the query
 
             $count = 1;
         
             if ($result) {
+            
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $timestamp = date('F j, Y h:i A', strtotime($row['timestamp']));
+                    // Your table rows here...
+                     $timestamp = date('F j, Y h:i A', strtotime($row['timestamp']));
                     ?>
                     <tr>
                         <td data-title='#'><?php echo $count; ?></td>
-                        <td data-title='Núm. Caso'><?php echo htmlspecialchars($row['ref_number']); ?></td>
-                        <td data-title='Nombre del Form'><?php echo htmlspecialchars($row['service_request']); ?></td>
-                        <td data-title='Estatus'><?php echo htmlspecialchars($row['process_status']); ?></td>
-                        <td data-title='Atendido por:'><?php echo htmlspecialchars($row['receiver_division_name']); ?></td>
+                        <td data-title='Núm. Caso'><?php echo $row['ref_number']?></td>
+                        <td data-title='Nombre del Form'><?php echo $row['service_request']?></td>
+                        <td data-title='Estatus'><?php echo $row['process_status']; ?></td>
+                        <td data-title='Atendido por:'><?php echo $row['receiver_division_name']?></td>
                         <td data-title='Fecha'><?php echo $timestamp; ?></td>
                        <td data-title='Ver Formulario'>
-                                          <?php
-                                if ($row['process_status'] !== "Draft" && $row['process_status'] !== "Reverted") {
-                                    echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="readOnlyForm_001.php?action=edit&id=' . $row['fId'] . '"><span><i class="fa-solid fa-eye"></i></span></a>';
-                                } else {
-                                    echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="senderForm_001.php?action=edit&id=' . $row['fId'] . '"><span><i class="fa-solid fa-eye"></i></span></a>';
-                                }
+                            <?php
+                            echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="readOnlyForm_001.php?action=edit&id=' . $row['fId'] . '"><span><i class="fa-solid fa-eye"></i></span></a>';
                             ?>
                         </td>           
                     </tr>
@@ -103,10 +95,8 @@ $workflowLevelId = $workflow['wlevelId'];
             } else {
                 echo "Error executing query: " . mysqli_error($db);
             }
-        } else {
-            echo "Table name could not be determined.";
-        }
-        ?>
+            
+            ?>
             <!-- Display the workflowName as the heading -->
     </tbody>
                         

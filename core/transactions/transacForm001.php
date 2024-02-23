@@ -37,9 +37,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $form_001_id = mysqli_insert_id($db);
             
             $currentTimestamp = date('Y-m-d H:i:s');
-            // Insert data into forms_log table
-            $stmt = $db->prepare('INSERT INTO forms_log (fl_sender_user_id, fl_receiver_user_id, process_status, timestamp, forms_id, process_level_id, receiver_division_wcid) VALUES (?, ?, ?, ?, ?, ?, ?)');
+            // Insert data into forms_status table
+            $stmt = $db->prepare('INSERT INTO forms_status (fl_sender_user_id, fl_receiver_user_id, process_status, timestamp, forms_id, process_level_id, receiver_division_wcid) VALUES (?, ?, ?, ?, ?, ?, ?)');
             $stmt->execute([$session_user, $receiverUserId, $processStatus, $currentTimestamp, $form_001_id, 2, $workflows_creator_id]);
+
+            // Insert record into the forms_audit_trail table
+            $stmt = $db->prepare('INSERT INTO forms_audit_trail (actions, fl_user_id, fl_forms_id, fl_timestamp) VALUES (?, ?, ?, ?)');
+            $stmt->execute([$processStatus, $session_user, $form_001_id, $currentTimestamp]);
 
             // Commit the transaction
             $db->commit();
