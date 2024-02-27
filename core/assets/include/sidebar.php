@@ -23,15 +23,6 @@
                     </a>
                 </li>
                 <?php } ?>
-            
-            <li class="has-subnav">
-                <a href="#" id="expandButton">
-                    <i class="fa fa-code-commit fa-2x"></i>
-                    <span class="nav-text">
-                        My Modules
-                    </span>
-                </a>
-            </li>
 
             <div id="expandContent" style="display: block;">
                 
@@ -54,7 +45,7 @@
             
                 $wId = $workflow['workflow_id'];
                 if ($workflow['wlevelId'] > 1) { ?>
-                    <li class="has-subnav">
+                    
                         <a href="<?php echo "receiverDataTable.php" . '?workflow_id=' . $wId; ?>">
                             <i class="fa fa-file-invoice fa-2x"></i>
                             <span class="nav-text">
@@ -62,16 +53,35 @@
                             </span>
                         </a>
                     </li>
+                <?php } if ($workflow['wlevelId'] = 1) { ?>
                     <li class="has-subnav">
-                        <a href="<?php echo "archiveDataTable.php" . '?workflow_id=' . $wId; ?>">
-                            <i class="fa fa-file-invoice fa-2x"></i>
+                        <a href="<?php echo "senderDataTable.php" . '?workflow_id=' . $wId; ?>">
+                            <i class="fa fa-file-import fa-2x"></i>
                             <span class="nav-text">
-                                Archived
+                                Active Requests
                             </span>
                         </a>
                     </li>
-                <?php }
-                if ($workflow['workflow_name'] == 'Asistencia') { ?>
+                <details style="">
+                    <summary>Archive</summary>
+                    <li class="has-subnav">
+                        <a href="<?php echo "rejectedDataTable.php" . '?workflow_id=' . $wId; ?>">
+                            <i class="fa fa-box-archive fa-2x"></i>
+                            <span class="nav-text">
+                                Rejected
+                            </span>
+                        </a>
+                    </li>
+                    <li class="has-subnav">
+                        <a href="<?php echo "completedDataTable.php" . '?workflow_id=' . $wId; ?>">
+                            <i class="fa fa-box-archive fa-2x"></i>
+                            <span class="nav-text">
+                                Completed
+                            </span>
+                        </a>
+                    </li>
+                </details>
+                <?php } if ($workflow['workflow_name'] == 'Asistencia') { ?>
                     <li class="has-subnav">
                         <a href="<?php echo "newAttendance.php" . '?workflow_id=' . $wId; ?>">
                             <i class="fa fa-user-clock fa-2x"></i>

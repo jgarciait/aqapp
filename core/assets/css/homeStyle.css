@@ -749,8 +749,29 @@ body {
             border: 1px solid #7095da;
         }
 
+summary {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary:before {
+    content: '---';
+    margin-right: 64px; /* Adjust the space between the arrow and the text */
+    display: inline-block;
+    padding-left: 15px;
+}
+
+details[open] summary:before {
+    content: '▼';
+}
+
 .display-picture{
-  margin-left: auto;
+  margin-left: 10px;
 }
 .display-picture img{
   width: 50px;

@@ -12,27 +12,6 @@ $workflowLevelId = $workflow['wlevelId'];
             <div class="container">
             <a class="title-table"><span><?php echo $user_data2['workflow_name'] . " - " . $user_data2['wcreator_name'];  ?></span></a>
             <p>Historical Records</p>            
-            <div class="col-sm-2 mb-3 pt-2">
-                    <select class="form-select" id="filterFormStatus">
-                        <?php
-                        // Fetch unique statuses from the shift_table
-                        $statusQuery = "SELECT DISTINCT process_status AS filter_status FROM forms_status
-                        WHERE forms_status.process_level_id = $workflowLevelId";
-                        $formStatus = mysqli_query($db, $statusQuery);
-
-                        if ($formStatus) {
-                            echo '<option value="">Filter by Status</option>';
-                            while ($row = mysqli_fetch_assoc($formStatus)) {
-                                $filterStatus = $row['filter_status'];
-                                echo "<option value='$filterStatus'>$filterStatus</option>";
-                            }
-                            mysqli_free_result($formStatus); // Correct variable name here
-                        } else {
-                            echo "Error fetching status options: " . mysqli_error($db);
-                        }
-                        ?>
-                    </select>
-                </div>
             </div>
                 <div class="container-fluid p-3 mr-2 ">        
                     <table style="width: 100%; padding: 1rem;" id="senderTable" class="table table-bordered table-condensed table-hover">
@@ -40,9 +19,9 @@ $workflowLevelId = $workflow['wlevelId'];
                             <tr>
                                     <th>#</th>
                                     <th>Núm. Caso</th>
+                                    <th>Remitente</th>
                                     <th>Servicio</th>
                                     <th>Estatus</th>
-                                    <th>Asignado a:</th>
                                     <th>Fecha</th> 
                                     <th>Form Options</th>         
                                 </tr>
@@ -50,7 +29,7 @@ $workflowLevelId = $workflow['wlevelId'];
                             <tbody>
         <?php
             mysqli_set_charset($db, "utf8");
-            $sql = "SELECT form_001.id AS fId, receiver_division.wcreator_name AS receiver_division_name, users_by_wcreator.ubw_user_id, form_name, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
+            $sql = "SELECT form_001.id AS fId, receiver_division.wcreator_name AS receiver_division_name, users_by_wcreator.ubw_user_id, form_name, ref_number, process_status, service_request, sender.first_name AS sender_name, sender.last_name AS sender_lname, receiver.first_name AS receiver_name, timestamp
             FROM workflows
             LEFT JOIN form_metadata ON form_metadata.fm_workflows_id = workflows.id
             LEFT JOIN form_001 ON form_001.form_metadata_id = form_metadata.id
@@ -78,9 +57,9 @@ $workflowLevelId = $workflow['wlevelId'];
                     <tr>
                         <td data-title='#'><?php echo $count; ?></td>
                         <td data-title='Núm. Caso'><?php echo $row['ref_number']?></td>
+                        <td data-title='Remitente'><?php echo $row['sender_name'] . " " . $row['sender_lname']?></td>
                         <td data-title='Nombre del Form'><?php echo $row['service_request']?></td>
                         <td data-title='Estatus'><?php echo $row['process_status']; ?></td>
-                        <td data-title='Atendido por:'><?php echo $row['receiver_division_name']?></td>
                         <td data-title='Fecha'><?php echo $timestamp; ?></td>
                        <td data-title='Ver Formulario'>
                             <?php

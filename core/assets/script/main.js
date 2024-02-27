@@ -73,6 +73,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// Dropdown Sidebar Toggle
+document.addEventListener('DOMContentLoaded', function() {
+    var dropdown = document.querySelector('.dropdown-toggle');
+    dropdown.onclick = function(event) {
+        event.preventDefault();
+        var menu = this.nextElementSibling;
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    };
+});
+
 /*
 const expandButton = document.getElementById("expandButton");
 const expandContent = document.getElementById("expandContent");

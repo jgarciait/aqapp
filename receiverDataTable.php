@@ -19,7 +19,7 @@ $wcId = $user_data2['workflows_creator_id'];
                         <?php
                         // Fetch unique statuses from the shift_table
                         $statusQuery = "SELECT DISTINCT process_status AS filter_status FROM forms_status
-                        WHERE forms_status.fl_receiver_user_id = $session_user";
+                        WHERE forms_status.receiver_division_wcid = $wcId";
                         $formStatus = mysqli_query($db, $statusQuery);
 
                         if ($formStatus) {
