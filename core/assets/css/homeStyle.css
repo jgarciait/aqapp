@@ -760,14 +760,20 @@ summary::-webkit-details-marker {
 }
 
 summary:before {
-    content: '---';
+    font-family: 'Font Awesome\ 6 Free';
+    font-size: large;
+    content: '\f054';
+    font-weight: 900;
     margin-right: 64px; /* Adjust the space between the arrow and the text */
     display: inline-block;
     padding-left: 15px;
 }
 
 details[open] summary:before {
-    content: '▼';
+    font-family: 'Font Awesome\ 6 Free';
+    font-size: large;
+    content: '\f078';
+    font-weight: 900;
 }
 
 .display-picture{

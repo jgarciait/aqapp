@@ -63,7 +63,7 @@
                         </a>
                     </li>
                 <details style="">
-                    <summary>Archive</summary>
+                    <summary>Archives</summary>
                     <li class="has-subnav">
                         <a href="<?php echo "rejectedDataTable.php" . '?workflow_id=' . $wId; ?>">
                             <i class="fa fa-box-archive fa-2x"></i>
