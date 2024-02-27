@@ -42,7 +42,7 @@ $workflowLevelId = $workflow['wlevelId'];
             LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_status.receiver_division_wcid
             WHERE forms_status.process_level_id = 1
             AND forms_audit_trail.fl_user_id = $session_user
-            AND forms_status.process_status = 'Rejected'
+            AND forms_status.process_status = 'Rejected by Dependencia A'
             GROUP BY forms_status.forms_id"; 
 
             $result = mysqli_query($db, $sql); // Execute the query
