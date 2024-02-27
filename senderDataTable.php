@@ -70,7 +70,7 @@ $wcId = $user_data2['workflows_creator_id'];
                         LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
                         LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_status.receiver_division_wcid
                         WHERE forms_status.fl_sender_user_id = $session_user
-                        AND forms_status.process_status != 'Rejected'
+                        AND forms_status.process_status != 'Rejected by Dependencia A'
                         AND forms_status.process_status != 'Completed'
                         ORDER BY forms_status.timestamp DESC";
 
