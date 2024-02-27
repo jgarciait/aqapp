@@ -109,7 +109,7 @@ $wcId = $user_data2['workflows_creator_id'];
                 echo "Error executing query: " . mysqli_error($db);
             }
         } else {
-            echo "Table name could not be determined.";
+            echo "No records found.";
         }
         ?>
             <!-- Display the workflowName as the heading -->
