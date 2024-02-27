@@ -53,7 +53,7 @@
                             </span>
                         </a>
                     </li>
-                <?php } if ($workflow['wlevelId'] = 1) { ?>
+                <?php } if ($workflow['wlevelId'] < 2) { ?>
                     <li class="has-subnav">
                         <a href="<?php echo "senderDataTable.php" . '?workflow_id=' . $wId; ?>">
                             <i class="fa fa-file-import fa-2x"></i>
