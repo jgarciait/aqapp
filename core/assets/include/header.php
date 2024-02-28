@@ -29,7 +29,7 @@
                 <div class="nf-area py-2">
                     <a class="btn-noti" id="notification-btn">
                     <i class="fas fa-bell fa-lg"></i></a>
-                    <span id="nf-n">0</span>
+                    <span id="nf-n">...</span>
                 </div>
                 <div class="nf-message" id="notifications"></div>
             </div>

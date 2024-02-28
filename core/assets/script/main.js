@@ -30,11 +30,11 @@ $(document).ready(function () {
             success: function (data) {
                 let contentData = data; // Assuming this is already parsed JSON
                 $('#notifications').html('');
-
-                if (contentData.length > 0) {
+                console.log(contentData.length); // Log the length to verify
+                if (contentData.length > 1) {
                     // Update notification count
                     $('#nf-n').text(contentData[0].total);
-
+                    $('#nf-n').show(); 
                     // Populate notifications
                     for (let i = 1; i < contentData.length; i++) {
                         const element = contentData[i];
@@ -48,7 +48,6 @@ $(document).ready(function () {
 
                     // Attach click handler to toggle visibility only if contentData.length > 0
                     $('#notification-btn').off('click').on('click', function () {
-                        console.log("Notification button clicked.");
                         $('#notifications').toggle(); // Toggle the visibility of notifications
                     });
 
@@ -57,10 +56,13 @@ $(document).ready(function () {
                         const notificationId = $(this).data('id');
                         markNotificationAsSeen(notificationId);
                     });
+                    
                 } else {
-                    $('#nf-n').text('0');
-                    // Disable click handler if no notifications are present
-                    $('#notification-btn').off('click');
+                    $('#notifications').html('No new notifications.');
+                    $('#nf-n').hide(); 
+                    $('#notification-btn').off('click').on('click', function () {
+                    $('#notifications').toggle(); // Toggle the visibility of notifications
+                    });
                 }
             }
         });
@@ -71,6 +73,9 @@ $(document).ready(function () {
 
 // Example of marking a notification as seen                    
 function markNotificationAsSeen(notificationId) {
+    // Show loading indicator or temporary text
+    $('#nf-n').text('..');
+
     $.ajax({
         type: 'POST',
         url: 'markAsSeen.php', // This script marks a notification as seen
@@ -78,18 +83,30 @@ function markNotificationAsSeen(notificationId) {
             notification_id: notificationId
         },
         success: function (response) {
-             console.log(notificationId);
+            console.log(notificationId);
             let responseData = JSON.parse(response);
             if (responseData.success) {
-                // Optionally, remove the notification from the DOM or decrement the notification counter
+                // Remove the notification from the DOM
                 $(`button[data-id="${notificationId}"]`).parent().remove();
                 // Update notification count
-                let currentCount = parseInt($('#nf-n').text(), 10);
-                $('#nf-n').text(currentCount - 1);
+                let updatedCount = parseInt($('#nf-n').text(), 10) - 1;
+                $('#nf-n').text(updatedCount > 0 ? updatedCount : '...');
+            } else {
+                // Handle failure (optionally show previous count or an error message)
+                $('#nf-n').text('Error'); // Or revert to the previous count
             }
+        },
+        error: function() {
+            // Handle AJAX error
+            $('#nf-n').text('Error'); // Indicate error
+        },
+        complete: function() {
+            // This callback function runs regardless of the success or error
+            // Update the count properly here if not already updated in success/error
         }
     });
 }
+
 
 
 //::::Sidebar Scripts::::
