@@ -16,7 +16,7 @@ $(document).ready(function () {
 
     // Call fetchNotifications at regular intervals
     fetchNotifications();
-    setInterval(fetchNotifications, 5000);
+    setInterval(fetchNotifications, 3000);
 
     // Function to fetch notifications
     function fetchNotifications() {
