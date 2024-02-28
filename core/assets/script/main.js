@@ -7,6 +7,91 @@ function openTab(tabName) {
     document.getElementById(tabName).style.display = "block";
 }
 
+
+// Notification Scripts
+
+$(document).ready(function () {
+    // Initially hide the notifications area
+    $('#notifications').hide();
+
+    // Call fetchNotifications at regular intervals
+    fetchNotifications();
+    setInterval(fetchNotifications, 5000);
+
+    // Function to fetch notifications
+    function fetchNotifications() {
+        $.ajax({
+            type: 'POST',
+            url: 'fetchNotifications.php', // This script should return notifications related to forms
+            data: {
+                key: '123' // Key to send to the server
+            },
+            cache: false,
+            success: function (data) {
+                let contentData = data; // Assuming this is already parsed JSON
+                $('#notifications').html('');
+
+                if (contentData.length > 0) {
+                    // Update notification count
+                    $('#nf-n').text(contentData[0].total);
+
+                    // Populate notifications
+                    for (let i = 1; i < contentData.length; i++) {
+                        const element = contentData[i];
+                        $('#notifications').append(`
+                            <div class="notification-item">
+                                Request ${element.ref_number} was ${element.actions}
+                                <button style="color:white; font-size: 14px;" class="btn btn-sm mark-as-seen" data-id="${element.audit_trail_id}"><i class="fa-solid fa-trash-can"></i></span></button>
+                            </div>
+                        `);
+                    }
+
+                    // Attach click handler to toggle visibility only if contentData.length > 0
+                    $('#notification-btn').off('click').on('click', function () {
+                        console.log("Notification button clicked.");
+                        $('#notifications').toggle(); // Toggle the visibility of notifications
+                    });
+
+                    // Mark notification as seen
+                    $(document).on('click', '.mark-as-seen', function() {
+                        const notificationId = $(this).data('id');
+                        markNotificationAsSeen(notificationId);
+                    });
+                } else {
+                    $('#nf-n').text('0');
+                    // Disable click handler if no notifications are present
+                    $('#notification-btn').off('click');
+                }
+            }
+        });
+    }
+});
+
+
+
+// Example of marking a notification as seen                    
+function markNotificationAsSeen(notificationId) {
+    $.ajax({
+        type: 'POST',
+        url: 'markAsSeen.php', // This script marks a notification as seen
+        data: {
+            notification_id: notificationId
+        },
+        success: function (response) {
+             console.log(notificationId);
+            let responseData = JSON.parse(response);
+            if (responseData.success) {
+                // Optionally, remove the notification from the DOM or decrement the notification counter
+                $(`button[data-id="${notificationId}"]`).parent().remove();
+                // Update notification count
+                let currentCount = parseInt($('#nf-n').text(), 10);
+                $('#nf-n').text(currentCount - 1);
+            }
+        }
+    });
+}
+
+
 //::::Sidebar Scripts::::
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -71,16 +156,6 @@ document.addEventListener('DOMContentLoaded', function () {
             sidebar.classList.toggle('expanded');
         });
     }
-});
-
-// Dropdown Sidebar Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    var dropdown = document.querySelector('.dropdown-toggle');
-    dropdown.onclick = function(event) {
-        event.preventDefault();
-        var menu = this.nextElementSibling;
-        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-    };
 });
 
 /*

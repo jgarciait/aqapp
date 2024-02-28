@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Update process_level_id and process_status in the forms_log table
-            $stmt = $db->prepare('UPDATE forms_log SET process_level_id = ?, process_status = ?, receiver_division_wcid = ? WHERE forms_id = ?');
+            $stmt = $db->prepare('UPDATE forms_status SET process_level_id = ?, process_status = ?, receiver_division_wcid = ? WHERE forms_id = ?');
             $stmt->execute([$formLevel_Id, $processStatus, $receiverDivisionId, $form_id]);
 
             // Commit the transaction

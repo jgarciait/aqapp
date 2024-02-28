@@ -1,4 +1,4 @@
-/* Header Styles */
+/* Header Styles 
 .header {
     display: flex;
     justify-content: center;
@@ -13,29 +13,135 @@
     margin-left: 1.5rem;
 }
 
-.notification-bar {
-    height: 16px;
-    width: 100%;
-    background: linear-gradient(45deg, #fdff733a, #fbff2238, #ff73496c, #fbff2238, #fdff733a, #76adff8f, #f5f9ff8f, #f5f9ff8f, #f5f9ff8f);
-    background-repeat: repeat;
-    background-size: 70%;
-    animation: animate 30s linear infinite;
+#notifications {
     display: none;
-    position: fixed;
-    top: 52px;
-    left: 0;
-    z-index: 1;
 }
-.notification-content p{
-    z-index: 1;
-    color:#2f2bfa;
-    font-size: 13px;
-    font-weight: 700;
+
+.nf-area {
+    right: 0;
+    padding : 10px 10px;
+}
+
+#nf-n {
+    position: absolute;
+    top: 5px;
+    color: white;
+    z-index: 4;
+    background-color: #fb2323ca;
+    border-radius: 20px;
+    font-weight: 600;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 12px;
+    vertical-align: middle;
+    line-height: 20px;
+}
+
+.nf-message {
+    position: absolute;
+    top: 40px;
+    border: 1px solid #000000;
+    padding: 20px;
+    border-radius: 7px;
+    background-color: rgba(36, 43, 51, 0.955);
+    color: white;
+    padding-bottom: 10px;
+    right: 5rem;
+}
+
+.header-content p{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%; /* Ensure the .header-content takes up the full height */
+    height: 100%;
 }
+
+*/
+.header {
+    padding: .4rem;
+    background: #fafdff;
+    color: #383838;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.header .nav-container {
+    display: flex;
+   /* Keeps the left and right alignment for the first and third columns */
+    align-items: center; /* Vertically centers the content */
+    width: 100%; /* Ensures the container spans the full width of the header */
+}
+
+
+.first-column {
+    width: 34%;
+}
+
+.second-column {
+    /* To center the header content, ensure it's also a flex container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 33%;
+}
+
+.third-column {
+    display: flex;
+    justify-content: flex-end; /* Aligns items to the right */
+    width: 33%;
+    padding-right: 3rem;
+}
+
+/* Adjust the profile and notification sections within the third column */
+.profile {
+    display: flex;
+    align-items: center; /* Aligns items vertically in the center */
+    justify-content: flex-end; /* Aligns items to the start of the container */
+}
+
+.profile-text {
+    width: 100%;
+}
+.nf-all {
+     order: 2; /* Reverses the order of the notification icon and the profile picture */
+
+}
+
+#nf-n {
+    position: absolute;
+    top: 5px;
+    color: white;
+    z-index: 4;
+    background-color: #fb2323ca;
+    border-radius: 20px;
+    font-weight: 600;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 12px;
+    vertical-align: middle;
+    line-height: 20px;
+}
+
+.nf-message {
+    position: absolute;
+    top: 4rem;
+    border: 1px solid #000000;
+    padding: 20px;
+    border-radius: 7px;
+    background-color: rgba(36, 43, 51, 0.955);
+    color: white;
+    padding-bottom: 10px;
+    right: 1rem;
+}
+
+
 @keyframes animate {
     0% {
         background-position: 0 0;
@@ -45,17 +151,11 @@
     }
 }
 
-
 body {
     background: #3b3c4717;
 }
 
-.header-content p{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%; /* Ensure the .header-content takes up the full height */
-}
+
 
 .shine {
     font-family: sans-serif;
@@ -81,18 +181,8 @@ body {
         background-position: 500%;
     }
 }
-.profile {
-    display: flex;
-    align-items: center;
-    padding: 0 5rem;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
 
-.profile .profile-text {
-    padding-right: .5rem;
-}
+
 
 /* Media Query for Mobile Devices */
 @media (max-width: 768px) {

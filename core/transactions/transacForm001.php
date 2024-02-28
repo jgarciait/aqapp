@@ -42,8 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$session_user, $receiverUserId, $processStatus, $currentTimestamp, $form_001_id, 2, $workflows_creator_id]);
 
             // Insert record into the forms_audit_trail table
-            $stmt = $db->prepare('INSERT INTO forms_audit_trail (actions, fl_user_id, fl_forms_id, fl_timestamp) VALUES (?, ?, ?, ?)');
-            $stmt->execute([$processStatus, $session_user, $form_001_id, $currentTimestamp]);
+            $stmt = $db->prepare('INSERT INTO forms_audit_trail (actions, fl_user_id, fl_forms_id, fl_timestamp, is_seen) VALUES (?, ?, ?, ?, ?)');
+            $stmt->execute([$processStatus, $session_user, $form_001_id, $currentTimestamp, 0]);
 
             // Commit the transaction
             $db->commit();
