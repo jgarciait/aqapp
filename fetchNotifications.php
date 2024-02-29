@@ -79,6 +79,6 @@ function handleReceiverNotifications($pdo, $wcId) {
     while ($notification = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $data[] = $notification;
         return $data;
+};
 }
-
 ?>
