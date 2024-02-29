@@ -59,7 +59,7 @@ $(document).ready(function () {
                     });
                     
                 } else {
-                    $('#notifications').html('No new notifications.');
+                    $('#notifications').hide();
                     $('#nf-n').hide(); 
                     $('#notification-btn').off('click').on('click', function () {
                     $('#notifications').toggle(); // Toggle the visibility of notifications
