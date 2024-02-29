@@ -30,7 +30,8 @@ $(document).ready(function () {
             success: function (data) {
                 let contentData = data; // Assuming this is already parsed JSON
                 $('#notifications').html('');
-                if (contentData.length > 1) {
+                console.log(contentData);
+                if (contentData.length > 0) {
                     // Update notification count
                     $('#nf-n').text(contentData[0].total);
                     $('#nf-n').show(); 
@@ -46,7 +47,7 @@ $(document).ready(function () {
                     $('#notifications').append(`
                         <a style="color:white;" href="senderDataTable.php?workflow_id=${element.workflow_id}" class="notification-link">
                             <div class="notification-item">
-                                ${element.ref_number} was ${element.actions} on ${formatDate(element.last_update)}
+                                ${element.ref_number} was ${element.actions} on ${formatDate(element.fl_timestamp)}
                                 <button style="color:white; font-size: 14px;" class="btn btn-sm mark-as-seen" data-id="${element.audit_trail_id}" onclick="event.preventDefault(); markNotificationAsSeen(${element.audit_trail_id});"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                         </a>
@@ -65,7 +66,7 @@ $(document).ready(function () {
                     });
                     
                 } else {
-                    $('#notifications').hide();
+                    $('#notifications').text('No new notifications');
                     $('#nf-n').hide(); 
                     $('#notification-btn').off('click').on('click', function () {
                     $('#notifications').toggle(); // Toggle the visibility of notifications
