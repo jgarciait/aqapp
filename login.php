@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
     
     <!-- Index (login) app CSS Style -->
-    <link rel="stylesheet" type="text/css" href="core/assets/css/formsStyle.css">
+    <link rel="stylesheet" type="text/css" href="core/assets/css/loginStyle.css">
 </head>
 
 <body style="background: #34354138;" class="body-container">
