@@ -72,7 +72,13 @@ function handleReceiverNotifications($pdo, $wcId) {
             AND forms_status.receiver_division_wcid = :wcId";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':wcId' => $wcId]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $n_numbers = $stmt->rowCount();
+
+    $data[] = ['total' => $n_numbers];
+
+    while ($notification = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $data[] = $notification;
+        return $data;
 }
 
 ?>
