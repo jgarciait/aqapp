@@ -274,9 +274,10 @@ function getWCreatorAndMetadataId($id, $db) {
 
 function getLevelWcreateId($formLevel_Id, $workflow_id, $db) {
     mysqli_set_charset($db, "utf8mb4");
-    $sql = "SELECT workflows_creator.id AS wcId
+    $sql = "SELECT workflows_creator.id AS wcId, users_by_wcreator.ubw_user_id AS userId 
     FROM workflows_creator
     INNER JOIN workflows ON workflows.id = workflows_creator.wcreator_workflows_id
+    INNER JOIN users_by_wcreator ON users_by_wcreator.wcreator_id = workflows_creator.id
     WHERE workflows_creator.wlevel_id = ?
     AND workflows.id = ?";
 

@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Process is ongoing, update status accordingly
                 $statusSenderName = getSenderUser($session_user, $workflow_id, $db);
                 $receiverDivisionId = $workflowData['wcId'];
+                $receiverUserId = $workflowData['userId'];
                 $processStatus = "Approved by " . $statusSenderName['sender_division_name'];
             }
         } elseif ($action === "revert") {
@@ -34,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Process is ongoing, update status accordingly
                 $statusSenderName = getSenderUser($session_user, $workflow_id, $db);
                 $receiverDivisionId = $workflowData['wcId'];
+                $receiverUserId = $workflowData['userId'];
                 $processStatus = "Reverted by " . $statusSenderName['sender_division_name'];
             }
         } elseif ($action === "reject") {
@@ -47,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Process is ongoing, update status accordingly
                 $statusSenderName = getSenderUser($session_user, $workflow_id, $db);
                 $receiverDivisionId = $workflowData['wcId'];
+                $receiverUserId = $workflowData['userId'];
                 $processStatus = "Rejected by " . $statusSenderName['sender_division_name'];
             }
         }
@@ -54,8 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $currentTimestamp = date('Y-m-d H:i:s');
 
         // Corrected the order of parameters in the execute() method to match the prepared statement
-        $stmt = $db->prepare('UPDATE forms_status SET process_level_id = ?, process_status = ?, receiver_division_wcid = ?, timestamp = ? WHERE forms_id = ?');
-        $stmt->execute([$formLevel_Id, $processStatus, $receiverDivisionId, $currentTimestamp, $form_id]);
+        $stmt = $db->prepare('UPDATE forms_status SET process_level_id = ?, process_status = ?, fl_receiver_user_id = ?, receiver_division_wcid = ?, timestamp = ? WHERE forms_id = ?');
+        $stmt->execute([$formLevel_Id, $processStatus, $receiverUserId, $receiverDivisionId, $currentTimestamp, $form_id]);
         
         // Insert record into the forms_audit_trail table
         $stmt = $db->prepare('INSERT INTO forms_audit_trail (actions, fl_user_id, fl_forms_id, fl_timestamp, is_seen) VALUES (?, ?, ?, ?, ?)');

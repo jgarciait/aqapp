@@ -29,7 +29,7 @@ $userWorkflows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Assuming $userWorkflows contains all related workflow info for the user
 foreach ($userWorkflows as $workflow) {
     if ($workflow['wlevelId'] > 1) {
-        $data = handleReceiverNotifications($pdo, $workflow['wcreator_id']);
+        $data = handleReceiverNotifications($pdo, $session_user);
     } else {
         $data = handleSenderNotifications($pdo, $session_user);
     }
@@ -62,7 +62,7 @@ function handleSenderNotifications($pdo, $session_user) {
 
 
 // Function to handle notifications for users that receive requests
-function handleReceiverNotifications($pdo, $wcId) {
+function handleReceiverNotifications($pdo, $session_user) {
     $sql = "SELECT fl_timestamp, workflows.id AS workflow_id, forms_audit_trail.id AS audit_trail_id, form_001.ref_number, forms_audit_trail.actions, form_001.id
             FROM forms_audit_trail
             INNER JOIN form_001 ON form_001.id = forms_audit_trail.fl_forms_id
@@ -70,9 +70,10 @@ function handleReceiverNotifications($pdo, $wcId) {
             INNER JOIN forms_status ON forms_status.forms_id = form_001.id
             INNER JOIN workflows ON workflows.id = form_metadata.fm_workflows_id
             WHERE forms_audit_trail.is_seen = 0
-            AND forms_status.receiver_division_wcid = :wcId";
+       AND forms_status.fl_receiver_user_id = :session_user";
+
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([':wcId' => $wcId]);
+    $stmt->execute([':session_user' => $session_user]);
     $n_numbers = $stmt->rowCount();
 
     $data[] = ['total' => $n_numbers];
