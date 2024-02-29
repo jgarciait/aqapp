@@ -35,17 +35,23 @@ $(document).ready(function () {
                     $('#nf-n').text(contentData[0].total);
                     $('#nf-n').show(); 
                     // Populate notifications
-                    for (let i = 1; i < contentData.length; i++) {
-                        const element = contentData[i];
-                        $('#notifications').append(`
-                            <a style="color:white;" href="senderDataTable.php?workflow_id=${element.workflow_id}" class="notification-link">
-                                <div class="notification-item">
-                                    Request ${element.ref_number} was ${element.actions}
-                                    <button style="color:white; font-size: 14px;" class="btn btn-sm mark-as-seen" data-id="${element.audit_trail_id}" onclick="event.preventDefault(); markNotificationAsSeen(${element.audit_trail_id});"><i class="fa-solid fa-trash-can"></i></button>
-                                </div>
-                            </a>
-                        `);
-                    }
+                function formatDate(timestamp) {
+                    const date = new Date(timestamp);
+                    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+                    return date.toLocaleDateString('en-US', options);
+                }
+
+                for (let i = 1; i < contentData.length; i++) {
+                    const element = contentData[i];
+                    $('#notifications').append(`
+                        <a style="color:white;" href="senderDataTable.php?workflow_id=${element.workflow_id}" class="notification-link">
+                            <div class="notification-item">
+                                ${element.ref_number} was ${element.actions} on ${formatDate(element.last_update)}
+                                <button style="color:white; font-size: 14px;" class="btn btn-sm mark-as-seen" data-id="${element.audit_trail_id}" onclick="event.preventDefault(); markNotificationAsSeen(${element.audit_trail_id});"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </a>
+                    `);
+                }
 
                     // Attach click handler to toggle visibility only if contentData.length > 0
                     $('#notification-btn').off('click').on('click', function () {
