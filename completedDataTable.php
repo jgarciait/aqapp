@@ -41,7 +41,8 @@ $workflowLevelId = $workflow['wlevelId'];
             LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
             LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_status.receiver_division_wcid
             WHERE forms_status.process_level_id = 1
-            AND forms_audit_trail.fl_user_id = $session_user
+            AND forms_status.fl_sender_user_id = $session_user
+            AND forms_status.process_status = 'Completed'
             GROUP BY forms_status.forms_id"; 
 
             $result = mysqli_query($db, $sql); // Execute the query

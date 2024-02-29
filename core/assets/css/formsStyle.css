@@ -1,24 +1,72 @@
-/* Header Styles */
 .header {
-    display: flex;
-    justify-content: center;
     padding: .4rem;
     background: #fafdff;
     color: #383838;
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
-    z-index: 3;
+    z-index: 1;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-.header-content p{
+
+.header .nav-container {
+    display: flex;
+   /* Keeps the left and right alignment for the first and third columns */
+    align-items: center; /* Vertically centers the content */
+    width: 100%; /* Ensures the container spans the full width of the header */
+}
+
+
+.first-column {
+    width: 34%;
+}
+
+.second-column {
+    /* To center the header content, ensure it's also a flex container */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%; /* Ensure the .header-content takes up the full height */
+    width: 33%;
 }
 
-/*Notifications*/
+.third-column {
+    display: flex;
+    justify-content: flex-end; /* Aligns items to the right */
+    width: 33%;
+    padding-right: 3rem;
+}
+
+/* Adjust the profile and notification sections within the third column */
+.profile {
+    display: flex;
+    align-items: center; /* Aligns items vertically in the center */
+    justify-content: flex-end; /* Aligns items to the start of the container */
+}
+
+.profile .display-picture {
+    width: 50px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+.notification-link {
+    color: white; /* Set the default text color to white */
+    text-decoration: none; /* Optional: Removes the underline from links */
+}
+
+.notification-link:hover {
+    background-color: lightblue; /* Light blue background on hover */
+    color: black; /* Optional: Change text color on hover if needed */
+}
+
+.profile-text {
+    width: 100%;
+}
+.nf-all {
+     order: 2; /* Reverses the order of the notification icon and the profile picture */
+
+}
 
 #nf-n {
     position: absolute;
@@ -38,16 +86,15 @@
 
 .nf-message {
     position: absolute;
-    top: 40px;
+    top: 4rem;
     border: 1px solid #000000;
     padding: 20px;
     border-radius: 7px;
-    background-color: #313a46e6;
+    background-color: rgba(36, 43, 51, 0.955);
     color: white;
     padding-bottom: 10px;
-    right: 5rem;
+    right: 1rem;
 }
-
 
 
 body {
@@ -84,14 +131,6 @@ body {
     /* Add any additional styling you want here */
 }
 
-.profile {
-    display: flex;
-    align-items: center;
-    padding: 0 4rem;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
 
 .profile-menu {
     display: none;
@@ -100,8 +139,8 @@ body {
     padding: 10px 20px;
     list-style: none;
     position: absolute;
-    margin-right: 2rem;
-    top: 100%;
+    margin-right: 5rem;
+    top: 3rem;
     right: 0;
 }
 

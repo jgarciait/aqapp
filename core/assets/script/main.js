@@ -30,7 +30,6 @@ $(document).ready(function () {
             success: function (data) {
                 let contentData = data; // Assuming this is already parsed JSON
                 $('#notifications').html('');
-                console.log(contentData.length); // Log the length to verify
                 if (contentData.length > 1) {
                     // Update notification count
                     $('#nf-n').text(contentData[0].total);
@@ -39,10 +38,12 @@ $(document).ready(function () {
                     for (let i = 1; i < contentData.length; i++) {
                         const element = contentData[i];
                         $('#notifications').append(`
-                            <div class="notification-item">
-                                Request ${element.ref_number} was ${element.actions}
-                                <button style="color:white; font-size: 14px;" class="btn btn-sm mark-as-seen" data-id="${element.audit_trail_id}"><i class="fa-solid fa-trash-can"></i></span></button>
-                            </div>
+                            <a style="color:white;" href="senderDataTable.php?workflow_id=${element.workflow_id}" class="notification-link">
+                                <div class="notification-item">
+                                    Request ${element.ref_number} was ${element.actions}
+                                    <button style="color:white; font-size: 14px;" class="btn btn-sm mark-as-seen" data-id="${element.audit_trail_id}" onclick="event.preventDefault(); markNotificationAsSeen(${element.audit_trail_id});"><i class="fa-solid fa-trash-can"></i></button>
+                                </div>
+                            </a>
                         `);
                     }
 

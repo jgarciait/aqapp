@@ -104,6 +104,15 @@
     align-items: center; /* Aligns items vertically in the center */
     justify-content: flex-end; /* Aligns items to the start of the container */
 }
+.notification-link {
+    color: white; /* Set the default text color to white */
+    text-decoration: none; /* Optional: Removes the underline from links */
+}
+
+.notification-link:hover {
+    background-color: lightblue; /* Light blue background on hover */
+    color: black; /* Optional: Change text color on hover if needed */
+}
 
 .profile-text {
     width: 100%;
@@ -281,6 +290,7 @@ body {
     text-align: center;
     justify-content: center;
  }
+
 .profile .display-picture {
     width: 50px;
     border-radius: 50%;
@@ -295,7 +305,7 @@ body {
     list-style: none;
     position: absolute;
     margin-right: 5rem;
-    top: 100%;
+    top: 3rem;
     right: 0;
 }
 

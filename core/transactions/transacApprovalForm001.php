@@ -56,12 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Corrected the order of parameters in the execute() method to match the prepared statement
         $stmt = $db->prepare('UPDATE forms_status SET process_level_id = ?, process_status = ?, receiver_division_wcid = ?, timestamp = ? WHERE forms_id = ?');
         $stmt->execute([$formLevel_Id, $processStatus, $receiverDivisionId, $currentTimestamp, $form_id]);
-
-
-        // Insert record into the forms_audit_trail table
         
-        $stmt = $db->prepare('INSERT INTO forms_audit_trail (actions, fl_user_id, fl_forms_id, fl_timestamp) VALUES (?, ?, ?, ?)');
-        $stmt->execute([$processStatus, $session_user, $form_id, $currentTimestamp]);
+        // Insert record into the forms_audit_trail table
+        $stmt = $db->prepare('INSERT INTO forms_audit_trail (actions, fl_user_id, fl_forms_id, fl_timestamp, is_seen) VALUES (?, ?, ?, ?, ?)');
+        $stmt->execute([$processStatus, $session_user, $form_id, $currentTimestamp, 0]);
 
         // Commit the transaction
         $db->commit();
