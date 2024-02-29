@@ -56,9 +56,10 @@ function handleSenderNotifications($pdo, $session_user) {
 
     while ($notification = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $data[] = $notification;
-        return $data;
-};
+    }
+    return $data; // Move this outside the loop
 }
+
 
 // Function to handle notifications for users that receive requests
 function handleReceiverNotifications($pdo, $wcId) {
@@ -78,7 +79,7 @@ function handleReceiverNotifications($pdo, $wcId) {
 
     while ($notification = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $data[] = $notification;
-        return $data;
-};
+    }
+    return $data; // Move this outside the loop
 }
 ?>
