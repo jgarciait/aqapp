@@ -572,7 +572,7 @@ function showTab(n) {
             // Add logic here to handle form approval
             // For example, show a confirmation dialog and submit the form with an "approved" action
             if (confirm("Do you want to approve the form?")) {
-                document.getElementById("action").value = "approved";
+                document.getElementById("action").value = "approv";
                 document.getElementById("regForm").submit();
             }
         }
@@ -582,7 +582,7 @@ function showTab(n) {
             // Add logic here to handle form rejection
             // For example, show a confirmation dialog and submit the form with a "rejected" action
             if (confirm("Do you want to reject the form?")) {
-                document.getElementById("action").value = "rejected";
+                document.getElementById("action").value = "reject";
                 document.getElementById("regForm").submit();
             }
         }
@@ -592,7 +592,7 @@ function showTab(n) {
             // Add logic here to handle form reversion
             // For example, show a confirmation dialog and submit the form with a "reverted" action
             if (confirm("Do you want to revert the form?")) {
-                document.getElementById("action").value = "reverted";
+                document.getElementById("action").value = "revert";
                 document.getElementById("regForm").submit();
             }
         }

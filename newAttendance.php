@@ -11,8 +11,8 @@ $wcreator_id = $user_data2['wcreator_workflows_id'];
 // Check if the "success" parameter is set
 if (isset($_GET['success']) && $_GET['success'] === 'true') {
     $confirmationLink = "https://localhost/aqapp/"; 
-    $subject = "AQPlatform: Solicitud Enviada";
-    $message = "Le notificaremos cuando su solicitud sea atendida. <a href=\"$confirmationLink\">www.aqplatform.com</a>";
+    $subject = "Test";
+    $message = "Test <a href=\"$confirmationLink\">www.aqplatform.com</a>";
     
     if (isset($_GET['user_email'])) {
     $user_email = urldecode($_GET['user_email']);

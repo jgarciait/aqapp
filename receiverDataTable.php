@@ -1,17 +1,57 @@
 <?php
 include_once 'core/config/main_setup.php';
 
+// Ensure session_start() is called within main_setup.php or here if not already included
+if (isset($_SESSION['formSubmittedSuccessfully']) && $_SESSION['formSubmittedSuccessfully']) {
+    echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+            $.ajax({
+                url: 'process_queue.php',
+                type: 'GET',
+                dataType: 'json', // Expecting JSON response
+                success: function(response) {
+                    if (response.success) {
+                        console.log(response.message);
+                    } else {
+                        console.error(response.message);
+                    }
+                },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Handle JSON parsing error
+                        if (jqXHR.responseText) {
+                            try {
+                                var response = JSON.parse(jqXHR.responseText);
+                                console.error('Detailed error: ' + response.message);
+                                if (response.errors.length > 0) {
+                                    response.errors.forEach(function(error) {
+                                        console.error('Error detail: ' + error);
+                                    });
+                                }
+                            } catch (e) {
+                                console.error('AJAX error: ' + textStatus + ', ' + errorThrown);
+                            }
+                        } else {
+                            console.error('AJAX error: ' + textStatus + ', ' + errorThrown);
+                        }
+                    }
+            });
+            });
+          </script>";
+    unset($_SESSION['formSubmittedSuccessfully']); // Clean up
+}
+
 $workflow_id = $_GET['workflow_id'];
 $user_data2 = getUserById2($session_user, $workflow_id, $db);
 $table_data = getTableNameByWorkflowId($workflow_id, $db); // Retrieve the dynamic table name
 $table_name = $table_data['table_name']; // Correctly accessing the table name
-$fmId = $table_data['form_metadata.id'];
+$fmId = $table_data['id'];
 $workflowLevelId = $workflow['wlevelId'];
 $wcId = $user_data2['workflows_creator_id'];
 
-?> 
+
+?>
     <div class="container container-table">
-        <main class="container-fluid my-1 p-4 border border-info content-table bg-white shadow rounded table-responsive">
+        <main class="container-fluid my-4 p-4 border border-info content-table bg-white shadow rounded table-responsive">
             <div class="container">
             <a class="title-table"><span><?php echo $user_data2['workflow_name'] . " - " . $user_data2['wcreator_name'];  ?></span></a>
             <div class="col-sm-2 mb-3 pt-2">
@@ -120,5 +160,14 @@ $wcId = $user_data2['workflows_creator_id'];
     <footer id="myFooter" class="footer">
     <p>Document Control Systems Inc.</p>
 </footer>
+<script>
+$(document).ready(function() {
+    var formSubmittedSuccessfully = localStorage.getItem('formSubmittedSuccessfully');
+    if (formSubmittedSuccessfully === 'true') {
+        // Trigger the email queue processing script here
+        localStorage.removeItem('formSubmittedSuccessfully'); // Clean up after triggering
+    }
+});
+</script>
 </body>
 </html>

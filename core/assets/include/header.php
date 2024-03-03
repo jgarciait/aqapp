@@ -18,9 +18,12 @@
                 <div class="profile-text px-2">
                     <?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name'] . " - " . $_SESSION['sys_group_name']; ?>
                 </div>
-                <img class="display-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/64px-Windows_10_Default_Profile_Picture.svg.png" alt="Profile Image" width="40">
+                <div class="header-profile-image-wrapper">
+                    <img src="core/assets/uploads/profile_images/<?php echo htmlspecialchars($sysRol['profile_image']); ?>" alt="Profile Image" class="header-profile-image">
+                </div>
                 <ul class="shadow border profile-menu">
                     <li><a href="profile.php">Profile</a></li>
+                    <li><a href="userPreferences.php">Preferences</a></li>  
                     <li><a href="logout.php">Log Out</a></li>
                 </ul>
             </nav>

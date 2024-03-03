@@ -50,7 +50,6 @@ $currentDate = strtr($currentDate, $monthTranslations);
                                 <div><i class="fas fa-users fa-lg" style="color: #11538d;"></i>
                                 <p>User Management</p></div>
                             </a>
-                 
                             <a class="data-card" href="modulesList.php">
                                 <div><i class="fas fa-circle-nodes fa-lg" style="color: #11538d;"></i>
                                 <p>Module Management</p></div>

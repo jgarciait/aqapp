@@ -8,7 +8,7 @@ $workflowLevelId = $workflow['wlevelId'];
 
 ?> 
     <div class="container container-table">
-        <main class="container-fluid my-1 p-4 border border-info content-table bg-white shadow rounded table-responsive">
+        <main class="container-fluid my-4 p-4 border border-info content-table bg-white shadow rounded table-responsive">
             <div class="container">
             <a class="title-table"><span><?php echo $user_data2['workflow_name'] . " - " . $user_data2['wcreator_name'];  ?></span></a>
             <p>Historical Records</p>            

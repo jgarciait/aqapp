@@ -154,33 +154,33 @@ function getSysRol($id, $db) {
 function getTableNameByWorkflowId($workflow_id, $db) {
     mysqli_set_charset($db, "utf8mb4");
 
-    // Retrieve the table_name and table_name based on the workflow_id
-    $sql = "SELECT fm.table_name 
+    // Retrieve the table_name based on the workflow_id
+    $sql = "SELECT fm.table_name, fm.id
             FROM form_metadata AS fm
             WHERE fm.fm_workflows_id = ?";
     $stmt = $db->prepare($sql);
     if (!$stmt) {
         // Handle error, e.g., log or throw an exception
-        return false;
+        // Return a default structure with null values
+        return ['id' => null, 'table_name' => null];
     }
     $stmt->bind_param('i', $workflow_id);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows === 0) {
         // No form associated with this workflow_id
-        return false;
+        // Return a default structure with null values
+        return ['id' => null, 'table_name' => null];
     }
     $metadata = $result->fetch_assoc();
     $table_name = $metadata['table_name'];
 
-    // Assuming you want to retrieve data such as id from the dynamically determined table
-    // Note: This part might need to adjust based on what 'id' represents in your context
-    // If 'id' is not directly stored in your form tables, you might need a different approach
     $sql = "SELECT id FROM " . $table_name . " LIMIT 1"; // Example: Getting the first 'id' for demonstration
     $stmt = $db->prepare($sql);
     if (!$stmt) {
         // Handle error
-        return false;
+        // Return a default structure with null values if the table name is valid but the query fails
+        return ['id' => null, 'table_name' => $table_name];
     }
     // No parameters to bind in this case
     $stmt->execute();
@@ -191,9 +191,11 @@ function getTableNameByWorkflowId($workflow_id, $db) {
         // Return both the ID and table_name as an associative array
         return ['id' => $formData['id'], 'table_name' => $table_name];
     } else {
-        return false;
+        // No data found, but table_name is valid
+        return ['id' => null, 'table_name' => $table_name];
     }
 }
+
 
 function getFormData($id, $db) {
     mysqli_set_charset($db, "utf8mb4");
@@ -289,6 +291,27 @@ function getLevelWcreateId($formLevel_Id, $workflow_id, $db) {
     if ($result->num_rows > 0) {
         $workflowData = $result->fetch_assoc();
         return $workflowData;
+    } else {
+        return false;
+    }
+}
+
+function getOriginatorUser($form_id, $db) {
+    mysqli_set_charset($db, "utf8mb4");
+    $sql = "SELECT forms_status.fl_sender_user_id AS oUserId, users.first_name, users.last_name, users.user_email
+    FROM form_001
+    INNER JOIN forms_status ON forms_status.forms_id = form_001.id
+    LEFT JOIN users ON users.id = forms_status.fl_sender_user_id
+    WHERE form_001.id = ?";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param('i', $form_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $originatorUser = $result->fetch_assoc();
+        return $originatorUser;
     } else {
         return false;
     }

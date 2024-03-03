@@ -104,6 +104,85 @@
     align-items: center; /* Aligns items vertically in the center */
     justify-content: flex-end; /* Aligns items to the start of the container */
 }
+
+/* Modal Styles */
+.profile-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 5; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 50%; /* Full width */
+    height: 50%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.profile-modal-content {
+    background-color: #fefefe;
+    margin: 5px auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Custom Styles for Modal Inner Content */
+.profile-modal-body .container-fluid {
+    padding: 20px;
+}
+
+.modal-profile-info h2, .modal-profile-info p {
+    margin: 0;
+    padding: 10px 0;
+}
+
+.modal-profile-image {
+    max-width: 100%;
+    padding: 20px; /* Padding around image */
+}
+
+/* End Profile Modal Styles */
+
+.header-profile-image-wrapper {
+    flex-shrink: 0; /* Prevents the flex item from shrinking */
+    flex-basis: 40px; /* Gives a starting point before remaining space is distributed */
+    width: 40px;
+    height: 40px;
+    display: inline-flex; /* Adjusted to inline-flex for better centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.header-profile-image {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .notification-link {
     color: white; /* Set the default text color to white */
     text-decoration: none; /* Optional: Removes the underline from links */
@@ -291,8 +370,8 @@ body {
     justify-content: center;
  }
 
-.profile .display-picture {
-    width: 50px;
+.profile .profile-image {
+    width: 40px;
     border-radius: 50%;
     border: 2px solid #fff;
 }
@@ -576,6 +655,8 @@ body {
 
         /* Sidebar Styles */
         .sidebar {
+            display: flex;
+            flex-direction: column;
             width: 50px;
             background: #313a46;
             color: #fff;
@@ -588,7 +669,15 @@ body {
             overflow: hidden;
             transition: width 0.3s;
         }
-
+        
+        .logout {
+            margin-top: auto;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            padding: 10px 0;
+            font-family: arial;
+        }
         .sidebar a {
             display: block;
             color: #fff;
@@ -654,11 +743,7 @@ body {
         /* Miscellaneous Styles */
         /* Add other styles here as needed */
 
-        .sidebar>ul.logout {
-            position: absolute;
-            left: 0;
-            bottom: 0;
-        }
+ 
 
         /* Social Sidebar Styles */
         .socialSidebar {

@@ -44,11 +44,104 @@
     align-items: center; /* Aligns items vertically in the center */
     justify-content: flex-end; /* Aligns items to the start of the container */
 }
+/* Modal Content/Box */
 
-.profile .display-picture {
-    width: 50px;
+/* Ensure the modal itself covers the entire viewport */
+.profile-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 6;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Ensure the modal content also stretches accordingly */
+.profile-modal-content {
+    display: flex; /* This makes it a flex container */
+    flex-direction: column; /* Stack children vertically */
+    min-height: 40%; /* Minimum height to fill the modal */
+    background-color: #fefefe;
+    margin: 5px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* For the modal body, ensure it can expand to fill the content area */
+.profile-modal-body {
+    flex: 1; /* Allows this element to expand and fill the available space */
+    display: flex; /* Makes it a flex container too */
+}
+
+/* Adjust container-fluid within the modal body for full height */
+.profile-modal-body .container-fluid {
+    flex: 1; /* Let it expand */
+    padding: 20px;
+    display: flex; /* To support child flex items properly */
+}
+
+/* The .modal-profile-info adjustments remain the same */
+.modal-profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100%;
+    text-align: center;
+}
+
+.modal-profile-info h2 {
+    margin-bottom: 10px;
+}
+.modal-profile-info p {
+    margin: 1px;
+}
+
+.modal-profile-image {
+    max-width: 100%;
+    padding: 20px; /* Padding around image */
+}
+
+/* End Profile Modal Styles */
+.header-profile-image-wrapper {
+    flex-shrink: 0; /* Prevents the flex item from shrinking */
+    flex-basis: 40px; /* Gives a starting point before remaining space is distributed */
+    width: 40px;
+    height: 40px;
+    display: inline-flex; /* Adjusted to inline-flex for better centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
     border-radius: 50%;
-    border: 2px solid #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+.header-profile-image {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .notification-link {
     color: white; /* Set the default text color to white */

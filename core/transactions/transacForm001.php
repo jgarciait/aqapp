@@ -1,5 +1,6 @@
 <?php
 include_once '../../core/config/transac_setup.php';
+$originatorEmail = $sysRol['user_email'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $workflow_id = $_POST['workflow_id'];
@@ -34,16 +35,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$firstName, $lastName, $age, $gender, $service_request, $formMetadataId, $refNumber, $physical_address, $postal_address, $sector, $phone, $email]);
 
             // Get the last inserted ID from form_001 using mysqli_insert_id()
-            $form_001_id = mysqli_insert_id($db);
+            $form_id = mysqli_insert_id($db);
             
             $currentTimestamp = date('Y-m-d H:i:s');
             // Insert data into forms_status table
             $stmt = $db->prepare('INSERT INTO forms_status (fl_sender_user_id, fl_receiver_user_id, process_status, timestamp, forms_id, process_level_id, receiver_division_wcid) VALUES (?, ?, ?, ?, ?, ?, ?)');
-            $stmt->execute([$session_user, $receiverUserId, $processStatus, $currentTimestamp, $form_001_id, 2, $workflows_creator_id]);
+            $stmt->execute([$session_user, $receiverUserId, $processStatus, $currentTimestamp, $form_id, 2, $workflows_creator_id]);
 
             // Insert record into the forms_audit_trail table
-            $stmt = $db->prepare('INSERT INTO forms_audit_trail (actions, fl_user_id, fl_forms_id, fl_timestamp, is_seen) VALUES (?, ?, ?, ?, ?)');
-            $stmt->execute([$processStatus, $session_user, $form_001_id, $currentTimestamp, 0]);
+            $stmt = $db->prepare('INSERT INTO forms_audit_trail (actions, fl_user_id, fl_forms_id, fl_timestamp) VALUES (?, ?, ?, ?)');
+            $stmt->execute([$processStatus, $session_user, $form_id, $currentTimestamp]);
+
+            // Retrieve the last insert id correctly using mysqli
+            $formAuditTrailId = mysqli_insert_id($db);
+
+            // Insert record for the receiver user into the user_notifications table
+            $stmt = $db->prepare('INSERT INTO user_notifications (user_id, notification_id, is_seen) VALUES (?, ?, ?)');
+            $stmt->execute([$receiverUserId, $formAuditTrailId, 0]);
+
+            // Insert record for the sender user into the user_notifications table
+            $stmt = $db->prepare('INSERT INTO user_notifications (user_id, notification_id, is_seen) VALUES (?, ?, ?)');
+            $stmt->execute([$session_user, $formAuditTrailId, 0]);
+
+            // Example to enqueue an email notification
+            $emailSubject = "Workflow Notification";
+            $emailBody = "The status of your workflow is now: " . $processStatus . ".";
+            $recipientEmail = $originatorEmail; // Assuming you're notifying the originator
+
+            $stmt = $db->prepare('INSERT INTO email_queue (recipient_email, email_subject, email_body) VALUES (?, ?, ?)');
+            $stmt->execute([$recipientEmail, $emailSubject, $emailBody]);
 
             // Commit the transaction
             $db->commit();
@@ -52,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mysqli_close($db);
 
             // Redirect to a success page or perform other actions as needed
-            header('Location: ../../socialHome.php');
+            header("Location: ../../senderDataTable.php?workflow_id=$workflow_id"); 
             exit();
         } catch (PDOException $e) {
             // Handle database errors or exceptions here

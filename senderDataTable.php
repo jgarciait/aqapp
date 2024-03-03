@@ -1,16 +1,19 @@
 <?php
-include_once 'core/config/main_setup.php';
+include_once 'core/config/main_setup.php';   
 
 $workflow_id = $_GET['workflow_id'];
 $user_data2 = getUserById2($session_user, $workflow_id, $db);
 $table_data = getTableNameByWorkflowId($workflow_id, $db); // Retrieve the dynamic table name
 $table_name = $table_data['table_name']; // Correctly accessing the table name
-$fmId = $table_data['form_metadata.id'];
+$fmId = $table_data['id'];
 $workflowLevelId = $workflow['wlevelId'];
 $wcId = $user_data2['workflows_creator_id'];
+
 ?> 
+
+
     <div class="container container-table">
-        <main class="container-fluid my-1 p-4 border border-info content-table bg-white shadow rounded table-responsive">
+        <main class="container-fluid my-4 p-4 border border-info content-table bg-white shadow rounded table-responsive">
             <div class="container">
             <a class="title-table"><span><?php echo $user_data2['workflow_name'] . " - " . $user_data2['wcreator_name'];  ?></span></a>
             <div class="col-sm-2 mb-3 pt-2">

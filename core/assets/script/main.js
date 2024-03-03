@@ -7,6 +7,36 @@ function openTab(tabName) {
     document.getElementById(tabName).style.display = "block";
 }
 
+// Profile Script Success Message
+// Check if the success message element exists
+    document.addEventListener('DOMContentLoaded', function() {
+        const successMessage = document.querySelector('.alert-success');
+        if (successMessage) {
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000); // 3000 milliseconds = 3 seconds
+        }
+    });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Profile Image Modal
+    var modal = document.getElementById("profileModal");
+
+    // Get the image and insert it inside the modal
+    var img = document.querySelector(".profile-image");
+    img.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    // Close the modal if the user clicks anywhere outside of it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+});
+
 
 // Notification Scripts
 
@@ -16,7 +46,7 @@ $(document).ready(function () {
 
     // Call fetchNotifications at regular intervals
     fetchNotifications();
-    setInterval(fetchNotifications, 3000);
+    setInterval(fetchNotifications, 1000);
 
     // Function to fetch notifications
     function fetchNotifications() {
@@ -31,7 +61,7 @@ $(document).ready(function () {
                 let contentData = data; // Assuming this is already parsed JSON
                 $('#notifications').html('');
                 console.log(contentData);
-                if (contentData.length > 0) {
+                if (contentData.length > 1) {
                     // Update notification count
                     $('#nf-n').text(contentData[0].total);
                     $('#nf-n').show(); 
@@ -41,11 +71,31 @@ $(document).ready(function () {
                     const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
                     return date.toLocaleDateString('en-US', options);
                 }
-
+           
+                    $('#notifications').append(`
+                        <div>
+                            <button id="mark-all-seen" style="color: white; font-size: 16px;" class="btn btn-sm"><i class="fa-solid fa-eye"></i> Mark all as seen</button>
+                        <hr>
+                    </div>`);
+                    
                 for (let i = 1; i < contentData.length; i++) {
                     const element = contentData[i];
+                    let linkHref;
+
+                    // Determine the link based on the action
+                    if (element.actions === "Completed") {
+                        linkHref = `completedDataTable.php?workflow_id=${element.workflow_id}`;
+                    } else if (element.actions === "Rejected") {
+                        linkHref = `rejectedDataTable.php?workflow_id=${element.workflow_id}`;
+                    } else {
+                        // Default to sender or receiver link based on is_receiver flag
+                        linkHref = element.is_receiver ? `receiverDataTable.php?workflow_id=${element.workflow_id}` : `senderDataTable.php?workflow_id=${element.workflow_id}`;
+                    }
+                    
+           
+                    // Append the notification element with the dynamically determined linkHref
                     $('#notifications').append(`
-                        <a style="color:white;" href="senderDataTable.php?workflow_id=${element.workflow_id}" class="notification-link">
+                        <a style="color:white;" href="${linkHref}" class="notification-link">
                             <div class="notification-item">
                                 ${element.ref_number} was ${element.actions} on ${formatDate(element.fl_timestamp)}
                                 <button style="color:white; font-size: 14px;" class="btn btn-sm mark-as-seen" data-id="${element.audit_trail_id}" onclick="event.preventDefault(); markNotificationAsSeen(${element.audit_trail_id});"><i class="fa-solid fa-trash-can"></i></button>
@@ -54,9 +104,15 @@ $(document).ready(function () {
                     `);
                 }
 
+
                     // Attach click handler to toggle visibility only if contentData.length > 0
                     $('#notification-btn').off('click').on('click', function () {
                         $('#notifications').toggle(); // Toggle the visibility of notifications
+                    });
+                    
+                    // Event listener for "Mark all as seen" button
+                    $('#mark-all-seen').on('click', function() {
+                        markAllNotificationsAsSeen();
                     });
 
                     // Mark notification as seen
@@ -76,6 +132,25 @@ $(document).ready(function () {
         });
     }
 });
+
+// Function to mark all notifications as seen
+function markAllNotificationsAsSeen() {
+    $.ajax({
+        type: 'POST',
+        url: 'markAllAsSeen.php',
+        success: function(response) {
+            let responseData = JSON.parse(response);
+            if (responseData.success) {
+                fetchNotifications(); // Re-fetch notifications to update UI
+            } else {
+                console.log('Failed to mark all as seen');
+            }
+        },
+        error: function() {
+            console.log('Error marking all notifications as seen');
+        }
+    });
+}
 
 
 

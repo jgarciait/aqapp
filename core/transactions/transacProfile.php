@@ -1,83 +1,129 @@
 <?php
 include_once '../../core/config/transac_setup.php';
 
-if (isset($_POST['first_name']) || isset($_POST['last_name']) || isset($_POST['user_pass']) || isset($_POST['user_email'])) {
+
+
+// Function to validate and upload the profile image
+function uploadProfileImage($file, $userId) {
+    $targetDir = "../../core/assets/uploads/profile_images/";
+    $fileName = basename($file['name']);
+    $targetFilePath = $targetDir . $userId . '_' . $fileName;
+    $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+    $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+    if (in_array($fileType, $allowTypes)) {
+        if (file_exists($targetFilePath)) {
+            unlink($targetFilePath);
+        }
+        if (move_uploaded_file($file['tmp_name'], $targetFilePath)) {
+            return $userId . '_' . $fileName;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+$uploadStatus = true;
+$profileImageFileName = '';
+
+if(isset($_POST['delete_profile_image'])) {
+    // Logic to set profile image to defa
+    $profileImageFileName = 'default-profile-image.png';
+} else if (!empty($_FILES['profile_image']['name'])) {
+    $profileImageFileName = uploadProfileImage($_FILES['profile_image'], $session_user);
+    if ($profileImageFileName === false) {
+        $em = "Profile image upload failed or file type not allowed.";
+        header("Location: ../../profile.php?error=$em");
+        exit;
+    }
+}
+
+if (isset($_POST['first_name'], $_POST['last_name'], $_POST['user_pass'], $_POST['position_title'], $_POST['user_email']) || $profileImageFileName !== '') {
     $fname = $_POST['first_name'];
     $lname = $_POST['last_name'];
     $psswd = $_POST['user_pass'];
     $email = $_POST['user_email'];
+    $positionTitle = $_POST['position_title'];
 
     $id = $session_user;
 
-    // Check if any of the fields is empty
-    if (empty($fname) && empty($lname) && empty($psswd) && empty($email)) {
-        $em = "At least one field must be provided for an update";
-        header("Location: profile.php?error=$em");
-        exit;
+    $sql = "UPDATE users SET ";
+    $data = [];
+    $types = "";
+
+    if (!empty($fname)) {
+        $sql .= "first_name=?, ";
+        $data[] = $fname;
+        $types .= "s";
+    }
+
+    if (!empty($lname)) {
+        $sql .= "last_name=?, ";
+        $data[] = $lname;
+        $types .= "s";
+    }
+
+    if (!empty($psswd)) {
+        $hashed_psswd = password_hash($psswd, PASSWORD_DEFAULT);
+        $sql .= "user_pass=?, ";
+        $data[] = $hashed_psswd;
+        $types .= "s";
+    }
+
+    if (!empty($positionTitle)) {
+        $sql .= "position_title=?, ";
+        $data[] = $positionTitle;
+        $types .= "s";
+    }
+
+    if (!empty($email)) {
+        $sql .= "user_email=?, ";
+        $data[] = $email;
+        $types .= "s";
+    }
+
+    if ($profileImageFileName !== '') {
+        $sql .= "profile_image=?, ";
+        $data[] = $profileImageFileName;
+        $types .= "s";
+    }
+
+    $sql = rtrim($sql, ", ");
+    $sql .= " WHERE id=?";
+    $data[] = $id;
+    $types .= "i";
+
+    $stmt = $db->prepare($sql);
+    if ($stmt) {
+        $stmt->bind_param($types, ...$data);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $stmt->close();
+
+            // Fetch and update session variables if needed
+            // Redirect to profile page with success message
+            header("Location: ../../profile.php?success=Profile Successfully Updated.");
+            exit;
+        } else {
+            $stmt->close();
+            // Handle no changes made
+            $em = "No changes were made to the profile.";
+            header("Location: ../../profile.php?error=$em");
+            exit;
+        }
     } else {
-        // User updating their own profile
-        // Update the Database based on provided fields
-        $db->set_charset("utf8");
-        // Initialize SQL query and data array
-        $sql = "UPDATE users SET ";
-        $data = [];
-
-        if (!empty($fname)) {
-            $sql .= "first_name=?, ";
-            $data[] = $fname;
-        }
-
-        if (!empty($lname)) {
-            $sql .= "last_name=?, ";
-            $data[] = $lname;
-        }
-
-        if (!empty($psswd)) {
-            // Hash the new password before updating
-            $hashed_psswd = password_hash($psswd, PASSWORD_DEFAULT);
-            $sql .= "user_pass=?, ";
-            $data[] = $hashed_psswd;
-        }
-
-        if (!empty($email)) {
-            $sql .= "user_email=?, ";
-            $data[] = $email;
-        }
-
-        // Remove the trailing comma and space from the SQL query
-        $sql = rtrim($sql, ", ");
-
-        // Add the WHERE clause to update the specific user's data
-        $sql .= " WHERE id=?";
-        $data[] = $id;
-
-        $stmt = $db->prepare($sql);
-        $stmt->execute($data);
-
+        // Handle prepare statement error
+        $em = "An error occurred while preparing the statement.";
+        header("Location: ../../profile.php?error=$em");
+        exit;
     }
 } else {
-    echo "Error";
-}
-
-// After successfully updating the user's profile, you can check if any rows were affected
-if ($stmt->affected_rows > 0) { // Check if any rows were affected (i.e., if the update was successful)
-    // Fetch the updated user information
-    $sql = "SELECT id, first_name, last_name FROM users WHERE id = ?";
-    $stmt = $db->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-
-        // Update the session variables with the new user information
-        $_SESSION['first_name'] = $user['first_name'];
-        $_SESSION['last_name'] = $user['last_name'];
-    }
+    // Handle invalid request
+    $em = "Invalid request.";
+    header("Location: ../../profile.php?error=$em");
+    exit;
 }
 ?>
-<script type="text/javascript">
-	alert("Profile Successfully Updated.");
-	window.location = "../../profile.php";
-</script>

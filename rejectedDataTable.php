@@ -8,7 +8,7 @@ $workflowLevelId = $workflow['wlevelId'];
 
 ?> 
     <div class="container container-table">
-        <main class="container-fluid my-1 p-4 border border-info content-table bg-white shadow rounded table-responsive">
+        <main class="container-fluid my-4 p-4 border border-info content-table bg-white shadow rounded table-responsive">
             <div class="container">
             <a class="title-table"><span><?php echo $user_data2['workflow_name'] . " - " . $user_data2['wcreator_name'];  ?></span></a>
             <p>Rejected Request</p>            
@@ -42,7 +42,7 @@ $workflowLevelId = $workflow['wlevelId'];
             LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_status.receiver_division_wcid
             WHERE forms_status.process_level_id = 1
             AND forms_status.fl_sender_user_id = $session_user
-            AND forms_status.process_status = 'Rejected by Dependencia A'
+            AND forms_status.process_status LIKE '%Rejected%'
             GROUP BY forms_status.forms_id"; 
 
             $result = mysqli_query($db, $sql); // Execute the query
