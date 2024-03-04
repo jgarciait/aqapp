@@ -491,83 +491,120 @@ body {
         font-size: 20px;
     }
 
-    /* Sidebar Styles */
-    .sidebar {
-        width: 60px;
-        background: #313a46;
-        color: #fff;
-        text-align: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        z-index: 4;
-        overflow: hidden;
-        transition: width 0.3s;
-    }
+        /* Sidebar Styles */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            width: 50px;
+            background: #313a46;
+            color: #fff;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 4;
+            overflow: hidden;
+            transition: width 0.3s;
+        }
+        
+        .logout {
+            margin-top: auto;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            padding: 10px 0;
+            font-family: arial;
+        }
+        .sidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 0;
+        }
 
-    .sidebar a {
-        display: block;
-        color: #fff;
-        text-decoration: none;
-        padding: 10px 0;
-    }
+        .sidebar a:hover {
+            background-color: #37709e;
+        }
 
-    .sidebar a:hover {
-        background-color: #37709e;
-    }
+        .sidebar.expanded {
+            width: 200px;
+        }
 
-    .sidebar.expanded {
-        width: 200px;
-    }
+        .sidebar > ul {
+            margin: 7px 0;
+            overflow: hidden;
+        }
 
-    .sidebar > ul {
-        margin: 7px 0;
-        overflow: hidden;
-    }
+        .sidebar li {
+            position: relative;
+            display: block;
+        }
 
-    .sidebar li {
-        position: relative;
-        display: block;
-    }
+        .sidebar li > a {
+            position: relative;
+            display: table;
+            border-collapse: collapse;
+            border-spacing: 0;
+            color: #ffff;
+            font-family: arial;
+            font-size: 16px;
+            text-decoration: none;
+            -webkit-transform: translateZ(0) scale(1, 1);
+            -webkit-transition: all .1s linear;
+            transition: all .1s linear;
+        }
 
-    .sidebar li > a {
-        position: relative;
-        display: table;
-        border-collapse: collapse;
-        border-spacing: 0;
-        color: #ffff;
-        font-family: arial;
-        font-size: 16px;
-        text-decoration: none;
-        -webkit-transform: translateZ(0) scale(1, 1);
-        -webkit-transition: all .1s linear;
-        transition: all .1s linear;
-    }
+        .sidebar .nav-icon {
+            position: relative;
+            display: table-cell;
+            width: 60px;
+            height: 36px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 18px;
+        }
 
-    .sidebar .nav-icon {
-        position: relative;
-        display: table-cell;
-        width: 60px;
-        height: 36px;
-        text-align: center;
-        vertical-align: middle;
-        font-size: 18px;
-    }
+        .sidebar .nav-text {
+            position: relative;
+            display: table-cell;
+            vertical-align: middle;
+            width: 190px;
+            font-family: 'Titillium Web', sans-serif;
+            display: none;
+        }
 
-    .sidebar .nav-text {
-        position: relative;
-        display: table-cell;
-        vertical-align: middle;
-        width: 190px;
-        font-family: 'Titillium Web', sans-serif;
-        display: none;
-    }
+        .sidebar.expanded .nav-text {
+            display: table-cell;
+        }
+/* Sidebar Archives Summary Styles Start*/
+summary {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
 
-    .sidebar.expanded .nav-text {
-        display: table-cell;
-    }
+summary::-webkit-details-marker {
+    display: none;
+}
 
+summary:before {
+    font-family: 'Font Awesome\ 6 Free';
+    font-size: large;
+    content: '\f054';
+    font-weight: 900;
+    margin-right: 64px; /* Adjust the space between the arrow and the text */
+    display: inline-block;
+    padding-left: 15px;
+}
+
+details[open] summary:before {
+    font-family: 'Font Awesome\ 6 Free';
+    font-size: large;
+    content: '\f078';
+    font-weight: 900;
+}
+/* Sidebar Archives Summary Styles End*/
     /* Miscellaneous Styles */
     .sidebar>ul.logout {
         position: absolute;

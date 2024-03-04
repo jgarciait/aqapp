@@ -116,15 +116,35 @@ if (!empty($user_workflows)) {
                     </span>
                 </a>
             </li>
-        <?php }
-    }
-} else {
-    // Handle the case where the user's ID is not found
-    // You can display an alternative message or take other actions here
-    echo "---";
-}
-?>
-
+            <?php } if ($workflow['wlevelId'] < 2) { ?>
+                    <li class="has-subnav">
+                        <a href="<?php echo "senderDataTable.php" . '?workflow_id=' . $wId; ?>">
+                            <i class="fa fa-file-import fa-2x"></i>
+                            <span class="nav-text">
+                                Active Requests
+                            </span>
+                        </a>
+                    </li>
+                <details style="">
+                    <summary>Archives</summary>
+                    <li class="has-subnav">
+                        <a href="<?php echo "rejectedDataTable.php" . '?workflow_id=' . $wId; ?>">
+                            <i class="fa fa-box-archive fa-2x"></i>
+                            <span class="nav-text">
+                                Rejected
+                            </span>
+                        </a>
+                    </li>
+                    <li class="has-subnav">
+                        <a href="<?php echo "completedDataTable.php" . '?workflow_id=' . $wId; ?>">
+                            <i class="fa fa-box-archive fa-2x"></i>
+                            <span class="nav-text">
+                                Completed
+                            </span>
+                        </a>
+                    </li>
+                </details>
+                <?php } ?>
                     <ul class="logout">
                         <li>
                             <a href="logout.php">

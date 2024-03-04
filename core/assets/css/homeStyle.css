@@ -948,6 +948,7 @@ body {
             border: 1px solid #7095da;
         }
 
+/* Sidebar Archives Summary Styles Start*/
 summary {
     cursor: pointer;
     display: flex;
@@ -974,6 +975,7 @@ details[open] summary:before {
     content: '\f078';
     font-weight: 900;
 }
+/* Sidebar Archives Summary Styles End*/
 
 .display-picture{
   margin-left: 10px;

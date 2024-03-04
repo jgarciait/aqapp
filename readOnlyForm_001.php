@@ -513,7 +513,8 @@ label {
                     <th>#</th>
                     <th>Ref. Number</th>
                     <th>Action</th>
-                    <th>User</th>
+                    <th>Name</th>
+                    <th>Email</th>
                     <th>Timestamp</th>
                 </tr>
             </thead>
@@ -527,7 +528,8 @@ label {
                             <td data-title='#'><?php echo $count; ?></td>
                             <td data-title='Ref. Number'><?php echo $row['ref_number']; ?></td>
                             <td data-title='Action'><?php echo $row['actions']; ?></td>
-                            <td data-title='User'><?php echo $row['user_email']; ?></td>
+                            <td data-title='Name'><?php echo $row['first_name'] . " " . $row['last_name']; ?></td>
+                            <td data-title='Email'><?php echo $row['user_email']; ?></td>
                             <td data-title='Timestamp'><?php echo $timestamp; ?></td>
                         </tr>
                         <?php

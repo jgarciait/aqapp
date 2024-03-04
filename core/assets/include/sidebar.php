@@ -62,6 +62,7 @@
                             </span>
                         </a>
                     </li>
+                <?php } ?>
                 <details style="">
                     <summary>Archives</summary>
                     <li class="has-subnav">
@@ -81,7 +82,7 @@
                         </a>
                     </li>
                 </details>
-                <?php } if ($workflow['workflow_name'] == 'Asistencia') { ?>
+                <?php if ($workflow['workflow_name'] == 'Asistencia') { ?>
                     <li class="has-subnav">
                         <a href="<?php echo "newAttendance.php" . '?workflow_id=' . $wId; ?>">
                             <i class="fa fa-user-clock fa-2x"></i>
@@ -134,78 +135,7 @@
                     </div>
                     
                 </form>
-                <?php }}
-                if (!empty($user_data)) { // Check if $user_data is not empty
-                
-                    // SQL query to fetch user workflows and check if the user is associated with each workflow
-                    $sql = "SELECT workflows.workflow_name, workflows.wsender, workflows_creator.wcreator_name, workflows_creator.wlevel_id AS wlevelId, workflows.id AS workflow_id
-                        from users_by_wcreator
-                        INNER JOIN workflows_creator ON workflows_creator.id = users_by_wcreator.wcreator_id
-                        left JOIN workflows ON workflows.id = workflows_creator.wcreator_workflows_id
-                        WHERE ubw_user_id = ?
-                        ORDER BY workflow_name ASC
-                        ";
-
-                    // Prepare and execute the SQL query
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute([$session_user]);
-
-                    // Fetch all the user's workflows into an array
-                    $user_workflows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                    // Check if user_workflows are found
-                    if (!empty($user_workflows)) {
-                    
-
-                        $cardCount = 0; // Initialize card count
-
-                        foreach ($user_workflows as $workflow) {
-                        }  
-                    
-                    if ($workflow['workflow_id'] != 384)
-                    {
-                        $href1 = "newRequest.php";
-                        
-                        echo '<li class="has-subnav">';
-                        echo '<a href="'. $href1 .'?workflow_id=' . $wId . '">';
-                        echo '<i class="fa fa-ellipsis fa-2x"></i>';
-                        echo '<span class="nav-text">';
-                        echo $workflow['workflow_name'];
-                        echo '</span>';
-                        echo '</a>';
-                        echo '</li>';
-                    
-                    }
-                    
-                    if ($workflow['workflow_id'] == 384)
-                            {
-                            $href1 = "medicoTable.php";
-                            $href2 = "medicoChart.php";
-                                
-                                echo '<li class="has-subnav">';
-                                echo '<a href="'. $href1 .'?workflow_id=' . $wId . '">';
-                                echo '<i class="fa fa-file-waveform fa-2x"></i>';
-                                echo '<span class="nav-text">';
-                                echo $workflow['workflow_name'];
-                                echo '</span>';
-                                echo '</a>';
-                                echo '</li>';
-
-                                echo '<li class="has-subnav">';
-                                echo '<a href="'. $href2 .'?workflow_id=' . $wId . '">';
-                                echo '<i class="fa fa-chart-column fa-2x"></i>';
-                                echo '<span class="nav-text">';
-                                echo 'Dashboard';
-                                echo '</span>';
-                                echo '</a>';
-                                echo '</li>';
-                            }
-
-                    $cardCount++;
-                    }
-                    }
-                
-                    ?>  
+                <?php }} ?>
                 
                 </div>
                 <ul  class="logout">
