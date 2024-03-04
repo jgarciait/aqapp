@@ -1,3 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
 .header {
     padding: .4rem;
     background: #fafdff;
@@ -63,12 +76,12 @@
 .profile-modal-content {
     display: flex; /* This makes it a flex container */
     flex-direction: column; /* Stack children vertically */
-    min-height: 40%; /* Minimum height to fill the modal */
+    min-height: 700px; /* Minimum height to fill the modal */
     background-color: #fefefe;
-    margin: 5px auto;
+    margin: 4rem auto auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 50%;
+    width: 950px;
 }
 
 /* The Close Button */
@@ -115,17 +128,27 @@
     margin: 1px;
 }
 
+.modal-pro-column-image {
+    flex: 1; /* Let it expand */
+    display: flex; /* To support child flex items properly */
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+     width: 100%;
+}
+
 .modal-profile-image {
-    max-width: 100%;
+    width: 100%;
     padding: 20px; /* Padding around image */
+    object-fit: cover; /* Ensure the image fills the container */
 }
 
 /* End Profile Modal Styles */
 .header-profile-image-wrapper {
     flex-shrink: 0; /* Prevents the flex item from shrinking */
     flex-basis: 40px; /* Gives a starting point before remaining space is distributed */
-    width: 40px;
-    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
     display: inline-flex; /* Adjusted to inline-flex for better centering */
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
@@ -188,7 +211,162 @@
     padding-bottom: 10px;
     right: 1rem;
 }
+  
+/* AQMessenger Styles Start */
+.contacts-list a {
+    display: flex;
+    align-items: center;
+    padding: 10px 0px;
+    text-decoration: none;
+    color: #000;
+    border-bottom: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
 
+.contacts-list a:hover {
+    background-color: #dfeffc; /* Light grey background on hover */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    color: #007bff; /* Optional: Change text color on hover */
+}
+
+.form-floating .contact-search {
+    transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for transform and color */
+}
+
+.form-floating .contact-search:hover {
+    color: #007bff;
+    cursor: pointer;
+    transform: scale(1.3); /* Increase size by 10% on hover */
+}
+
+.contacts-list a .status-dot {
+    font-size: 10px; /* Adjust size as needed */
+}
+
+.contacts-list a .status-online {
+    color: green;
+}
+
+.contacts-list a .status-offline {
+    color: grey;
+}
+
+.contacts-list a .status-dnd { /* Do not disturb */
+    color: red;
+}
+
+.contacts-list a .status-away {
+    color: yellow;
+}
+
+.contacts-list a .status-dot.offline {
+    color: #adadad;
+}
+
+.contacts-list .status-message {
+    color: #adadad;
+    font-size: 15px;
+    margin-left: 5px;
+}
+.contacts-list .status-message.none {
+    display: none;
+}
+
+/* Chat Area Styles */
+.chat-area .back-icon {
+    display: inline-flex; /* Make it flex to center the icon and allow transform */
+    align-items: center; /* Center the icon vertically */
+    justify-content: center; /* Center the icon horizontally */
+    color: #313a46;
+    padding-right: 1rem;
+    transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for transform and color */
+}
+
+.chat-area .back-icon:hover {
+    color: #007bff;
+    cursor: pointer;
+    transform: scale(1.3); /* Increase size by 10% on hover */
+}
+
+
+.chat-area {
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: rgb(39, 39, 39);
+    align-items: flex-start;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    background-color: #ecf4ff;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.chat-box .chat-box-content {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+    overflow-y: auto;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer 10+ */
+}
+
+.chat-box .chat-box-content::-webkit-scrollbar {
+    display: none; /* For WebKit browsers like Chrome and Safari */
+}
+
+.chat-box-message {
+    align-self: flex-start;
+    color: #575757;
+    background-color: #ffffff;
+    word-wrap: break-word;
+    max-width: 15rem;
+    margin: 0;
+    padding: .5rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 0;
+    border: 1px solid #c0c0c0;
+    font-size: 14px;
+}
+
+.chat-box-message.outgoing {
+    align-self: flex-end;
+    color: #ffffff;
+    background-color: #313a46;
+    word-wrap: break-word;
+    margin: 0;
+    padding: .5rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 10px;
+}
+
+.chat-box .chat-box-content .chat-box-message .chat-box-message-time p{
+    font-size: 12px;
+    color: #adadad;
+    bottom: 0;
+    text-align: end;
+    margin:0;
+}
+.chat-box-input .chat-input-icon { 
+    background-color: white;
+    color: #313a46;
+    padding: 10px;
+    transition: color 0.3s ease; /* Smooth transition for color */
+}
+
+.chat-box-input .chat-input-icon:hover {
+    color: #007bff;
+    cursor: pointer;
+}
+/* AQMessenger Styles End*/
 
 body {
     background: #3b3c4717;
@@ -251,7 +429,7 @@ body {
     align-items: center;
     justify-content: center;
     flex: 1;
-    margin-top: 5rem;
+    margin-top: 4rem;
 }
 
 /* Content Styles */

@@ -1,8 +1,6 @@
 <?php
 include_once '../../core/config/transac_setup.php';
 
-
-
 // Function to validate and upload the profile image
 function uploadProfileImage($file, $userId) {
     $targetDir = "../../core/assets/uploads/profile_images/";

@@ -40,7 +40,7 @@ if ($prefResult && $prefResult['in_app_noti'] == 1) {
     }
 } else {
     // In-app notifications are disabled, so we do not fetch notifications
-    $data = ['message' => 'In-app notifications are disabled.'];
+    $data = ['status' => 'disabled', 'message' => 'In-app notifications are disabled.'];// If notifications are disabled
 }
 
 echo json_encode($data);

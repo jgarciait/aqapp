@@ -23,6 +23,7 @@
                 </div>
                 <ul class="shadow border profile-menu">
                     <li><a href="profile.php">Profile</a></li>
+                    <li><a href="aqMessenger.php">AQMessenger</a></li>
                     <li><a href="userPreferences.php">Preferences</a></li>  
                     <li><a href="logout.php">Log Out</a></li>
                 </ul>

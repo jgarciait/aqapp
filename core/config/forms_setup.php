@@ -15,7 +15,7 @@ session_start();
 if (!isset($_SESSION['id']) || !isset($_SESSION['first_name'])) {
     echo "<script type=\"text/javascript\">
         alert('Para continuar debes iniciar sesión.');
-        window.location.href = '../../login.php';
+        window.location.href = 'login.php';
     </script>";
     exit();
 }

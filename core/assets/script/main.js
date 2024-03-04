@@ -7,58 +7,119 @@ function openTab(tabName) {
     document.getElementById(tabName).style.display = "block";
 }
 
-// Profile Script Success Message
 // Check if the success message element exists
-    document.addEventListener('DOMContentLoaded', function() {
-        const successMessage = document.querySelector('.alert-success');
-        if (successMessage) {
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 3000); // 3000 milliseconds = 3 seconds
-        }
-    });
-
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Profile Image Modal
-    var modal = document.getElementById("profileModal");
-
-    // Get the image and insert it inside the modal
-    var img = document.querySelector(".profile-image");
-    img.onclick = function() {
-      modal.style.display = "block";
-    }
-
-    // Close the modal if the user clicks anywhere outside of it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
+    const successMessage = document.querySelector('.alert-success');
+    if (successMessage) {
+        setTimeout(() => {
+            successMessage.style.display = 'none';
+        }, 60000); // 60000 milliseconds = 1 minute
     }
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const searchBar = document.querySelector('.users .contact-search-1 input'),
+          contactsList = document.querySelector('.users .contacts-list');
+    
+    // Check if all elements exist
+    if (searchBar && contactsList) {
+        // Setup button click event only if all elements are found
+        searchBar.onclick = () => {
+            searchBar.classList.toggle('active');
+            searchBar.focus();
+            searchBar.value = "";
+        };
 
-// Notification Scripts
+        searchBar.onkeyup = () => {
+            let searchTerm = searchBar.value;
+            if (searchTerm != "") {
+                searchBar.classList.add('active');
+            } else {
+                searchBar.classList.remove('active');
+            }
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "contactsSearch.php", true);
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        contactsList.innerHTML = data;
+                    }
+                }
+            }
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send("searchTerm=" + searchTerm);
+        }
+        
+        // Setup the interval for fetching contacts as all elements are present
+        const intervalId = setInterval(() => {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "contacts.php", true);
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        if (!searchBar.classList.contains('active')) {
+                            contactsList.innerHTML = data;
+                        }
+                    } else {
+                        // Log fetching error with the status code
+                        console.error('Error fetching contacts. Status:', xhr.status);
+                    }
+                }
+            };
+            xhr.onerror = () => {
+                // Additional error handling for network errors
+                console.error('Network error occurred while fetching contacts.');
+            };
+            xhr.send();
+        }, 500);
+    } 
+});
+
+
+
+// Profile Script
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.addEventListener('click', function(event) {
+        var modal = document.getElementById("profileModal");
+        
+        if (event.target.matches(".profile-image")) {
+            if (modal) {
+                modal.style.display = "block";
+            }
+        } else if (modal && event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
+});
+
+// Notification Scripts Test
 
 $(document).ready(function () {
-    // Initially hide the notifications area
-    $('#notifications').hide();
+    $('#notifications').hide(); // Initially hide the notifications area
 
-    // Call fetchNotifications at regular intervals
-    fetchNotifications();
-    setInterval(fetchNotifications, 1000);
+    var notificationInterval = setInterval(fetchNotifications, 3000); // Call fetchNotifications at regular intervals
+    fetchNotifications(); // Initial call
 
-    // Function to fetch notifications
     function fetchNotifications() {
         $.ajax({
             type: 'POST',
-            url: 'fetchNotifications.php', // This script should return notifications related to forms
-            data: {
-                key: '123' // Key to send to the server
-            },
+            url: 'fetchNotifications.php',
+            data: { key: '123' },
+            dataType: 'json', // Expect a JSON response
             cache: false,
-            success: function (data) {
-                let contentData = data; // Assuming this is already parsed JSON
+            success: function (response) {
+                // Check for a specific status or message in the JSON response
+                if (response.status === 'disabled' || response.message === 'In-app notifications are disabled.' || !response) {
+                    clearInterval(notificationInterval); // Stop the interval
+                    $('#notifications').hide();
+                    $('#nf-n').hide();
+                    return; // Exit the function
+                }
+
+                let contentData = response; // Assuming this is already parsed JSON
+                // Further processing of contentData as before...
                 $('#notifications').html('');
                 console.log(contentData);
                 if (contentData.length > 1) {
