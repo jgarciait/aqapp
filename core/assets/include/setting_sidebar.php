@@ -144,7 +144,7 @@ if (!empty($user_workflows)) {
                         </a>
                     </li>
                 </details>
-                <?php }} ?>
+                <?php }}} ?>
 
                     <ul class="logout">
                         <li>
