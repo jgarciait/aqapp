@@ -1,6 +1,6 @@
 <?php
 include_once 'core/config/forms_settings_setup.php';
-include_once 'core/assets/util/phpMailerFunction.php';
+include_once 'core/vendor/phpMailerFunction.php';
 
 // Handle form submission to send invitation
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

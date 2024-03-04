@@ -1,4 +1,28 @@
 <?php
+function getWorkflowIdByUserId($session_user, $db) {
+    // Validate $userId as an integer
+    if (!filter_var($session_user, FILTER_VALIDATE_INT)) {
+        return false;
+    }
+
+    mysqli_set_charset($db, "utf8mb4");
+    $sql = "SELECT workflows_creator.wcreator_workflows_id AS workflows_id
+            FROM users
+            INNER JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = users.id
+            INNER JOIN workflows_creator ON workflows_creator.id = users_by_wcreator.wcreator_id 
+            WHERE users.id = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param('i', $session_user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $workflow = $result->fetch_assoc();
+        return $workflow;
+    } else {
+        return false;
+    }
+}
 
 function getUserById($id, $db) {
     // Validate $id as an integer
@@ -12,6 +36,7 @@ function getUserById($id, $db) {
         users.first_name, 
         users.last_name, 
         users.user_email,
+        users_by_wcreator.ubw_user_id,
         workflows.id,
         workflows_creator.wlevel_id, 
         workflows.workflow_name,
@@ -46,6 +71,7 @@ function getUserById($id, $db) {
         return false;
     }
 }
+
 function getUserById2($id, $workflow_id, $db) {
     // Validate $id as an integer
     if (!filter_var($id, FILTER_VALIDATE_INT)) {

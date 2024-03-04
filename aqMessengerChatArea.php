@@ -119,10 +119,10 @@ if (isset($_GET['id'])) {
             </div>
         </div>
         <div class="chat-box-input py-3">
-            <form action="core/controllers/aqMessengerChatAreaController.php" method="post">
+            <form calss="typing-area" action="core/controllers/aqMessengerChatAreaController.php" method="post">
                 <div class="mb-3 px-3">
                     <div class="d-flex form-floating">
-                        <textarea class="form-control" placeholder="Type a message..." id="chat-message" name="chat-message" style="height: auto;"></textarea>
+                        <textarea class="form-control input-field" placeholder="Type a message..." id="chat-message" name="chat-message" style="height: auto;"></textarea>
                         <label for="chat-message">Type a message...</label>
                         <button type="submit" class="btn btn p-2"><i class="fa-brands fa-telegram fa-2x chat-input-icon"></i></button>
                     </div>

@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// AQMessenger Scripts Start
 document.addEventListener('DOMContentLoaded', function () {
     const searchBar = document.querySelector('.users .contact-search-1 input'),
           contactsList = document.querySelector('.users .contacts-list');
@@ -76,8 +77,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 500);
     } 
 });
+/*
+const chatform = document.getElementById('.typing-area'),
+    inputField = chatform.querySelector('.input-field'),
+    sendBtn = chatform.querySelector('button');
 
+sendBtn.onclick = () => {
+    // Let's start AJAX
+    let xhr = new XMLHttpRequest(); // Creating XML object
+    xhr.open("POST", "message.php", true);
+    xhr.onload = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                inputField.value = ""; // Once message is sent, leave the input field blank
+            }
+        }
+    }
+} */
+    // We have to send the form data through ajax to php
 
+// AQMessenger Scripts End
 
 // Profile Script
 document.addEventListener('DOMContentLoaded', function() {

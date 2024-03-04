@@ -1,7 +1,10 @@
 <?php
 include 'core/config/config_db.php';
+include 'core/assets/util/functions.php';
 
 session_start();
+
+
 
 if (!isset($_SESSION['id']) || !isset($_SESSION['first_name'])) {
     echo "<script type=\"text/javascript\">
@@ -11,11 +14,21 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['first_name'])) {
     exit();
 }
 
+$session_user = $_SESSION['id'];
+
+$userData = getWorkflowIdByUserId($session_user, $db);
+
+$wId = $userData['workflows_id'];
+
+
 // $_SESSION['id']; // This line seems redundant and has no effect.
 
 $sql = "SELECT *
         FROM users
-        WHERE id != ?";
+        INNER JOIN users_by_wcreator ON users_by_wcreator.id = users.id
+        LEFT JOIN workflows_creator ON workflows_creator.id = users_by_wcreator.wcreator_id
+        WHERE users.id != ?
+        AND workflows_creator.wcreator_workflows_id = ?";
 
 $stmt = $db->prepare($sql);
 // Ensure that the $stmt is successfully created.
@@ -24,7 +37,7 @@ if (!$stmt) {
 }
 
 // Bind the parameter before executing the statement.
-$stmt->bind_param("i", $_SESSION['id']);
+$stmt->bind_param("ii", $session_user, $wId);
 
 if (!$stmt->execute()) {
     die('Execute failed: ' . $stmt->error);
