@@ -25,7 +25,7 @@ $wId = $userData['workflows_id'];
 
 $sql = "SELECT *
         FROM users
-        INNER JOIN users_by_wcreator ON users_by_wcreator.id = users.id
+        INNER JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = users.id
         LEFT JOIN workflows_creator ON workflows_creator.id = users_by_wcreator.wcreator_id
         WHERE users.id != ?
         AND workflows_creator.wcreator_workflows_id = ?";

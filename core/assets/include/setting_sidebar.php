@@ -6,7 +6,7 @@
             <nav>
                  <ul>
                     <li class="has-subnav">
-                        <a href="home.php">
+                        <a href="socialHome.php">
                             <i class="fa fa-home fa-sm"></i>
                             <span class="nav-text">
                                 Home
