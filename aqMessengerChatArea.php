@@ -44,85 +44,18 @@ if (isset($_GET['id'])) {
                 <p style="color:green; margin-bottom: 0; padding: 0;">Online</p>
             </div>
         </div>
-        <div class="chat-box ">
+        <div class="chat-box">
             <div class="chat-box-content px-4">
-                <div class="chat-box-message outgoing">
-                    <div class="chat-box-message-content">
-                        <div class="chat-box-message-text">
-                            <p>Ok</p>
-                        </div>
-                        <div class="chat-box-message-time">
-                            <p>10:06 AM</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="chat-box-message">
-                    <div class="chat-box-message-content">
-                        <div class="chat-box-message-text">
-                            <p>Actually, I've been having a great week! Just got back from a trip.</p>
-                        </div>
-                        <div class="chat-box-message-time">
-                            <p>10:05 AM</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="chat-box-message outgoing">
-                    <div class="chat-box-message-content ">
-                        <div class="chat-box-message-text">
-                            <p>That's wonderful to hear! What have you been up to lately?</p>
-                        </div>
-                        <div class="chat-box-message-time">
-                            <p>10:04 AM</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="chat-box-message">
-                    <div class="chat-box-message-content">
-                        <div class="chat-box-message-text">
-                            <p>Yes, things are looking up. How about yourself?</p>
-                        </div>
-                        <div class="chat-box-message-time">
-                            <p>10:03 AM</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="chat-box-message outgoing">
-                    <div class="chat-box-message-content ">
-                        <div class="chat-box-message-text">
-                            <p>How about you?</p>
-                        </div>
-                        <div class="chat-box-message-time">
-                            <p>10:02 AM</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="chat-box-message">
-                    <div class="chat-box-message-content">
-                        <div class="chat-box-message-text">
-                            <p>I'm doing great, thank you for asking. It's been a good day so far.</p>
-                        </div>
-                        <div class="chat-box-message-time">
-                            <p>10:01 AM</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="chat-box-message outgoing">
-                    <div class="chat-box-message-content">
-                        <div class="chat-box-message-text">
-                            <p>Hello, how are you?</p>
-                        </div>
-                        <div class="chat-box-message-time">
-                            <p>10:00 AM</p>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
         <div class="chat-box-input py-3">
-            <form calss="typing-area" action="core/controllers/aqMessengerChatAreaController.php" method="post">
+            <form class="typing-area" action="#" autocomplete="off">
                 <div class="mb-3 px-3">
                     <div class="d-flex form-floating">
-                        <textarea class="form-control input-field" placeholder="Type a message..." id="chat-message" name="chat-message" style="height: auto;"></textarea>
+                        <input type="text" name="outgoing_id" value="<?php echo $_SESSION['id']; ?>" hidden>
+                        <input type="text" name="incoming_id" value="<?php echo $userId; ?>" hidden>
+                        <textarea type="text" class="form-control input-field" placeholder="Type a message..." id="chat-message" name="msg" style="height: auto;"></textarea>
                         <label for="chat-message">Type a message...</label>
                         <button type="submit" class="btn btn p-2"><i class="fa-brands fa-telegram fa-2x chat-input-icon"></i></button>
                     </div>

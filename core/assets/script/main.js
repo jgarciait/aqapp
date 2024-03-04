@@ -77,23 +77,60 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 500);
     } 
 });
-/*
-const chatform = document.getElementById('.typing-area'),
-    inputField = chatform.querySelector('.input-field'),
-    sendBtn = chatform.querySelector('button');
 
-sendBtn.onclick = () => {
-    // Let's start AJAX
-    let xhr = new XMLHttpRequest(); // Creating XML object
-    xhr.open("POST", "message.php", true);
-    xhr.onload = () => {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                inputField.value = ""; // Once message is sent, leave the input field blank
+document.addEventListener('DOMContentLoaded', function () {
+    const chatForm = document.querySelector('.typing-area');
+    if (!chatForm) {
+        return;
+    }
+
+    const inputField = chatForm.querySelector('.input-field'),
+        sendBtn = chatForm.querySelector('button'),
+        chatBoxContent = document.querySelector('.chat-box-content');
+
+    if (inputField && sendBtn && chatBoxContent) {
+      
+        chatForm.onsubmit = (e) => {
+            e.preventDefault(); // Prevent form submission
+        }
+        
+        sendBtn.onclick = () => {
+      
+    
+        // Let's start AJAX
+        let xhr = new XMLHttpRequest(); // Creating XML object
+        xhr.open("POST", "insert-chat.php", true);
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    inputField.value = ""; // Clear the input field          
+                }
             }
         }
+        let formData = new FormData(chatForm); // Creating new formData object
+        xhr.send(formData); // Sending the form data to insert-chat.php
+        }
+        // Setup the interval for fetching contacts as all elements are present
+        setInterval(() => {
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "get-chat.php", true);
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        chatBoxContent.innerHTML = data;
+                    }
+                } 
+            };
+            xhr.onerror = () => {
+                // Additional error handling for network errors
+                console.error('Network error occurred while fetching contacts.');
+            };
+            let formData = new FormData(chatForm); // Creating new formData object
+            xhr.send(formData); // Sending the form data to insert-chat.php
+        }, 500);
     }
-} */
+});
     // We have to send the form data through ajax to php
 
 // AQMessenger Scripts End

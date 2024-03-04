@@ -54,7 +54,6 @@
                                 </span>
                             </a>
                         </li>
-                  
                     <?php } ?>
                     <ul class="logout">
                         <li>

@@ -17,7 +17,7 @@
             default:
                 $statusClass = 'status-offline'; // Default case if none of the above
         }
-        $output .= '<a href="aqMessengerChatArea.php?id='. $row['id'].'">
+        $output .= '<a href="aqMessengerChatArea.php?id='. $row['user_id'].'">
                         <div class="d-flex align-items-center justify-content-between p-3" style="width: 100%;">
                             <div class="d-flex align-items-center">
                                 <div class="pe-3">

@@ -19,11 +19,10 @@ $session_user = $_SESSION['id'];
 $userData = getWorkflowIdByUserId($session_user, $db);
 
 $wId = $userData['workflows_id'];
-
-
+;
 // $_SESSION['id']; // This line seems redundant and has no effect.
 
-$sql = "SELECT *
+$sql = "SELECT *, users.id AS user_id
         FROM users
         INNER JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = users.id
         LEFT JOIN workflows_creator ON workflows_creator.id = users_by_wcreator.wcreator_id
