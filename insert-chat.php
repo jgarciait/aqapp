@@ -20,7 +20,7 @@ $incoming_id = $_POST['incoming_id'];
 $message = $_POST['msg'];
 
 if(!empty($message)){
-    $sql = "INSERT INTO  aq_messages (incoming_msg_id, outgoing_msg_id, msg, msg_timestamp)
+        $sql = "INSERT INTO  aq_messages (incoming_msg_id, outgoing_msg_id, msg, msg_timestamp)
             VALUES (?, ?, ?, ?)";
     $stmt = $db->prepare($sql);
     if (!$stmt) {

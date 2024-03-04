@@ -33,34 +33,35 @@ if (!$stmt->execute()) {
 
 $result = $stmt->get_result();
 
+
 if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
     $dateTime = $row['msg_timestamp']; // Assuming this field exists in your rows
     $readableDateTime = date('M d, Y h:i A', strtotime($dateTime));
     
-    if($row['outgoing_msg_id'] == $outgoing_id) { // Use == for comparison unless you need strict type comparison
-        $output .= '<div class="chat-box-message outgoing">
-                        <div class="chat-box-message-content">
-                            <div class="chat-box-message-text">
-                                <p>'.$row['msg'].'</p>
-                            </div>
-                            <div class="chat-box-message-time">
-                                <p>'.$readableDateTime.'</p>
-                            </div>
+if ($row['outgoing_msg_id'] == $outgoing_id) {
+    $output .= '<div class="chat-box-message outgoing">
+                    <div class="chat-box-message-content">
+                        <div class="chat-box-message-text">
+                            <p>'.nl2br($row['msg']).'</p>
                         </div>
-                    </div>';
-    } else {
-            $output .= '<div class="chat-box-message ">
-                        <div class="chat-box-message-content">
-                            <div class="chat-box-message-text">
-                                <p>'.$row['msg'].'</p>
-                            </div>
-                            <div class="chat-box-message-time">
-                                <p>'.$readableDateTime.'</p>
-                            </div>
+                        <div class="chat-box-message-time">
+                            <p>'.$readableDateTime.'</p>
                         </div>
-                    </div>';
-    }
+                    </div>
+                </div>';
+} else {
+    $output .= '<div class="chat-box-message">
+                    <div class="chat-box-message-content">
+                        <div class="chat-box-message-text">
+                            <p>'.nl2br($row['msg']).'</p>
+                        </div>
+                        <div class="chat-box-message-time">
+                            <p>'.$readableDateTime.'</p>
+                        </div>
+                    </div>
+                </div>';
+}
   }
 }
 
