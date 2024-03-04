@@ -11,10 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($firstName)) {
         // Hash the password
         $hashedPass = password_hash($userPass, PASSWORD_DEFAULT);
+        $profileImageFileName = 'default-profile-image.png';
 
         // Use prepared statement to insert data
-        $stmt = $db->prepare("INSERT INTO users (first_name, last_name, user_email, user_pass) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $firstName, $lastName, $userEmail, $hashedPass);
+        $stmt = $db->prepare("INSERT INTO users (first_name, last_name, user_email, user_pass, profile_image ) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $firstName, $lastName, $userEmail, $hashedPass, $profileImageFileName);
 
         if ($stmt->execute()) {
             $userId = $stmt->insert_id; // Get the ID of the inserted user
@@ -25,6 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
 
             $stmt->close();
+
+            // Insert default preferences
+            $stmt = $db->prepare("INSERT INTO noti_preference (np_user_id, in_app_noti, email_noti) VALUES (?, 1, 1)");
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+
+            $stmt->close();
+
 
 
             $user_Id = $session_user;
