@@ -16,8 +16,8 @@ while ($row = $result->fetch_assoc()) {
 
     $messageContent = str_replace("\n", "<br>", $messageContent);
     $msg = (strlen($messageContent) > 20) ? substr($messageContent, 0, 20) . '...' : $messageContent;
-    ($outgoing_id == $row2['outgoing_msg_id']) ? $you = "You: " : $you = "";
-
+    ($outgoing_id == $row2['outgoing_msg_id']) ? $you = "You: " : $msgWho = "";
+    ($row['user_id'] == $row2['incoming_msg_id']) ? $you = "From: " : $msgWho = "";
         $output .= '<a href="aqMessengerChatArea.php?id=' . $row['user_id'] . '">
                         <div class="d-flex align-items-center justify-content-between p-3" style="width: 100%;">
                             <div class="d-flex align-items-center">
@@ -26,7 +26,7 @@ while ($row = $result->fetch_assoc()) {
                                 </div>
                                 <div>
                                     ' . htmlspecialchars($row['first_name']) . " " . htmlspecialchars($row['last_name']) . " - " . $row['status'] . '
-                                    <div class="status-message">' . $you . $msg . '</div>
+                                    <div class="status-message">' . $msgWho . $msg . '</div>
                                 </div>
                             </div>
                             <span style="margin-bottom: 0; padding: 0;"><i class="fas fa-circle"></i></span>
