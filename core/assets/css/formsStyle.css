@@ -326,13 +326,12 @@ a {
     word-wrap: break-word;
     max-width: 15rem;
     margin: 0;
-    padding: .5rem;
+    padding: .3rem;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 0;
     border: 1px solid #c0c0c0;
-    font-size: 14px;
 }
 
 .chat-box-message.outgoing {
@@ -348,12 +347,21 @@ a {
     border-bottom-left-radius: 10px;
 }
 
-.chat-box .chat-box-content .chat-box-message .chat-box-message-time p{
+.chat-box-message-time p{
     font-size: 12px;
     color: #adadad;
     bottom: 0;
     text-align: end;
     margin:0;
+    padding:0;
+}
+
+.chat-box-message-text p{
+    font-size: 14px;
+    bottom: 0;
+    text-align: end;
+    margin:0;
+    padding:0;
 }
 .chat-box-input .chat-input-icon { 
     background-color: white;

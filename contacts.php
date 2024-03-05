@@ -18,6 +18,8 @@ $session_user = $_SESSION['id'];
 
 $userData = getWorkflowIdByUserId($session_user, $db);
 
+$outgoing_id = $session_user;
+
 $wId = $userData['workflows_id'];
 ;
 // $_SESSION['id']; // This line seems redundant and has no effect.

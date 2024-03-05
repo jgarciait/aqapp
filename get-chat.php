@@ -17,7 +17,10 @@ $outgoing_id = $_POST['outgoing_id'];
 $incoming_id = $_POST['incoming_id'];
 $output = '';
 
-$sql = "SELECT * FROM aq_messages WHERE (incoming_msg_id = ? AND outgoing_msg_id = ?) OR (outgoing_msg_id = ? AND incoming_msg_id = ?)
+$sql = "SELECT *, users.profile_image FROM aq_messages 
+        LEFT JOIN users ON users.id = aq_messages.outgoing_msg_id
+        WHERE (incoming_msg_id = ? AND outgoing_msg_id = ?) 
+        OR (outgoing_msg_id = ? AND incoming_msg_id = ?)
         ORDER BY msg_id DESC";
 
 $stmt = $db->prepare($sql);
@@ -40,24 +43,34 @@ if ($result->num_rows > 0) {
     $readableDateTime = date('M d, Y h:i A', strtotime($dateTime));
     
 if ($row['outgoing_msg_id'] == $outgoing_id) {
-    $output .= '<div class="chat-box-message outgoing">
-                    <div class="chat-box-message-content">
-                        <div class="chat-box-message-text">
-                            <p>'.nl2br($row['msg']).'</p>
+    $output .= '<div class="d-flex justify-content-end">
+                    <div class="chat-box-message outgoing ">
+                        <div class="chat-box-message-content">
+                            <div class="chat-box-message-text">
+                                <p>'.nl2br($row['msg']).'</p>
+                            </div>
+                            <div class="chat-box-message-time">
+                                <p>'.$readableDateTime.'</p>
+                            </div>
                         </div>
-                        <div class="chat-box-message-time">
-                            <p>'.$readableDateTime.'</p>
-                        </div>
+                    </div>
+                    <div class="ms-2">
+                        <img src="core/assets/uploads/profile_images/'.$row['profile_image'].'" alt="Profile Image" style="width:40px; height:40px; border-radius: 50%; object-fit: cover;">
                     </div>
                 </div>';
 } else {
-    $output .= '<div class="chat-box-message">
-                    <div class="chat-box-message-content">
-                        <div class="chat-box-message-text">
-                            <p>'.nl2br($row['msg']).'</p>
-                        </div>
-                        <div class="chat-box-message-time">
-                            <p>'.$readableDateTime.'</p>
+    $output .= '<div class="d-flex">
+                    <div class="me-2">
+                        <img src="core/assets/uploads/profile_images/'.$row['profile_image'].'" alt="Profile Image" style="width:40px; height:40px; border-radius: 50%; object-fit: cover;">
+                    </div>
+                    <div class="chat-box-message">
+                        <div class="chat-box-message-content">
+                            <div class="chat-box-message-text">
+                                <p>'.nl2br($row['msg']).'</p>
+                            </div>
+                            <div class="chat-box-message-time">
+                                <p>'.$readableDateTime.'</p>
+                            </div>
                         </div>
                     </div>
                 </div>';

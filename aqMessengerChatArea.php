@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
                 <a class="" href="aqMessenger.php">
                     <i class="back-icon fas fa-arrow-left fa-xl"></i>
                 </a>
-                <img src="core/assets/uploads/profile_images/<?php echo htmlspecialchars($row['profile_image']); ?>" alt="Profile Image" style="width:40px; height:40px; border-radius: 50%; object-fit: cover;">
+                <img src="core/assets/uploads/profile_images/<?php echo htmlspecialchars($row['profile_image']); ?>" alt="Profile Image" style="width:50px; height:50px; border-radius: 50%; object-fit: cover;">
             </div>
             <div>
                 <?php echo $row['first_name'] . " " . $row['last_name']; ?>

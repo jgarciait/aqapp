@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (xhr.status === 200) {
                         let data = xhr.response;
                         chatBoxContent.innerHTML = data;
+                        scrollToBottom();
                     }
                 } 
             };
@@ -131,6 +132,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 500);
     }
 });
+
+function scrollToBottom() {
+    chatBoxContent.scrollTop = chatBoxContent.scrollHeight;
+}
     // We have to send the form data through ajax to php
 
 // AQMessenger Scripts End
