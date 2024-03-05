@@ -1,8 +1,8 @@
 <?php
 while ($row = $result->fetch_assoc()) {
     $sql2 = "SELECT * FROM aq_messages 
-    WHERE (incoming_msg_id = {$row['user_id']} AND outgoing_msg_id = {$outgoing_id}) 
-    OR (outgoing_msg_id = {$row['user_id']} AND incoming_msg_id = {$outgoing_id}) 
+    WHERE (incoming_msg_id = {$row['user_id']} OR outgoing_msg_id = {$row['user_id']}) 
+    AND (outgoing_msg_id = {$outgoing_id} OR incoming_msg_id = {$outgoing_id}) 
     ORDER BY msg_id DESC LIMIT 1";
     $stmt2 = $db->prepare($sql2);
     $stmt2->execute(); // Execute the prepared statement
@@ -16,38 +16,23 @@ while ($row = $result->fetch_assoc()) {
 
     $messageContent = str_replace("\n", "<br>", $messageContent);
     $msg = (strlen($messageContent) > 20) ? substr($messageContent, 0, 20) . '...' : $messageContent;
+    ($outgoing_id == $row2['outgoing_msg_id']) ? $you = "You: " : $you = "";
 
-    $statusClass = '';
-    switch ($row['status']) {
-        case 'Online':
-            $statusClass = 'status-online';
-            break;
-        case 'Offline':
-            $statusClass = 'status-offline';
-            break;
-        case 'Do not disturb':
-            $statusClass = 'status-dnd';
-            break;
-        case 'Away':
-            $statusClass = 'status-away';
-            break;
-        default:
-            $statusClass = 'status-offline'; // Default case if none of the above
-    }
-    $output .= '<a href="aqMessengerChatArea.php?id=' . $row['user_id'] . '">
-                    <div class="d-flex align-items-center justify-content-between p-3" style="width: 100%;">
-                        <div class="d-flex align-items-center">
-                            <div class="pe-3">
-                                <img src="core/assets/uploads/profile_images/' . htmlspecialchars($row['profile_image']) . '" alt="Profile Image" style="margin-right: 1rem; width:40px; height:40px; border-radius: 50%; object-fit: cover;">
+        $output .= '<a href="aqMessengerChatArea.php?id=' . $row['user_id'] . '">
+                        <div class="d-flex align-items-center justify-content-between p-3" style="width: 100%;">
+                            <div class="d-flex align-items-center">
+                                <div class="pe-3">
+                                    <img src="core/assets/uploads/profile_images/' . htmlspecialchars($row['profile_image']) . '" alt="Profile Image" style="margin-right: 1rem; width:40px; height:40px; border-radius: 50%; object-fit: cover;">
+                                </div>
+                                <div>
+                                    ' . htmlspecialchars($row['first_name']) . " " . htmlspecialchars($row['last_name']) . " - " . $row['status'] . '
+                                    <div class="status-message">' . $you . $msg . '</div>
+                                </div>
                             </div>
-                            <div>
-                                ' . htmlspecialchars($row['first_name']) . " " . htmlspecialchars($row['last_name']) . " - " . $row['status'] . '
-                                <div class="status-message text-primary">' . $msg . '</div>
-                            </div>
+                            <span style="margin-bottom: 0; padding: 0;"><i class="fas fa-circle"></i></span>
                         </div>
-                        <span style="margin-bottom: 0; padding: 0;"><i class="fas fa-circle ' . $statusClass . '"></i></span>
-                    </div>
-                    <hr>
-                </a>';
-}
+                        <hr>
+                    </a>';
+    }
+
 ?>

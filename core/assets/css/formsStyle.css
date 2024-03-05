@@ -348,10 +348,10 @@ a {
 }
 
 .chat-box-message-time p{
-    font-size: 12px;
+    font-size: 10px;
     color: #adadad;
     bottom: 0;
-    text-align: end;
+    text-align: start;
     margin:0;
     padding:0;
 }
@@ -359,7 +359,7 @@ a {
 .chat-box-message-text p{
     font-size: 14px;
     bottom: 0;
-    text-align: end;
+    text-align: start;
     margin:0;
     padding:0;
 }
