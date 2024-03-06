@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
             };
             let formData = new FormData(chatForm); // Creating new formData object
             xhr.send(formData); // Sending the form data to insert-chat.php
-        }, 800);
+        }, 500);
         
         function scrollToTop() {
             chatBoxContent.scrollTop = chatBoxContent.scrollHeight;
