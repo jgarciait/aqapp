@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// AQMessenger Scripts Start
 document.addEventListener('DOMContentLoaded', function () {
     const searchBar = document.querySelector('.users .contact-search-1 input'),
           contactsList = document.querySelector('.users .contacts-list');
@@ -87,10 +88,11 @@ document.addEventListener('DOMContentLoaded', function () {
         fetchAndUpdateContacts();
 
         // Optionally, set up an interval to regularly fetch updates
-        const refreshInterval = 5000; // 15 seconds, adjust as needed
+        const refreshInterval = 15000; // 15 seconds, adjust as needed
         setInterval(fetchAndUpdateContacts, refreshInterval);
     } 
 });
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const chatForm = document.querySelector('.typing-area');
