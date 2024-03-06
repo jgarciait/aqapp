@@ -1,6 +1,5 @@
 <?php
 include 'core/config/config_db.php';
-include 'core/assets/util/functions.php';
 
 session_start();
 
@@ -13,20 +12,14 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['first_name'])) {
 }
 
 $session_user = $_SESSION['id'];
+$outgoing_id = $session_user;
 
 $searchTerm = $_POST['searchTerm'];
 
-$userData = getWorkflowIdByUserId($session_user, $db);
 
-$wId = $userData['workflows_id'];
-
-$sql = "SELECT *, users.id AS user_id
+$sql = "SELECT *
         FROM users
-        INNER JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = users.id
-        LEFT JOIN workflows_creator ON workflows_creator.id = users_by_wcreator.wcreator_id
-        WHERE users.id != ?
-        AND workflows_creator.wcreator_workflows_id = ?
-        AND (first_name LIKE ? 
+        Where (first_name LIKE ? 
         OR last_name LIKE ? 
         OR user_email LIKE ? 
         OR status LIKE ? 
@@ -42,7 +35,7 @@ if (!$stmt) {
 $likePattern = '%' . $searchTerm . '%';
 
 // Bind the parameter before executing the statement.
-$stmt->bind_param("iisssss", $_SESSION['id'], $wId, $likePattern, $likePattern, $likePattern, $likePattern, $likePattern);
+$stmt->bind_param("sssss", $likePattern, $likePattern, $likePattern, $likePattern, $likePattern);
 
 if (!$stmt->execute()) {
     die('Execute failed: ' . $stmt->error);

@@ -30,51 +30,50 @@ document.addEventListener('DOMContentLoaded', function () {
             searchBar.focus();
             searchBar.value = "";
         };
-
-        searchBar.onkeyup = () => {
-            let searchTerm = searchBar.value;
-            if (searchTerm != "") {
-                searchBar.classList.add('active');
-            } else {
-                searchBar.classList.remove('active');
-            }
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", "contactsSearch.php", true);
-            xhr.onload = () => {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        let data = xhr.response;
-                        contactsList.innerHTML = data;
-                    }
-                }
-            }
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.send("searchTerm=" + searchTerm);
-        }
         
-        // Setup the interval for fetching contacts as all elements are present
-        const intervalId = setInterval(() => {
-            let xhr = new XMLHttpRequest();
-            xhr.open("GET", "contacts.php", true);
-            xhr.onload = () => {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        let data = xhr.response;
-                        if (!searchBar.classList.contains('active')) {
-                            contactsList.innerHTML = data;
-                        }
-                    } else {
-                        // Log fetching error with the status code
-                        console.error('Error fetching contacts. Status:', xhr.status);
-                    }
-                }
-            };
-            xhr.onerror = () => {
-                // Additional error handling for network errors
-                console.error('Network error occurred while fetching contacts.');
-            };
-            xhr.send();
-        }, 500);
+searchBar.addEventListener('keyup', async () => {
+    let searchTerm = searchBar.value;
+    if (searchTerm !== "") {
+        searchBar.classList.add('active');
+    } else {
+        searchBar.classList.remove('active');
+    }
+    try {
+        const response = await fetch('contactsSearch.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `searchTerm=${encodeURIComponent(searchTerm)}`,
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.text();
+        contactsList.innerHTML = data;
+    } catch (error) {
+        console.error('Failed to search contacts:', error);
+    }
+});
+
+        
+// Use async function to handle asynchronous operations more cleanly
+async function fetchContacts() {
+    try {
+        const response = await fetch('contacts.php');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.text();
+        contactsList.innerHTML = data;
+    } catch (error) {
+        console.error('Failed to fetch contacts:', error);
+    }
+}
+
+// Setup the interval for fetching contacts as all elements are present
+const intervalId = setInterval(fetchContacts, 1500); // Adjust time as needed
+
     } 
 });
 
@@ -129,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
             };
             let formData = new FormData(chatForm); // Creating new formData object
             xhr.send(formData); // Sending the form data to insert-chat.php
-        }, 500);
+        }, 800);
     }
 });
 
@@ -157,8 +156,12 @@ document.addEventListener('DOMContentLoaded', function() {
 $(document).ready(function () {
     $('#notifications').hide(); // Initially hide the notifications area
 
-    var notificationInterval = setInterval(fetchNotifications, 3000); // Call fetchNotifications at regular intervals
-    fetchNotifications(); // Initial call
+    // Check if in-app notifications are enabled
+    if (userInAppNotiEnabled === 1) {
+        var notificationInterval = setInterval(fetchNotifications, 3000); // Call fetchNotifications at regular intervals
+        fetchNotifications(); // Initial call
+    }
+
 
     function fetchNotifications() {
         $.ajax({

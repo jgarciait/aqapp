@@ -13,23 +13,14 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['first_name'])) {
           </script>";
     exit();
 }
-
 $session_user = $_SESSION['id'];
-
-$userData = getWorkflowIdByUserId($session_user, $db);
-
 $outgoing_id = $session_user;
 
-$wId = $userData['workflows_id'];
 ;
 // $_SESSION['id']; // This line seems redundant and has no effect.
 
-$sql = "SELECT *, users.id AS user_id
-        FROM users
-        INNER JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = users.id
-        LEFT JOIN workflows_creator ON workflows_creator.id = users_by_wcreator.wcreator_id
-        WHERE users.id != ?
-        AND workflows_creator.wcreator_workflows_id = ?";
+$sql = "SELECT *
+        FROM users ";
 
 $stmt = $db->prepare($sql);
 // Ensure that the $stmt is successfully created.
@@ -38,7 +29,6 @@ if (!$stmt) {
 }
 
 // Bind the parameter before executing the statement.
-$stmt->bind_param("ii", $session_user, $wId);
 
 if (!$stmt->execute()) {
     die('Execute failed: ' . $stmt->error);

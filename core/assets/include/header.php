@@ -1,3 +1,21 @@
+<?php
+
+$sql = "SELECT in_app_noti, email_noti FROM noti_preference WHERE np_user_id = :userId";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(':userId' => $session_user));
+$userPreferences = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Check if the query returned any results
+if (!$userPreferences || !is_array($userPreferences)) {
+    // Set default values if no preferences found
+    $userPreferences = array('in_app_noti' => 0, 'email_noti' => 0);
+}
+
+echo "<script>
+var userInAppNotiEnabled = " . (int)$userPreferences['in_app_noti'] . ";
+</script>";
+?>
+
 <body>
 <header class="header">
     <div class="nav-container">
