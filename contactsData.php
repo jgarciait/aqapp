@@ -2,7 +2,7 @@
 $output = ''; // Define $output before appending content
 while ($row = $result->fetch_assoc()) {
     $sql2 = "SELECT * FROM aq_messages 
-    WHERE (incoming_msg_id = {$row['id']} OR outgoing_msg_id = {$row['id']}) 
+    WHERE (incoming_msg_id = {$row['user_id']} OR outgoing_msg_id = {$row['user_id']}) 
     AND (outgoing_msg_id = {$outgoing_id} OR incoming_msg_id = {$outgoing_id}) 
     ORDER BY msg_id DESC LIMIT 1";
     $stmt2 = $db->prepare($sql2);
@@ -28,7 +28,7 @@ while ($row = $result->fetch_assoc()) {
 
     // Note: Ensure $msgWho is safely handled when no message is found
 
-    $output .= '<a href="aqMessengerChatArea.php?id=' . $row['id'] . '">
+    $output .= '<a href="aqMessengerChatArea.php?id=' . $row['user_id'] . '">
                     <div class="d-flex align-items-center justify-content-between p-3" style="width: 100%;">
                         <div class="d-flex align-items-center">
                             <div class="pe-3">
