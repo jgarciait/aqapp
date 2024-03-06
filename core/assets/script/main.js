@@ -17,61 +17,78 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// AQMessenger Scripts Start
 document.addEventListener('DOMContentLoaded', function () {
     const searchBar = document.querySelector('.users .contact-search-1 input'),
           contactsList = document.querySelector('.users .contacts-list');
-    
-    // Check if all elements exist
+
     if (searchBar && contactsList) {
-        // Setup button click event only if all elements are found
         searchBar.onclick = () => {
             searchBar.classList.toggle('active');
             searchBar.focus();
             searchBar.value = "";
         };
-        
-searchBar.addEventListener('keyup', async () => {
-    let searchTerm = searchBar.value;
-    if (searchTerm !== "") {
-        searchBar.classList.add('active');
-    } else {
-        searchBar.classList.remove('active');
-    }
-    try {
-        const response = await fetch('contactsSearch.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `searchTerm=${encodeURIComponent(searchTerm)}`,
-        });
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.text();
-        contactsList.innerHTML = data;
-    } catch (error) {
-        console.error('Failed to search contacts:', error);
-    }
-});
 
-        
-// Use async function to handle asynchronous operations more cleanly
-async function fetchContacts() {
-    try {
-        const response = await fetch('contacts.php');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+        searchBar.addEventListener('keyup', async () => {
+            let searchTerm = searchBar.value;
+            if (searchTerm !== "") {
+                searchBar.classList.add('active');
+            } else {
+                searchBar.classList.remove('active');
+            }
+            try {
+                const response = await fetch('contactsSearch.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `searchTerm=${encodeURIComponent(searchTerm)}`,
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.text();
+                contactsList.innerHTML = data;
+            } catch (error) {
+                console.error('Failed to search contacts:', error);
+            }
+        });
+
+        // Function to load contacts from local storage
+        function loadContactsFromCache() {
+            const cache = localStorage.getItem('contactsData');
+            if (cache) {
+                const {data} = JSON.parse(cache);
+                contactsList.innerHTML = data;
+            }
         }
-        const data = await response.text();
-        contactsList.innerHTML = data;
-    } catch (error) {
-        console.error('Failed to fetch contacts:', error);
-    }
-}
-// Setup the interval for fetching contacts as all elements are present
-const intervalId = setInterval(fetchContacts, 1500); // Adjust time as needed
+
+        // Async function to fetch contacts from the server and update cache
+        async function fetchAndUpdateContacts() {
+            try {
+                const response = await fetch('contacts.php');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.text();
+                // Update the contacts list and local storage only if data has changed
+                if (contactsList.innerHTML !== data) {
+                    contactsList.innerHTML = data;
+                    localStorage.setItem('contactsData', JSON.stringify({data: data, timestamp: Date.now()}));
+                }
+            } catch (error) {
+                console.error('Failed to fetch contacts:', error);
+            }
+        }
+
+        // Initially load contacts from cache
+        loadContactsFromCache();
+
+        // Then fetch contacts from the server to check for updates
+        fetchAndUpdateContacts();
+
+        // Optionally, set up an interval to regularly fetch updates
+        const refreshInterval = 5000; // 15 seconds, adjust as needed
+        setInterval(fetchAndUpdateContacts, refreshInterval);
     } 
 });
 

@@ -15,11 +15,13 @@
     <!-- Index (login) app CSS Style -->
     <link rel="stylesheet" type="text/css" href="core/assets/css/formsStyle.css">
 
-    <!-- Embeded Map for GPS Features. Need to be removed. -->
+    <!-- Embeded Map for GPS Features. Need to be removed. 
     <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?key=AkdPaHyrL21_U0E9Gdvkl74fuoBSnbl6QyWT6WuLUrT0COJryzTbcprcqceoP9Pc&callback=loadMapScenario" async defer></script>
-    
+    -->
     
     <script src="https://code.jquery.com/jquery-3.7.0.js" type="text/javascript"></script>
+    <!-- Main JS Scripts -->
+    <script src="core/assets/script/main.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js" type="text/javascript"></script>
     
@@ -30,10 +32,6 @@
     <!-- QRCODE Scanner in HOME-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js" integrity="sha512-r6rDA7W6ZeQhvl8S7yRVQUKVHdexq+GAlNkNNqVC7YyIV+NwqCTJe2hDWCiffTyRNOeGEzRRJ9ifvRm/HCzGYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <!-- Main JS Scripts -->
-    <script src="core/assets/script/main.js"></script>
-
-    <link rel="apple-touch-startup-image" href="splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
     <link href="https://unpkg.com/@pqina/flip/dist/flip.min.css" rel="stylesheet">
     <script src="https://unpkg.com/@pqina/flip/dist/flip.min.js"></script>
 
