@@ -51,7 +51,7 @@ var userInAppNotiEnabled = " . (int)$userPreferences['in_app_noti'] . ";
                 <div class="nf-area py-2">
                     <a class="btn-noti" id="notification-btn">
                     <i class="fas fa-bell fa-lg"></i></a>
-                    <span id="nf-n">...</span>
+                    <span id="nf-n"></span>
                 </div>
                 <div class="nf-message" id="notifications"></div>
             </div>

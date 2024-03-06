@@ -85,6 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
         sendBtn = chatForm.querySelector('button'),
         chatBoxContent = document.querySelector('.chat-box-content');
 
+    let scrollToTopCalled = false;
+    
     if (inputField && sendBtn && chatBoxContent) {
       
         chatForm.onsubmit = (e) => {
@@ -100,13 +102,26 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.onload = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    inputField.value = ""; // Clear the input field          
+                    inputField.value = ""; // Clear the input field
+                    if (!scrollToTopCalled) { // Check if scrollToTop has been called before
+                        scrollToTop();
+                        scrollToTopCalled = true; // Set flag to true after first call
+                    }                     
                 }
             }
         }
         let formData = new FormData(chatForm); // Creating new formData object
         xhr.send(formData); // Sending the form data to insert-chat.php
         }
+        
+        chatBoxContent.onmouseenter = () => {
+            chatBoxContent.classList.add('active');
+        }
+        
+        chatBoxContent.onmouseleave = () => {
+            chatBoxContent.classList.remove('active');
+        }
+        
         // Setup the interval for fetching contacts as all elements are present
         setInterval(() => {
             let xhr = new XMLHttpRequest();
@@ -116,7 +131,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (xhr.status === 200) {
                         let data = xhr.response;
                         chatBoxContent.innerHTML = data;
-              
+                        if (!chatBoxContent.classList.contains('active') && !scrollToTopCalled) {
+                            scrollToTop();
+                            scrollToTopCalled = true; // Ensure it's called only once until mouse movement
+                        }
                     }
                 } 
             };
@@ -127,6 +145,10 @@ document.addEventListener('DOMContentLoaded', function () {
             let formData = new FormData(chatForm); // Creating new formData object
             xhr.send(formData); // Sending the form data to insert-chat.php
         }, 800);
+        
+        function scrollToTop() {
+            chatBoxContent.scrollTop = chatBoxContent.scrollHeight;
+        }
     }
 });
 
@@ -158,7 +180,9 @@ $(document).ready(function () {
     if (userInAppNotiEnabled === 1) {
         var notificationInterval = setInterval(fetchNotifications, 3000); // Call fetchNotifications at regular intervals
         fetchNotifications(); // Initial call
-    }
+    } else {    
+        $('#notification-btn').hide(); // Hide the notification button
+    }   $('#nf-n').hide();
 
 
     function fetchNotifications() {
@@ -170,7 +194,7 @@ $(document).ready(function () {
             cache: false,
             success: function (response) {
                 // Check for a specific status or message in the JSON response
-                if (response.status === 'disabled' || response.message === 'In-app notifications are disabled.' || !response) {
+                if (response.status === 0) {
                     clearInterval(notificationInterval); // Stop the interval
                     $('#notifications').hide();
                     $('#nf-n').hide();
@@ -179,7 +203,7 @@ $(document).ready(function () {
 
                 let contentData = response; // Assuming this is already parsed JSON
                 // Further processing of contentData as before...
-                $('#notifications').html('');
+                $('#notifications').html('0');
                 console.log(contentData);
                 if (contentData.length > 1) {
                     // Update notification count

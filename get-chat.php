@@ -21,7 +21,7 @@ $sql = "SELECT *, users.profile_image FROM aq_messages
         LEFT JOIN users ON users.id = aq_messages.outgoing_msg_id
         WHERE (incoming_msg_id = ? AND outgoing_msg_id = ?) 
         OR (outgoing_msg_id = ? AND incoming_msg_id = ?)
-        ORDER BY msg_id DESC";
+        ORDER BY msg_timestamp ASC";
 
 $stmt = $db->prepare($sql);
 if (!$stmt) {
