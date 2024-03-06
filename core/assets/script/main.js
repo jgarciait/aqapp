@@ -70,10 +70,8 @@ async function fetchContacts() {
         console.error('Failed to fetch contacts:', error);
     }
 }
-
 // Setup the interval for fetching contacts as all elements are present
 const intervalId = setInterval(fetchContacts, 1500); // Adjust time as needed
-
     } 
 });
 
