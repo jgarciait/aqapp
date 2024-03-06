@@ -4,7 +4,7 @@ while ($row = $result->fetch_assoc()) {
     $sql2 = "SELECT * FROM aq_messages 
     WHERE (incoming_msg_id = {$row['user_id']} OR outgoing_msg_id = {$row['user_id']}) 
     AND (outgoing_msg_id = {$outgoing_id} OR incoming_msg_id = {$outgoing_id}) 
-    ORDER BY msg_id ASC LIMIT 1";
+    ORDER BY msg_timestamp DESC LIMIT 1";
 
     $stmt2 = $db->prepare($sql2);
     $stmt2->execute(); // Execute the prepared statement
