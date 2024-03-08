@@ -282,7 +282,6 @@ $count = 1;
     </p>
 </footer>
 
-
 <script>
 // Initialize the current tab
 let currentTab = 0;
