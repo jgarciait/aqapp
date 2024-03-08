@@ -283,7 +283,8 @@ $count = 1;
 </footer>
 
 <script>
-// Initialize the current tab
+
+
 let currentTab = 0;
 showTab(currentTab); // Display the current tab
 

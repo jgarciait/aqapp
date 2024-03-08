@@ -448,7 +448,6 @@ function showTab(n) {
 
 }
 
-//  Function to handle Next and Previous buttons
         // Function to handle Next and Previous buttons
         function nextPrev(n) {
             var x = document.getElementsByClassName("tab");
