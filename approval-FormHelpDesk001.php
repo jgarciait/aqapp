@@ -216,7 +216,7 @@ $count = 1;
                 <ul id="progressbar">
                     <li class="active" id="summary"><strong>Summary</strong></li>
                     <li id="personal"><strong>User Info</strong></li>
-                    <li id="ticket"><strong>Details</strong></li>
+                    <li id="ticket"><strong>Incident Information</strong></li>
                 </ul>
             </div>
  
