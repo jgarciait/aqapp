@@ -101,7 +101,8 @@ $wcId = $user_data2['workflows_creator_id'];
                         <th>Status</th>
                         <th>Assigned to:</th>
                         <th>Date</th> 
-                        <th>Options</th>         
+                        <th>Options</th>     
+    
                     </tr>
                 </thead>
                 <tbody>
