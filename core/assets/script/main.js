@@ -17,10 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// AQMessenger Scripts Start
 document.addEventListener('DOMContentLoaded', function () {
     const searchBar = document.querySelector('.users .contact-search-1 input'),
           contactsList = document.querySelector('.users .contacts-list');
+
+    let isMouseOverContactsList = false;
+    let initialMouseEnter = true; // Flag to track the first mouse enter to delay fetch
 
     if (searchBar && contactsList) {
         searchBar.onclick = () => {
@@ -54,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Function to load contacts from local storage
         function loadContactsFromCache() {
             const cache = localStorage.getItem('contactsData');
             if (cache) {
@@ -63,15 +64,20 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Async function to fetch contacts from the server and update cache
-        async function fetchAndUpdateContacts() {
+        async function fetchAndUpdateContacts(delay = 0) {
+            if (isMouseOverContactsList) return; // Do not fetch if mouse is over contacts list
+
+            if (delay > 0) {
+                await new Promise(resolve => setTimeout(resolve, delay));
+                if (isMouseOverContactsList) return; // Check again after delay
+            }
+
             try {
                 const response = await fetch('contacts.php');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.text();
-                // Update the contacts list and local storage only if data has changed
                 if (contactsList.innerHTML !== data) {
                     contactsList.innerHTML = data;
                     localStorage.setItem('contactsData', JSON.stringify({data: data, timestamp: Date.now()}));
@@ -81,17 +87,34 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Initially load contacts from cache
         loadContactsFromCache();
 
-        // Then fetch contacts from the server to check for updates
-        fetchAndUpdateContacts();
+        // No immediate fetchAndUpdateContacts call here, moved inside mouseleave
 
-        // Optionally, set up an interval to regularly fetch updates
-        const refreshInterval = 15000; // 15 seconds, adjust as needed
-        setInterval(fetchAndUpdateContacts, refreshInterval);
-    } 
+        const refreshInterval = 5000; // Adjust as needed
+        let fetchInterval = setInterval(fetchAndUpdateContacts, refreshInterval);
+
+        contactsList.onmouseenter = () => {
+            isMouseOverContactsList = true;
+            if (initialMouseEnter) {
+                clearTimeout(fetchInterval); // Pause auto-fetching on initial enter
+            }
+        };
+
+        contactsList.onmouseleave = () => {
+            isMouseOverContactsList = false;
+            if (initialMouseEnter) {
+                fetchAndUpdateContacts(1000); // Delay the initial fetch by 1 second on first mouse leave
+                initialMouseEnter = false;
+                fetchInterval = setInterval(fetchAndUpdateContacts, refreshInterval); // Restart regular fetching
+            } else {
+                fetchAndUpdateContacts(); // Immediately fetch updates on subsequent leaves
+            }
+        };
+    }
 });
+
+
 
 
 document.addEventListener('DOMContentLoaded', function () {

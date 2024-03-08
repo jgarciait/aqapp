@@ -10,8 +10,6 @@ $workflowLevelId = $workflow['wlevelId'];
 $wcId = $user_data2['workflows_creator_id'];
 
 ?> 
-
-
     <div class="container container-table">
         <main class="container-fluid my-4 p-4 border border-info content-table bg-white shadow rounded table-responsive">
             <div class="container">
@@ -44,7 +42,7 @@ $wcId = $user_data2['workflows_creator_id'];
                             <tr>
                                     <th>#</th>
                                     <th>Núm. Caso</th>
-                                    <th>Servicio</th>
+
                                     <th>Estatus</th>
                                     <th>Asignado a:</th>
                                     <th>Fecha</th> 
@@ -56,26 +54,28 @@ $wcId = $user_data2['workflows_creator_id'];
        
                 if ($table_name) { // Check if table name was successfully retrieved
                 mysqli_set_charset($db, "utf8");
-                $sql = "SELECT {$table_name}.id AS fId, 
-                            receiver_division.wcreator_name AS receiver_division_name, 
-                            '{$table_name}' AS table_name, 
-                            ref_number, 
-                            process_status, 
-                            service_request, 
-                            sender.first_name AS sender_name, 
-                            receiver.first_name AS receiver_name, 
-                            timestamp
-                        FROM {$table_name}
-                        INNER JOIN forms_status ON forms_status.forms_id = {$table_name}.id
-                        LEFT JOIN users AS sender ON sender.id = forms_status.fl_sender_user_id
-                        LEFT JOIN users AS receiver ON receiver.id = forms_status.fl_receiver_user_id
-                        LEFT JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = forms_status.fl_sender_user_id
-                        LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
-                        LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_status.receiver_division_wcid
-                        WHERE forms_status.fl_sender_user_id = $session_user
-                        AND forms_status.process_status != 'Rejected by Dependencia A'
-                        AND forms_status.process_status != 'Completed'
-                        ORDER BY forms_status.timestamp DESC";
+                $sql = "SELECT DISTINCT {$table_name}.id AS fId, 
+                receiver_division.wcreator_name AS receiver_division_name, 
+                '{$table_name}' AS table_name,
+                forms_status.process_status AS fs_status, -- Specify the correct alias for process_status
+                sender.first_name AS sender_name, 
+                receiver.first_name AS receiver_name, 
+                forms_status.timestamp AS fs_timestamp,
+                forms_status.ref_number
+            FROM {$table_name}
+            LEFT JOIN forms_status ON forms_status.forms_id = {$table_name}.id
+            LEFT JOIN form_metadata ON form_metadata.id = {$table_name}.metadata_id
+            LEFT JOIN forms_status AS fs ON fs.fs_metadata_id = form_metadata.id
+            LEFT JOIN users AS sender ON sender.id = forms_status.fl_sender_user_id
+            LEFT JOIN users AS receiver ON receiver.id = forms_status.fl_receiver_user_id
+            LEFT JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = forms_status.fl_sender_user_id
+            LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
+            LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_status.receiver_division_wcid
+            WHERE forms_status.fl_sender_user_id = $session_user
+            AND forms_status.process_status != 'Rejected by Dependencia A'
+            AND forms_status.process_status != 'Completed'
+            ORDER BY fs_timestamp DESC";
+
 
             $stmt = mysqli_prepare($db, $sql);
             mysqli_stmt_execute($stmt);
@@ -85,21 +85,20 @@ $wcId = $user_data2['workflows_creator_id'];
         
             if ($result) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $timestamp = date('F j, Y h:i A', strtotime($row['timestamp']));
+                    $timestamp = date('F j, Y h:i A', strtotime($row['fs_timestamp']));
                     ?>
                     <tr>
                         <td data-title='#'><?php echo $count; ?></td>
                         <td data-title='Núm. Caso'><?php echo htmlspecialchars($row['ref_number']); ?></td>
-                        <td data-title='Nombre del Form'><?php echo htmlspecialchars($row['service_request']); ?></td>
-                        <td data-title='Estatus'><?php echo htmlspecialchars($row['process_status']); ?></td>
+                        <td data-title='Estatus'><?php echo htmlspecialchars($row['fs_status']); ?></td>
                         <td data-title='Atendido por:'><?php echo htmlspecialchars($row['receiver_division_name']); ?></td>
                         <td data-title='Fecha'><?php echo $timestamp; ?></td>
                        <td data-title='Ver Formulario'>
                                           <?php
-                                if ($row['process_status'] !== "Draft" && $row['process_status'] !== "Reverted") {
-                                    echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="readOnlyForm_001.php?action=edit&id=' . $row['fId'] . '"><span><i class="fa-solid fa-eye"></i></span></a>';
+                                if ($row['fs_status'] !== "Draft" && $row['fs_status'] !== "Reverted") {
+                                    echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="read-'.$table_name.'.php?action=edit&id=' . $row['fId'] . '"><span><i class="fa-solid fa-eye"></i></span></a>';
                                 } else {
-                                    echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="senderForm_001.php?action=edit&id=' . $row['fId'] . '"><span><i class="fa-solid fa-eye"></i></span></a>';
+                                    echo '<a type="button" class="btn-menu-1 btn-1 hover-filled-opacity" href="sender-{$table_name}.php?action=edit&id=' . $row['fId'] . '"><span><i class="fa-solid fa-eye"></i></span></a>';
                                 }
                             ?>
                         </td>           

@@ -5,25 +5,26 @@
         </div>
         <nav>
             <ul>
-                    <li class="has-subnav">
-                    <a href="socialHome.php">
-                        <i class="fa fa-home fa-2x"></i>
-                        <span class="nav-text">
-                            Home
-                        </span>
-                    </a>
-                </li>
-                <?php if ($sysRol['ubs_sys_groups_id'] == '1') { ?>
                 <li class="has-subnav">
-                    <a href="settings.php">
-                        <i class="fa fa-gear fa-2x"></i>
-                        <span class="nav-text">
-                            Settings
-                        </span>
-                    </a>
-                </li>
-                <?php } ?>
-
+                <a href="socialHome.php">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">
+                        Home
+                    </span>
+                </a>
+            </li>
+            <?php if ($sysRol['ubs_sys_groups_id'] == '1') { ?>
+            <li class="has-subnav">
+                <a href="settings.php">
+                    <i class="fa fa-gear fa-2x"></i>
+                    <span class="nav-text">
+                        Settings
+                    </span>
+                </a>
+            </li>
+        
+            <?php } ?>
+   <hr>
             <div id="expandContent" style="display: block;">
                 
                 <?php   
@@ -44,44 +45,49 @@
                 foreach ($user_workflows as $workflow) {
             
                 $wId = $workflow['workflow_id'];
-                if ($workflow['wlevelId'] > 1) { ?>
-                    
-                        <a href="<?php echo "receiverDataTable.php" . '?workflow_id=' . $wId; ?>">
-                            <i class="fa fa-file-invoice fa-2x"></i>
-                            <span class="nav-text">
-                                Requests
-                            </span>
-                        </a>
-                    </li>
-                <?php } if ($workflow['wlevelId'] < 2) { ?>
-                    <li class="has-subnav">
-                        <a href="<?php echo "senderDataTable.php" . '?workflow_id=' . $wId; ?>">
-                            <i class="fa fa-file-import fa-2x"></i>
-                            <span class="nav-text">
-                                Active Requests
-                            </span>
-                        </a>
-                    </li>
-                <?php } ?>
-                <details style="">
-                    <summary>Archives</summary>
-                    <li class="has-subnav">
-                        <a href="<?php echo "rejectedDataTable.php" . '?workflow_id=' . $wId; ?>">
-                            <i class="fa fa-box-archive fa-2x"></i>
-                            <span class="nav-text">
-                                Rejected
-                            </span>
-                        </a>
-                    </li>
-                    <li class="has-subnav">
-                        <a href="<?php echo "completedDataTable.php" . '?workflow_id=' . $wId; ?>">
-                            <i class="fa fa-box-archive fa-2x"></i>
-                            <span class="nav-text">
-                                Completed
-                            </span>
-                        </a>
-                    </li>
+                ?>
+                <details class="details-a">
+                        <summary class="summary-a"><?php echo $workflow['workflow_name']; ?></summary>
+                  <?php if ($workflow['wlevelId'] > 1) { ?>
+                        
+                            <a href="<?php echo "receiverDataTable.php" . '?workflow_id=' . $wId; ?>">
+                                <i class="fa fa-file-invoice fa-2x"></i>
+                                <span class="nav-text">
+                                    Requests
+                                </span>
+                            </a>
+                        </li>
+                    <?php } if ($workflow['wlevelId'] < 2) { ?>
+                        <li class="has-subnav">
+                            <a href="<?php echo "senderDataTable.php" . '?workflow_id=' . $wId; ?>">
+                                <i class="fa fa-file-import fa-2x"></i>
+                                <span class="nav-text">
+                                    Active Requests
+                                </span>
+                            </a>
+                        </li>
+                    <?php } ?>
+                    <details class="details-b">
+                        <summary class="summary-b">Archives</summary>
+                        <li class="has-subnav">
+                            <a href="<?php echo "rejectedDataTable.php" . '?workflow_id=' . $wId; ?>">
+                                <i class="fa fa-box-archive fa-2x"></i>
+                                <span class="nav-text">
+                                    Rejected
+                                </span>
+                            </a>
+                        </li>
+                        <li class="has-subnav">
+                            <a href="<?php echo "completedDataTable.php" . '?workflow_id=' . $wId; ?>">
+                                <i class="fa fa-box-archive fa-2x"></i>
+                                <span class="nav-text">
+                                    Completed
+                                </span>
+                            </a>
+                        </li>
+                    </details>
                 </details>
+                <hr>
                 <?php if ($workflow['workflow_name'] == 'Asistencia') { ?>
                     <li class="has-subnav">
                         <a href="<?php echo "newAttendance.php" . '?workflow_id=' . $wId; ?>">

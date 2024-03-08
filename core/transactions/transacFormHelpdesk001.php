@@ -4,16 +4,10 @@ $originatorEmail = $sysRol['user_email'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $workflow_id = $_POST['workflow_id'];
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $service_request = $_POST['service_request'];
-    $age = $_POST['age'];
-    $gender = $_POST['gender'];
-    $physical_address = $_POST['physical_address'];
-    $postal_address = $_POST['postal_address'];
-    $sector = $_POST['sector'];
-    $phone = $_POST['phone'];
+    $fullName = $_POST['fullName'];
     $email = $_POST['email'];
+    $issueType = $_POST['issueType'];
+    $issueDescription = $_POST['issueDescription'];
 
     // Get the workflows_creator.id and form_metadata.id
     $workflowData = getWCreatorAndMetadataId($workflow_id, $db);
@@ -28,25 +22,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $prefix = "HD";
         // Generate a new reference number
-        $refNumber = generateNewReferenceNumber($prefix, $session_user, $pdo);
-
+        $refNumber = generateNewReferenceNumber1($prefix, $session_user, $pdo);
 
         try {
-            // Insert data into form_001 table
-            $stmt = $db->prepare('INSERT INTO form_001 (firstName, lastName, age, gender, service_request, form_metadata_id, ref_number, physical_address, postal_address, sector, phone, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-            $stmt->execute([$firstName, $lastName, $age, $gender, $service_request, $formMetadataId, $refNumber, $physical_address, $postal_address, $sector, $phone, $email]);
+            // Insert data into formHelpDesk001 table
+            $stmt = $db->prepare('INSERT INTO formHelpDesk001 (fullName, email, issueType, issueDescription, metadata_id) VALUES (?, ?, ?, ?, ?)');
+            $stmt->execute([$fullName, $email, $issueType, $issueDescription, $formMetadataId]);
 
-            // Get the last inserted ID from form_001 using mysqli_insert_id()
-            $form_id = mysqli_insert_id($db);
-            
+            // Get the last inserted ID from formHelpDesk001
+            $form_data_id = mysqli_insert_id($db);
+
             $currentTimestamp = date('Y-m-d H:i:s');
             // Insert data into forms_status table
-            $stmt = $db->prepare('INSERT INTO forms_status (fl_sender_user_id, fl_receiver_user_id, process_status, timestamp, forms_id, process_level_id, receiver_division_wcid) VALUES (?, ?, ?, ?, ?, ?, ?)');
-            $stmt->execute([$session_user, $receiverUserId, $processStatus, $currentTimestamp, $form_id, 2, $workflows_creator_id]);
+            $stmt = $db->prepare('INSERT INTO forms_status (ref_number, fl_sender_user_id, fl_receiver_user_id, process_status, timestamp, forms_id, fs_metadata_id, process_level_id, receiver_division_wcid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            $stmt->execute([$refNumber, $session_user, $receiverUserId, $processStatus, $currentTimestamp, $form_data_id, $formMetadataId, 2, $workflows_creator_id]);
 
             // Insert record into the forms_audit_trail table
-            $stmt = $db->prepare('INSERT INTO forms_audit_trail (actions, fl_user_id, fl_forms_id, fl_timestamp) VALUES (?, ?, ?, ?)');
-            $stmt->execute([$processStatus, $session_user, $form_id, $currentTimestamp]);
+            $stmt = $db->prepare('INSERT INTO forms_audit_trail (actions, fl_user_id, fl_forms_id, fl_timestamp, fl_metadata_id) VALUES (?, ?, ?, ?, ?)');
+            $stmt->execute([$processStatus, $session_user, $form_id, $currentTimestamp, $formMetadataId]);
 
             // Retrieve the last insert id correctly using mysqli
             $formAuditTrailId = mysqli_insert_id($db);

@@ -26,7 +26,8 @@ while ($row = $result->fetch_assoc()) {
         // If no message is available, handle accordingly
         $msgWho = ""; // Adjust this as needed
     }
-
+    
+    ($row['status'] == 'Online') ? $status = "status-online" : (($row['status'] == 'Do not disturb') ? $status = "status-dnd" : $status = "status-offline" );
     // Note: Ensure $msgWho is safely handled when no message is found
 
     $output .= '<a href="aqMessengerChatArea.php?id=' . $row['user_id'] . '">
@@ -40,7 +41,7 @@ while ($row = $result->fetch_assoc()) {
                                 <div class="status-message">' . htmlspecialchars($msgWho) . '</div>
                             </div>
                         </div>
-                        <span style="margin-bottom: 0; padding: 0;"><i class="fas fa-circle"></i></span>
+                        <span style="margin-bottom: 0; padding: 0;"><i class="fas fa-circle '.$status.'"></i></span>
                     </div>
                     <hr>
                 </a>';

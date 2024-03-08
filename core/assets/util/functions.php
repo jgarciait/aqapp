@@ -223,7 +223,7 @@ function getTableNameByWorkflowId($workflow_id, $db) {
 }
 
 
-function getFormData($id, $db) {
+function formDataF001($id, $db) {
     mysqli_set_charset($db, "utf8mb4");
     $sql = "SELECT form_001.id AS fId, workflows.id AS wId, process_level_id, firstName, lastName, age, gender, physical_address, postal_address, sector, phone, email, receiver_division.wcreator_name AS receiver_division_name, table_name, signature, ref_number, process_status, service_request, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
             FROM workflows
@@ -236,6 +236,33 @@ function getFormData($id, $db) {
             LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
             LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_status.receiver_division_wcid
             WHERE form_001.id  = ?";
+    
+$stmt = $db->prepare($sql);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $formData = $result->fetch_assoc();
+        return $formData;
+    } else {
+        return false;
+    }
+}
+
+function formDataHelpDesk001($id, $db) {
+    mysqli_set_charset($db, "utf8mb4");
+    $sql = "SELECT *, formHelpDesk001.id AS fid, workflows.id AS wId, forms_status.ref_number, process_level_id, fullName, email, issueType, issueDescription, receiver_division.wcreator_name AS receiver_division_name, table_name, signature, ref_number, process_status, sender.first_name AS sender_name, receiver.first_name AS receiver_name, timestamp
+            FROM workflows
+            LEFT JOIN form_metadata ON form_metadata.fm_workflows_id = workflows.id
+            LEFT JOIN formHelpDesk001 ON formHelpDesk001.metadata_id = form_metadata.id
+            LEFT JOIN forms_status ON forms_status.forms_id = formHelpDesk001.id
+            LEFT JOIN users AS sender ON sender.id = forms_status.fl_sender_user_id
+            LEFT JOIN users AS receiver ON receiver.id = forms_status.fl_receiver_user_id
+            LEFT JOIN users_by_wcreator ON users_by_wcreator.ubw_user_id = fl_sender_user_id
+            LEFT JOIN workflows_creator AS sender_division ON sender_division.id = users_by_wcreator.wcreator_id
+            LEFT JOIN workflows_creator AS receiver_division ON receiver_division.id = forms_status.receiver_division_wcid
+            WHERE formHelpDesk001.id  = ?";
     
 $stmt = $db->prepare($sql);
     $stmt->bind_param('i', $id);
@@ -572,7 +599,7 @@ function insertRequest($referenceNumber, $requestName, $requestDescription, $req
         return false;
     }
 }
-function generateNewReferenceNumber($session_user, $pdo) {
+function generateNewReferenceNumber($prefix, $session_user, $pdo) {
     // Check if there is a previous reference number
     $sql = "SELECT MAX(ref_number) AS last_reference_number FROM form_001
     INNER JOIN forms_status ON forms_status.forms_id = form_001.id
@@ -584,7 +611,7 @@ function generateNewReferenceNumber($session_user, $pdo) {
 
     if ($row['last_reference_number']) {
         // Extract the year and numeric part of the last reference number
-        preg_match('/(\d{4})-(\d+)/', $row['last_reference_number'], $matches);
+        preg_match('/(\d{5})-(\d+)/', $row['last_reference_number'], $matches);
 
         if (count($matches) === 3) {
             $lastYear = $matches[1];
@@ -600,18 +627,23 @@ function generateNewReferenceNumber($session_user, $pdo) {
                 $newNumber = 1;
             }
 
-            // Format the new reference number with leading zeros
-            $formattedNumber = str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+            // Generate a unique combination of letters and numbers for the last 4 digits
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $randomString = '';
+            $length = 5;
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, strlen($characters) - 1)];
+            }
 
-            return "GMC-$currentYear-$formattedNumber";
+            return "$prefix-$currentYear-$randomString";
         }
     }
 
     // If no last reference number found or error occurred, use a default value
-    return "GMC-" . date('Y') . "-0001";
+    return $prefix ."-" . date('Y') . "-00001";
 }
   
-function getLastReferenceNumber($session_user, $pdo) {
+function getLastReferenceNumber($prefix, $session_user, $pdo) {
     $sql = "SELECT MAX(ref_number) AS last_reference_number FROM form_001
     INNER JOIN forms_status ON forms_status.forms_id = form_001.id
     WHERE fl_sender_user_id = :session_user";
@@ -622,7 +654,7 @@ function getLastReferenceNumber($session_user, $pdo) {
 
     if ($row['last_reference_number']) {
         // Extract the year and numeric part of the last reference number
-        preg_match('/(\d{4})-(\d+)/', $row['last_reference_number'], $matches);
+        preg_match('/(\d{5})-(\d+)/', $row['last_reference_number'], $matches);
 
         if (count($matches) === 3) {
             $lastYear = $matches[1];
@@ -638,15 +670,110 @@ function getLastReferenceNumber($session_user, $pdo) {
                 $newNumber = 1;
             }
 
-            // Format the new reference number with leading zeros
-            $formattedNumber = str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+            // Generate a unique combination of letters and numbers for the last 4 digits
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $randomString = '';
+            $length = 5;
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, strlen($characters) - 1)];
+            }
 
-            return "DCS-$currentYear-$formattedNumber";
+            return "$prefix-$currentYear-$randomString";
         }
     }
 
     // If no last reference number found or error occurred, use a default value
-    return "GMC-" . date('Y') . "-0001";
+    return "$prefix-" . date('Y') . "-00001";
+}
+
+function generateNewReferenceNumber1($prefix, $session_user, $pdo) {
+    $currentYear = date('Y');
+
+    // Generate a unique combination of letters and numbers for the last 4 digits
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomString = '';
+    $length = 5;
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    }
+
+    // Generate the new reference number
+    $newRefNumber = "$prefix-$currentYear-$randomString";
+
+    // Check if the generated reference number already exists in the database
+    $sql = "SELECT COUNT(*) AS count FROM forms_status WHERE ref_number = :ref_number";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':ref_number', $newRefNumber, PDO::PARAM_STR);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($row['count'] > 0) {
+        // If the generated reference number already exists, recursively call the function to generate a new one
+        return generateNewReferenceNumber1($prefix, $session_user, $pdo);
+    }
+
+    // If the reference number is unique, return it
+    return $newRefNumber;
+}
+
+  
+function getLastReferenceNumber1($prefix, $session_user, $pdo) {
+    // Retrieve the last reference number from the database
+    $sql = "SELECT MAX(forms_status.ref_number) AS last_reference_number FROM formHelpDesk001
+    INNER JOIN forms_status ON forms_status.forms_id = formHelpDesk001.id
+    WHERE fl_sender_user_id = :session_user";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':session_user', $session_user, PDO::PARAM_INT);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Extract the year and numeric part of the last reference number
+    if ($row['last_reference_number']) {
+        preg_match('/(\d{5})-(\d+)/', $row['last_reference_number'], $matches);
+        if (count($matches) === 3) {
+            $lastYear = $matches[1];
+            $lastNumber = intval($matches[2]);
+
+            // Check if the current year matches the last year
+            $currentYear = date('Y');
+            if ($currentYear == $lastYear) {
+                // Increment the last number by 1
+                $newNumber = $lastNumber + 1;
+            } else {
+                // Start a new numbering for the current year
+                $newNumber = 1;
+            }
+
+            // Generate a unique combination of letters and numbers for the last 4 digits
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $randomString = '';
+            $length = 5;
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, strlen($characters) - 1)];
+            }
+
+            // Generate the new reference number
+            $newRefNumber = "$prefix-$currentYear-$randomString";
+
+            // Check if the generated reference number already exists in the database
+            $sqlCheck = "SELECT COUNT(*) AS count FROM formHelpDesk001 WHERE ref_number = :ref_number";
+            $stmtCheck = $pdo->prepare($sqlCheck);
+            $stmtCheck->bindParam(':ref_number', $newRefNumber, PDO::PARAM_STR);
+            $stmtCheck->execute();
+            $rowCheck = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+
+            if ($rowCheck['count'] > 0) {
+                // If the generated reference number already exists, recursively call the function again to generate a new one
+                return getLastReferenceNumber1($prefix, $session_user, $pdo);
+            }
+
+            // If the reference number is unique, return it
+            return $newRefNumber;
+        }
+    }
+
+    // If no last reference number found or error occurred, use a default value
+    return "$prefix-" . date('Y') . "-0001";
 }
 
 // functions.php

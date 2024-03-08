@@ -379,6 +379,8 @@ body {
     padding: 2rem;
     min-height: 85vh;
 }
+
+
  #templateTable td { 
     text-align: center;
     justify-content: center;
@@ -969,7 +971,14 @@ summary:before {
     padding-left: 15px;
 }
 
-details[open] summary:before {
+details[open] > summary:before {
+    font-family: 'Font Awesome\ 6 Free';
+    font-size: large;
+    content: '\f078';
+    font-weight: 900;
+}
+
+.details-b[open] > summary:before {
     font-family: 'Font Awesome\ 6 Free';
     font-size: large;
     content: '\f078';
